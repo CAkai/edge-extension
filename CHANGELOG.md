@@ -20,7 +20,7 @@
 
 ## 版本
 <!-- no toc -->
-- [First Commit - 2022-09-07](#first-commit---2022-09-07)
+- [First Commit - 2024-10-08](#first-commit---2024-10-08)
 
 <br>
 
