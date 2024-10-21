@@ -7,10 +7,12 @@
 ![alt text](assets/usage_1.png)
 3. 點擊「管理擴充功能」。
 ![alt text](assets/usage_2.png)
-4. 點選「載入解壓縮」。
+4. 因為目前還沒上架，必須打開「開發人員模式」才能導入自己的擴充功能。
+![alt text](assets/usage_7.png)
+5. 點選「載入解壓縮」。
 ![alt text](assets/usage_3.png)
-5. 選擇要載入的資料夾或者壓縮檔。
+6. 選擇要載入的資料夾或者壓縮檔。
 ![alt text](assets/usage_4.png)
 ![alt text](assets/usage_5.png)
-6. 往下滑到「從其他來源」，就能找到我們的套件。
+7. 往下滑到「從其他來源」，就能找到我們的套件。
 ![alt text](assets/usage_6.png)
