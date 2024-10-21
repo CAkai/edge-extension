@@ -15,8 +15,7 @@
 
 ### 單一微服務(容器所代表的服務)
 - **:whale2:Docker**：服務建置工具。
-- **Chrome**：Chrome 的擴充套件。
-- **Edge**：Edge 的擴充套件。
+- **Translate**：翻譯擴充套件。
 
 ## 版本
 <!-- no toc -->
