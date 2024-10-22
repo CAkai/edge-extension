@@ -23,6 +23,13 @@
 
 <br>
 
+## 0.1.0 - 2024-10-22
+套用 [第三方框架][ts-react-chrome-extension]，採 TypeScript + React + Vite 開發。([f958417])
+
+[ts-react-chrome-extension]: https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite
+
+[f958417]: https://github.com/CAkai/edge-extension/commit/f958417d8749d26f9cc2f303c5360b2e02144241
+
 ## [First Commit] - 2024-10-08
 [返回目錄](#版本)
 
