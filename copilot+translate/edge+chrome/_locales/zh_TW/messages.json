@@ -1,6 +1,10 @@
 {
     "extensionName": {
-        "message": "iCloud 聊天助手",
+        "message": "iCloud AI 助手",
         "description": "標題"
+    },
+    "extensionDescription": {
+        "message": "提供側邊欄式的 AI 聊天機器人與您互動。不僅如此，透過 iCloud AI，提供翻譯功能，並保證資料不外流。",
+        "description": "描述"
     }
 }
