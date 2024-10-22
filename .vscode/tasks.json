@@ -1,0 +1,67 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build dev",
+            "type": "shell",
+            "command": "docker-compose up -d --build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "statusbar": {
+                    "label": "$(beaker)建構容器"
+                }
+            }
+        },
+        {
+            "label": "run",
+            "type": "shell",
+            "command": "docker-compose up -d",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "statusbar": {
+                    "label": "$(debug-start)啟動容器",
+                }
+            }
+        },
+        {
+            "label": "down",
+            "type": "shell",
+            "command": "docker-compose down --remove-orphans", 
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "statusbar": {
+                    "label": "$(debug-pause)終止容器"
+                }
+            }
+        },
+        {
+            "label": "watch",
+            "type": "shell",
+            "command": "docker-compose watch",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "options": {
+                "statusbar": {
+                    "label": "$(eye-watch)監控容器"
+                }
+            }
+        }
+    ]
+}
