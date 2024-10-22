@@ -1,9 +1,0 @@
-body {
-    width: 50rem;
-}
-
-#content {
-  width: 200px;
-  height: 100dvh;
-  overflow-y: auto;
-}
