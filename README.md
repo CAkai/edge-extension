@@ -1,5 +1,8 @@
 # iCloud 擴充套件
 
+## 如何開發
+於 Docker 容器建置後，請手動 `pnpm install` 安裝依賴。
+
 ## 如何安裝擴充套件
 1. 打開 Edge 瀏覽器，點選右上角的三個點點。
 ![alt text](assets/usage_0.png)
