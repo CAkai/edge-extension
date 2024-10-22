@@ -1,0 +1,62 @@
+{
+    "plugins": [
+    ],
+    "tabWidth": 4,
+    "useTabs": false,
+    "printWidth": 100,
+    "bracketSpacing": true,
+    "singleQuote": false,
+    "trailingComma": "es5",
+    "semi": true,
+    "overrides": [
+        {
+            "files": [
+                "*.json",
+                ".babelrc"
+            ],
+            "options": {
+                "parser": "json-stringify"
+            }
+        },
+        {
+            "files": [
+                "*.jsonc",
+                "tsconfig*.json"
+            ],
+            "options": {
+                "parser": "json"
+            }
+        },
+        {
+            "files": [
+                "*.js",
+                "*.cjs",
+                "*.mjs",
+                "*.jsx"
+            ],
+            "options": {
+                "parser": "babel",
+                "singleQuote": true
+            }
+        },
+        {
+            "files": [
+                "*.ts",
+                "*.tsx"
+            ],
+            "options": {
+                "parser": "babel-ts",
+                "singleQuote": true
+            }
+        },
+        {
+            "files": [
+                "*.html"
+            ],
+            "options": {
+                "parser": "html",
+                "singleQuote": true
+            }
+        }
+    ]
+}

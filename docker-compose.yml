@@ -6,6 +6,8 @@ services:
     init: true
     build:
       context: ./copilot+translate
-      target: init
+      target: dev
     volumes:
       - ./copilot+translate/dist:/app/dist
+      - ./copilot+translate/src:/app/src
+      - ./copilot+translate/public:/app/public
