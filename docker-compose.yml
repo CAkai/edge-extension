@@ -1,0 +1,11 @@
+name: "icloud-extension"
+
+services:
+  copilot:
+    restart: always
+    init: true
+    build:
+      context: ./copilot+translate
+      target: init
+    volumes:
+      - ./copilot+translate/dist:/app/dist
