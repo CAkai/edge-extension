@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "default_locale": "zh_TW",
   "name": "__MSG_extensionName__",
-  "version": "0.3.3",
+  "version": "0.1.0",
   "description": "__MSG_extensionDescription__",
   "host_permissions": [
     "<all_urls>"
@@ -22,9 +22,6 @@
   "action": {
     "default_popup": "popup/index.html",
     "default_icon": "icon-48.png"
-  },
-  "chrome_url_overrides": {
-    "newtab": "new-tab/index.html"
   },
   "icons": {
     "16": "icon-16.png",

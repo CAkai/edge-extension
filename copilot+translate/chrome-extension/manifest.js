@@ -38,9 +38,10 @@ const manifest = deepmerge(
       default_popup: 'popup/index.html',
       default_icon: 'icon-48.png',
     },
-    chrome_url_overrides: {
-      newtab: 'new-tab/index.html',
-    },
+    // 這個是用來取代新分頁的，但是目前沒有用到
+    // chrome_url_overrides: {
+    //   newtab: 'new-tab/index.html',
+    // },
     icons: {
       16: 'icon-16.png',
       48: 'icon-48.png',
