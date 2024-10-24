@@ -1,0 +1,68 @@
+{
+  "manifest_version": 3,
+  "default_locale": "zh_TW",
+  "name": "__MSG_extensionName__",
+  "version": "0.1.0",
+  "description": "__MSG_extensionDescription__",
+  "icons": {
+    "16": "icon-16.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "permissions": [
+    "storage",
+    "sidePanel"
+  ],
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_icon": "icon-48.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/index.tsx-loader-BRXHWeqi.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "css": [
+        "assets/index-C6G_3qQV.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "resources": [
+        "*.js",
+        "*.css",
+        "*.svg",
+        "icon-128.png",
+        "icon-48.png",
+        "icon-16.png"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "<all_urls>",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "assets/index.tsx-DT_r7HbV.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ],
+  "side_panel": {
+    "default_path": "src/side-panel/index.html"
+  }
+}

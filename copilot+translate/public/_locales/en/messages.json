@@ -1,0 +1,30 @@
+{
+    "extensionName": {
+        "message": "iCloud Copilot & Translate",
+        "description": "title"
+    },
+    "extensionDescription": {
+        "message": "Provide an AI chatbot that interacts with you in a sidebar style. Not only that, through iCloud AI, provide translation function, and guarantee that data will not leak.",
+        "description": "description"
+    },
+    "signInTitle": {
+        "description": "Sign in title",
+        "message": "Please sign in to your iCloud account"
+    },
+    "empid": {
+        "description": "Employee ID",
+        "message": "Employee ID"
+    },
+    "password": {
+        "description": "Password",
+        "message": "Password"
+    },
+    "empidError": {
+        "description": "Employee ID error",
+        "message": "Please enter the correct employee ID"
+    },
+    "signIn": {
+        "description": "Sign in",
+        "message": "Sign in"
+    }
+}

@@ -13,8 +13,10 @@ WORKDIR /app
 
 # 安裝 PNPM
 RUN --mount=type=cache,target=/usr/local/cache/.pnpm-store,id=pnpm_store,sharing=locked \
+    --mount=type=bind,source=package.json,target=package.json \
     set -xe; \
-    npm i -g pnpm@${PNPM_VERSION};
+    npm i -g pnpm@${PNPM_VERSION}; \
+    pnpm install;
 
 # 怕每次都要複製，所以放在最後面
 # 使用 .dockerignore 排除不需要的檔案

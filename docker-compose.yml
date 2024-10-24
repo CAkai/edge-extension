@@ -7,6 +7,6 @@ services:
     build:
       context: ./copilot+translate
     volumes:
-      - ./copilot+translate/chrome-extension:/app/chrome-extension
-      - ./copilot+translate/pages:/app/pages
-      - ./copilot+translate/bin:/app/bin
+      - ./copilot+translate/public:/app/public
+      - ./copilot+translate/src:/app/src
+      - ./copilot+translate/dist:/app/dist
