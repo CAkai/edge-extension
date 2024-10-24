@@ -1,3 +1,5 @@
+/* 這個是 tailwindcss 的主檔案，pnpm run tailwind 會根據使用這個 css 的組件，自動編譯大小。 */
+
 *, ::before, ::after {
   --tw-border-spacing-x: 0;
   --tw-border-spacing-y: 0;
@@ -106,9 +108,7 @@
   --tw-contain-style:  ;
 }
 
-/*
-! tailwindcss v3.4.14 | MIT License | https://tailwindcss.com
-*/
+/* ! tailwindcss v3.4.14 | MIT License | https://tailwindcss.com */
 
 /*
 1. Prevent padding and border from affecting element width. (https://github.com/mozdevs/cssremedy/issues/4)
@@ -736,6 +736,10 @@ video {
 .ring-gray-300 {
   --tw-ring-opacity: 1;
   --tw-ring-color: rgb(209 213 219 / var(--tw-ring-opacity));
+}
+
+.filter {
+  filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
 }
 
 .placeholder\:text-gray-400::-moz-placeholder {

@@ -13,9 +13,17 @@
     "<all_urls>"
   ],
   "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
     "storage",
-    "sidePanel"
+    "sidePanel",
+    "contextMenus"
   ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
   "action": {
     "default_popup": "src/popup/index.html",
     "default_icon": "icon-48.png"
@@ -23,22 +31,19 @@
   "content_scripts": [
     {
       "js": [
-        "assets/index.tsx-loader-BRXHWeqi.js"
+        "assets/index.ts-loader-C6RUcyvi.js"
       ],
       "matches": [
         "http://*/*",
         "https://*/*",
         "<all_urls>"
-      ],
-      "css": [
-        "assets/index-C6G_3qQV.css"
       ]
     }
   ],
   "web_accessible_resources": [
     {
       "matches": [
-        "*://*/*"
+        "<all_urls>"
       ],
       "resources": [
         "*.js",
@@ -57,7 +62,7 @@
         "https://*/*"
       ],
       "resources": [
-        "assets/index.tsx-DT_r7HbV.js"
+        "assets/index.ts-l0sNRNKZ.js"
       ],
       "use_dynamic_url": false
     }

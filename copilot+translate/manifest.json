@@ -13,9 +13,16 @@
     "<all_urls>"
   ],
   "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
     "storage",
-    "sidePanel"
+    "sidePanel",
+    "contextMenus"
   ],
+  "background": {
+    "service_worker": "src/background/index.ts"
+  },
   "action": {
     "default_popup": "src/popup/index.html",
     "default_icon": "icon-48.png"
@@ -28,7 +35,7 @@
         "<all_urls>"
       ],
       "js": [
-        "src/content/index.tsx"
+        "src/content/index.ts"
       ]
     }
   ],
@@ -43,7 +50,7 @@
         "icon-16.png"
       ],
       "matches": [
-        "*://*/*"
+        "<all_urls>"
       ]
     }
   ],

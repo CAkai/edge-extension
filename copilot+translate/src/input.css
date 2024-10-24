@@ -1,3 +1,4 @@
+/* 這個是 tailwindcss 的主檔案，pnpm run tailwind 會根據使用這個 css 的組件，自動編譯大小。 */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

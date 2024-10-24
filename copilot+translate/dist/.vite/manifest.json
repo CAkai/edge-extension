@@ -1,6 +1,6 @@
 {
   "../@crx/manifest": {
-    "file": "assets/crx-manifest.js-B4nugyOv.js",
+    "file": "assets/crx-manifest.js-lo4wXexS.js",
     "name": "crx-manifest.js",
     "src": "../@crx/manifest",
     "isEntry": true
@@ -9,18 +9,21 @@
     "file": "assets/client-DOXpScke.js",
     "name": "client"
   },
-  "index.tsx-loader.js": {
-    "file": "assets/index.tsx-loader-BRXHWeqi.js",
-    "src": "index.tsx-loader.js"
+  "index.ts-loader.js": {
+    "file": "assets/index.ts-loader-C6RUcyvi.js",
+    "src": "index.ts-loader.js"
   },
-  "src/content/index.tsx": {
-    "file": "assets/index.tsx-DT_r7HbV.js",
-    "name": "index.tsx",
-    "src": "src/content/index.tsx",
-    "isEntry": true,
-    "css": [
-      "assets/index-C6G_3qQV.css"
-    ]
+  "src/background/index.ts": {
+    "file": "assets/index.ts-BMZy8cMU.js",
+    "name": "index.ts",
+    "src": "src/background/index.ts",
+    "isEntry": true
+  },
+  "src/content/index.ts": {
+    "file": "assets/index.ts-l0sNRNKZ.js",
+    "name": "index.ts",
+    "src": "src/content/index.ts",
+    "isEntry": true
   },
   "src/popup/index.html": {
     "file": "assets/index.html-BjTuOKhZ.js",
@@ -32,7 +35,7 @@
     ]
   },
   "src/side-panel/index.html": {
-    "file": "assets/index.html-CuV5H40N.js",
+    "file": "assets/index.html-DuVReqjf.js",
     "name": "index.html",
     "src": "src/side-panel/index.html",
     "isEntry": true,
@@ -40,7 +43,7 @@
       "_client-DOXpScke.js"
     ],
     "css": [
-      "assets/index-BcUjfidz.css"
+      "assets/index-nQLryvLO.css"
     ]
   }
 }
