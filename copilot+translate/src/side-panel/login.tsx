@@ -5,12 +5,12 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 // 定義登入請求的資料格式
-const loginRequestSchema = z.object({
+const LoginRequestSchema = z.object({
     username: z.string().regex(new RegExp(/^(000\d{5}|[zZ]\d{4})$/), { message: chrome.i18n.getMessage("empidError") }),
     password: z.string(),
 });
 
-type LoginRequest = z.infer<typeof loginRequestSchema>;
+type LoginRequest = z.infer<typeof LoginRequestSchema>;
 
 const submit = (d: LoginRequest) => { console.log(d) };
 
@@ -22,7 +22,7 @@ export default function Login() {
       handleSubmit,
       formState: { errors },
   } = useForm<LoginRequest>({
-      resolver: zodResolver(loginRequestSchema),
+      resolver: zodResolver(LoginRequestSchema),
   });
 
   return (
