@@ -1,5 +1,3 @@
-import { StrictMode } from 'react';
-import { createRoot } from 'react-dom/client';
 import { useForm } from "react-hook-form";
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -42,11 +40,10 @@ export default function Login() {
   } = useForm<LoginRequest>({
       resolver: zodResolver(LoginRequestSchema),
   });
-
   return (
       <>
-          <div className={`flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ${bgColor}`}>
-              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <div className={`flex min-h-full flex-1 flex-col items-center justify-center px-6 py-12 lg:px-8 ${bgColor}`}>
+              <div className="w-full">
                   <img
                       alt="UMC"
                       src={chrome.runtime.getURL('icon-128.png')}
@@ -58,7 +55,7 @@ export default function Login() {
                   </h2>
               </div>
 
-              <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+              <div className="mt-10 w-full">
                   <form onSubmit={handleSubmit(submit)} className="space-y-6">
                       <div>
                           <div className="flex items-center justify-between">
@@ -104,9 +101,3 @@ export default function Login() {
       </>
   )
 }
-
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Login />
-  </StrictMode>,
-);

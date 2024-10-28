@@ -26,5 +26,9 @@
     "signIn": {
         "description": "登入",
         "message": "登入"
+    },
+    "enterText": {
+        "description": "輸入訊息",
+        "message": "輸入訊息"
     }
 }

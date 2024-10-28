@@ -26,5 +26,9 @@
     "signIn": {
         "description": "Sign in",
         "message": "Sign in"
+    },
+    "enterText": {
+        "description": "Enter message",
+        "message": "Enter message"
     }
 }
