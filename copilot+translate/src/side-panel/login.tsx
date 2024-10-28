@@ -3,6 +3,8 @@ import { createRoot } from 'react-dom/client';
 import { useForm } from "react-hook-form";
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ThemeStorage, UserStorage, useStorage } from '../storage';
+import { User } from '../types/user';
 
 // 定義登入請求的資料格式
 const LoginRequestSchema = z.object({
@@ -12,10 +14,26 @@ const LoginRequestSchema = z.object({
 
 type LoginRequest = z.infer<typeof LoginRequestSchema>;
 
-const submit = (d: LoginRequest) => { console.log(d) };
+const submit = (data: LoginRequest) => {
+    fetch('http://192.168.1.165:3003/api/v1/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+        UserStorage.set(data as User);
+        UserStorage.get().then(console.log);
+    })
+    .catch(console.error);
+};
 
 export default function Login() {
-  const isLight = true;
+  const isLight = useStorage(ThemeStorage) === 'light';
+  const textColor = isLight ? 'text-gray-900' : 'text-gray-100';
+  const bgColor = isLight ? 'bg-slate-50': 'bg-gray-800';
 
   const {
       register,
@@ -27,7 +45,7 @@ export default function Login() {
 
   return (
       <>
-          <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+          <div className={`flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ${bgColor}`}>
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                   <img
                       alt="UMC"
@@ -35,7 +53,7 @@ export default function Login() {
                       style={{ height: '20vmin' }}
                       className=" mx-auto w-auto"
                   />
-                  <h2 className={`text-center text-2xl font-bold leading-9 tracking-tight ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
+                  <h2 className={`text-center text-2xl font-bold leading-9 tracking-tight ${textColor}`}>
                       {chrome.i18n.getMessage("signInTitle")}
                   </h2>
               </div>
@@ -44,7 +62,7 @@ export default function Login() {
                   <form onSubmit={handleSubmit(submit)} className="space-y-6">
                       <div>
                           <div className="flex items-center justify-between">
-                              <label htmlFor="empid" className={`block text-sm font-medium leading-6 ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
+                              <label htmlFor="empid" className={`block text-sm font-medium leading-6 ${textColor}`}>
                                   {chrome.i18n.getMessage("empid")}
                               </label>
                           </div>
@@ -58,7 +76,7 @@ export default function Login() {
                       </div>
                       <div>
                           <div className="flex items-center justify-between">
-                              <label htmlFor="password" className={`block text-sm font-medium leading-6 ${isLight ? 'text-gray-900' : 'text-gray-100'}`}>
+                              <label htmlFor="password" className={`block text-sm font-medium leading-6 ${textColor}`}>
                                   {chrome.i18n.getMessage("password")}
                               </label>
                           </div>

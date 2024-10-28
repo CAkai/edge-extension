@@ -9,15 +9,22 @@
     "file": "assets/client-DOXpScke.js",
     "name": "client"
   },
+  "_index-BmQNzxyB.js": {
+    "file": "assets/index-BmQNzxyB.js",
+    "name": "index"
+  },
   "index.ts-loader.js": {
     "file": "assets/index.ts-loader-C6RUcyvi.js",
     "src": "index.ts-loader.js"
   },
   "src/background/index.ts": {
-    "file": "assets/index.ts-BMZy8cMU.js",
+    "file": "assets/index.ts-CFphGtmZ.js",
     "name": "index.ts",
     "src": "src/background/index.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_index-BmQNzxyB.js"
+    ]
   },
   "src/content/index.ts": {
     "file": "assets/index.ts-l0sNRNKZ.js",
@@ -35,15 +42,16 @@
     ]
   },
   "src/side-panel/index.html": {
-    "file": "assets/index.html-BfkQcLrp.js",
+    "file": "assets/index.html-DyzrR-s_.js",
     "name": "index.html",
     "src": "src/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_client-DOXpScke.js"
+      "_client-DOXpScke.js",
+      "_index-BmQNzxyB.js"
     ],
     "css": [
-      "assets/index-DrwXLaKR.css"
+      "assets/index-DpYDoofz.css"
     ]
   }
 }

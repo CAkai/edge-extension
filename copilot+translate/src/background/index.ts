@@ -1,5 +1,5 @@
 import { ICLOUD_URL } from "../config";
-import { User } from "../types/user";
+import { UserStorage, useStorage } from "../storage";
 
 /*
 背景頁是一個運行在擴展進程中的HTML頁面。它在你的擴展的整個生命週期都存在，同時，在同一時間只有一個實例處於活動狀態。
@@ -7,15 +7,6 @@ import { User } from "../types/user";
 */
 const CONTEXTMENU_ID = 'icloud-side-panel';
 let fistLoadTab = false;
-const user: User = {
-  id: "",
-  name: "",
-  email: "",
-  access_token: "",
-  role: "user",
-  department: "",
-  fab: "",
-};
 
 chrome.runtime.onInstalled.addListener(() => {
   // 註冊右鍵菜單
@@ -71,8 +62,9 @@ async function getLocalStorage() {
   if (st[0].result) {
     const data = JSON.parse(st[0].result);
 
-    // 保存到 user & chrome.storage.local
-    user.access_token = data["umc-camera-access_token"];
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const user = useStorage(UserStorage);
+    user.access_token = data.access_token;
     console.error("token", user.access_token);
     // 到 iCloud 取得使用者資料
     await fetch(ICLOUD_URL + "api/v1/auth", {
@@ -94,9 +86,8 @@ async function getLocalStorage() {
       .catch((err) => {
         console.error("error", err);
       });
-      fistLoadTab = true; // 防止重複執行
+    fistLoadTab = true; // 防止重複執行
   }
-
 }
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
