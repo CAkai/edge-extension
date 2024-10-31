@@ -18,7 +18,7 @@
     "src": "index.ts-loader.js"
   },
   "src/background/index.ts": {
-    "file": "assets/index.ts-CFphGtmZ.js",
+    "file": "assets/index.ts-DbgMfYJB.js",
     "name": "index.ts",
     "src": "src/background/index.ts",
     "isEntry": true,
@@ -42,7 +42,7 @@
     ]
   },
   "src/side-panel/index.html": {
-    "file": "assets/index.html-0eqk0i0W.js",
+    "file": "assets/index.html-D1zZdtDQ.js",
     "name": "index.html",
     "src": "src/side-panel/index.html",
     "isEntry": true,

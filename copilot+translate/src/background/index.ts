@@ -1,4 +1,3 @@
-import { ICLOUD_URL } from "../config";
 import { UserStorage, useStorage } from "../storage";
 
 /*
@@ -67,7 +66,7 @@ async function getLocalStorage() {
     user.access_token = data.access_token;
     console.error("token", user.access_token);
     // 到 iCloud 取得使用者資料
-    await fetch(ICLOUD_URL + "api/v1/auth", {
+    await fetch(import.meta.env.VITE_ICLOUD_URL + "api/v1/auth", {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${user.access_token}`,

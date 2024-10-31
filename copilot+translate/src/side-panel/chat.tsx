@@ -1,19 +1,12 @@
 import SendIcon from './public/send.svg?react';
 import './chat.css';
-import { Message } from './message';
 import { useState } from 'react';
-
-const [messages, setMessages] = useState<Message[]>([]);
 
 const MessageBox = () => {
     return (
         <div className="h-5/6">
             <h1>Message Box</h1>
-            <ul>
-                {messages.map(message => (
-                    <li>{message.content}</li>
-                ))}
-            </ul>
+            <p>{import.meta.env.VITE_ICLOUD_URL}</p>
         </div>
     );
 };
@@ -26,7 +19,6 @@ const MessageInput = () => {
     }
 
     const send = () => {
-            messages.push({ role: 'user', content: text });
             setText(''); // 清空輸入框
     };
 
