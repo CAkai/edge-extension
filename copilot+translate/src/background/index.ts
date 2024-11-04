@@ -1,12 +1,13 @@
-import { UserStorage, useStorage } from "../storage";
+import userStore from "../store/user.store";
 
-/*
-背景頁是一個運行在擴展進程中的HTML頁面。它在你的擴展的整個生命週期都存在，同時，在同一時間只有一個實例處於活動狀態。
-在一個有背景頁的典型擴展中，使用者介面（比如，瀏覽器行為或者頁面行為和任何選項頁）是由沉默視圖實現的。當視圖需要一些狀態，它從背景頁獲取該狀態。當背景頁發現了狀態改變，它會通知視圖進行更新。
+/**
+ * 背景頁是一個運行在擴展進程中的HTML頁面。它在你的擴展的整個生命週期都存在，同時，在同一時間只有一個實例處於活動狀態。
+ * 在一個有背景頁的典型擴展中，使用者介面（比如，瀏覽器行為或者頁面行為和任何選項頁）是由沉默視圖實現的。當視圖需要一些狀態，它從背景頁獲取該狀態。當背景頁發現了狀態改變，它會通知視圖進行更新。
 */
 const CONTEXTMENU_ID = 'icloud-side-panel';
 let fistLoadTab = false;
 
+// 當瀏覽器安裝擴展時，會執行函數內的動作。
 chrome.runtime.onInstalled.addListener(() => {
   // 註冊右鍵菜單
   chrome.contextMenus.create({
@@ -57,30 +58,27 @@ async function getLocalStorage() {
       return JSON.stringify(localStorage);
     }
   });
-  console.error("localstorage", st[0].result);
   if (st[0].result) {
     const data = JSON.parse(st[0].result);
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const user = useStorage(UserStorage);
-    user.access_token = data.access_token;
-    console.error("token", user.access_token);
     // 到 iCloud 取得使用者資料
     await fetch(import.meta.env.VITE_ICLOUD_URL + "api/v1/auth", {
       method: "GET",
       headers: {
-        "Authorization": `Bearer ${user.access_token}`,
+        "Authorization": `Bearer ${data.access_token}`,
       },
     })
       .then((res) => res.json())
       .then((res) => {
-        user.id = res.id;
-        user.name = res.name;
-        user.email = res.email;
-        user.role = res.role;
-        user.department = res.department;
-        user.fab = res.fab;
-        console.error("2", user);
+        if (res.error) {
+          console.error(`連線到 iCloud 時，發生了錯誤：${res.error}`);
+          return;
+        }
+
+        if (res.access_token !== "") {
+          userStore.dispatch({ type: 'user/save', payload: res });
+          console.log("搜尋到 iCloud Token，正在自動登入...");
+        }
       })
       .catch((err) => {
         console.error("error", err);

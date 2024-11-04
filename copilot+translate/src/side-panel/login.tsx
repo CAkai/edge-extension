@@ -1,8 +1,9 @@
 import { useForm } from "react-hook-form";
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { ThemeStorage, UserStorage, useStorage } from '../storage';
-import { User } from '../types/user';
+import themeStore from "../store/theme.store";
+import userStore from "../store/user.store";
+
 
 // 定義登入請求的資料格式
 const LoginRequestSchema = z.object({
@@ -13,7 +14,7 @@ const LoginRequestSchema = z.object({
 type LoginRequest = z.infer<typeof LoginRequestSchema>;
 
 const submit = (data: LoginRequest) => {
-    fetch('http://192.168.1.165:3003/api/v1/login', {
+    fetch(`${import.meta.env.VITE_ICLOUD_URL}api/v1/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -22,14 +23,14 @@ const submit = (data: LoginRequest) => {
     })
     .then(response => response.json())
     .then(data => {
-        UserStorage.set(data as User);
-        UserStorage.get().then(console.log);
+        userStore.dispatch({ type: 'user/save', payload: data });
+        console.log("登入成功");
     })
     .catch(console.error);
 };
 
 export default function Login() {
-  const isLight = useStorage(ThemeStorage) === 'light';
+  const isLight = (themeStore.getState().theme as string) === "light";  // 如果直接寫 store.getState().theme 會報錯，因為 TypeScript 不知道 store.getState().theme 是什麼型別
   const textColor = isLight ? 'text-gray-900' : 'text-gray-100';
   const bgColor = isLight ? 'bg-slate-50': 'bg-gray-800';
 

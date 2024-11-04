@@ -1,22 +1,11 @@
-import { useState, useEffect } from 'react';
-import { useStorage, UserStorage } from '../storage';
-import { User } from '../types/user';
 import Login from './login';
 import Chat from './chat';
+import { useSelector } from 'react-redux';
+import { User } from '../store/user.store';
 
 export default function SidePanel() {
-    // 讀取使用者資料，然後申請 state 來判斷是否已登入
-    const user = useStorage(UserStorage);
-    const [isLoggedIn, setIsLoggedIn] = useState<boolean>(user.access_token ? true : false);
+    // useSelector 會自動訂閱 Redux store 的變化，當 store 變化時，會重新渲染元件
+    const user = useSelector((state: { user: User }) => state.user);
 
-    // 使用 useEffect 來監聽使用者是否已登入，如果已登入則顯示聊天室，否則顯示登入頁面
-    useEffect(() => {
-        // 檢查使用者是否已登入
-        chrome.storage.local.onChanged.addListener(changes => {
-            const user = changes['user-storage-key'].newValue as User;
-            setIsLoggedIn(!!user.access_token);
-        });
-    }, []);
-
-    return <div className="h-full w-full">{isLoggedIn ? <Chat /> : <Login />}</div>;
+    return <div className="h-full w-full">{user.access_token !== '' ? <Chat /> : <Login />}</div>;
 }
