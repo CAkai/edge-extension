@@ -30,5 +30,9 @@
     "enterText": {
         "description": "Enter message",
         "message": "Enter message"
+    },
+    "welcomeToICloudExtension": {
+        "description": "Welcome to iCloud Copilot & Translate",
+        "message": "Welcome to iCloud Copilot & Translate"
     }
 }

@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import SidePanel from "./main";
+import SidePanel from "./side-panel";
 import { Provider } from "react-redux";
 import userStore from "../store/user.store";
 

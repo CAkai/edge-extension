@@ -5,12 +5,8 @@
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_client-B8evT5fz.js": {
-    "file": "assets/client-B8evT5fz.js",
-    "name": "client"
-  },
-  "_user.store-CxFpjZnn.js": {
-    "file": "assets/user.store-CxFpjZnn.js",
+  "_user.store-CakSAJGD.js": {
+    "file": "assets/user.store-CakSAJGD.js",
     "name": "user.store"
   },
   "index.ts-loader.js": {
@@ -18,13 +14,10 @@
     "src": "index.ts-loader.js"
   },
   "src/background/index.ts": {
-    "file": "assets/index.ts-WUVLuacz.js",
+    "file": "assets/index.ts-CiB80v9N.js",
     "name": "index.ts",
     "src": "src/background/index.ts",
-    "isEntry": true,
-    "imports": [
-      "_user.store-CxFpjZnn.js"
-    ]
+    "isEntry": true
   },
   "src/content/index.ts": {
     "file": "assets/index.ts-l0sNRNKZ.js",
@@ -33,22 +26,21 @@
     "isEntry": true
   },
   "src/popup/index.html": {
-    "file": "assets/index.html-B3W_TEb_.js",
+    "file": "assets/index.html-Dpv-ksBy.js",
     "name": "index.html",
     "src": "src/popup/index.html",
     "isEntry": true,
     "imports": [
-      "_client-B8evT5fz.js"
+      "_user.store-CakSAJGD.js"
     ]
   },
   "src/side-panel/index.html": {
-    "file": "assets/index.html-C1p3TNQY.js",
+    "file": "assets/index.html-IkJq6ozE.js",
     "name": "index.html",
     "src": "src/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_client-B8evT5fz.js",
-      "_user.store-CxFpjZnn.js"
+      "_user.store-CakSAJGD.js"
     ],
     "css": [
       "assets/index-DU5WaIaT.css"

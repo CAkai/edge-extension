@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import themeStore from "../store/theme.store";
-import userStore from "../store/user.store";
+import userStore, { saveToStorage } from "../store/user.store";
 
 
 // 定義登入請求的資料格式
@@ -23,7 +23,7 @@ const submit = (data: LoginRequest) => {
     })
     .then(response => response.json())
     .then(data => {
-        userStore.dispatch({ type: 'user/save', payload: data });
+        userStore.dispatch(saveToStorage(data));
         console.log("登入成功");
     })
     .catch(console.error);

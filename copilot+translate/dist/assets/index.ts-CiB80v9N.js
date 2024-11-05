@@ -1,0 +1,1 @@
+const n="icloud-side-panel";chrome.runtime.onInstalled.addListener(()=>{chrome.contextMenus.create({id:n,title:chrome.i18n.getMessage("extensionName"),contexts:["all"]})});chrome.contextMenus.onClicked.addListener((o,e)=>{o.menuItemId===n&&chrome.tabs.sendMessage((e==null?void 0:e.windowId)??0,{type:"openSidePanel"})});
