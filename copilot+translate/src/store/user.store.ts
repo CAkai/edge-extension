@@ -38,7 +38,7 @@ export const saveToStorage = createAsyncThunk(
     'user/saveToStorage',
     async (user: User) => {
         void chrome.storage.local.set({ icloudToken: user.access_token });
-        // ? 怎麼在這邊調用 localStorage.setItem()
+        localStorage.setItem(import.meta.env.VITE_ICLOUD_STORAGE_KEY, user.access_token);
         return { ...user }
     });
 
@@ -76,7 +76,7 @@ export const loadFromStorage = createAsyncThunk(
         if (user.access_token) {
             return user;
         }
-        
+
         // 從 chrome.storage.local 取得 icloudToken
         const result = await chrome.storage.local.get('icloudToken');
         let token = result.icloudToken;

@@ -5,8 +5,8 @@
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_user.store-CakSAJGD.js": {
-    "file": "assets/user.store-CakSAJGD.js",
+  "_user.store-D9xDEaoe.js": {
+    "file": "assets/user.store-D9xDEaoe.js",
     "name": "user.store"
   },
   "index.ts-loader.js": {
@@ -26,21 +26,21 @@
     "isEntry": true
   },
   "src/popup/index.html": {
-    "file": "assets/index.html-Dpv-ksBy.js",
+    "file": "assets/index.html-DySMe4qw.js",
     "name": "index.html",
     "src": "src/popup/index.html",
     "isEntry": true,
     "imports": [
-      "_user.store-CakSAJGD.js"
+      "_user.store-D9xDEaoe.js"
     ]
   },
   "src/side-panel/index.html": {
-    "file": "assets/index.html-IkJq6ozE.js",
+    "file": "assets/index.html-CfpI6ALL.js",
     "name": "index.html",
     "src": "src/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_user.store-CakSAJGD.js"
+      "_user.store-D9xDEaoe.js"
     ],
     "css": [
       "assets/index-DU5WaIaT.css"
