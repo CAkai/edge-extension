@@ -8,6 +8,14 @@
 			"problemMatcher": [],
 			"label": "建置",
 			"detail": "建置專案為 Chrome Extension"
+		},
+		{
+			"type": "npm",
+			"script": "tailwind",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "Tailwind",
+			"detail": "啟動 Tailwind CSS 並監控"
 		}
 	]
 }
