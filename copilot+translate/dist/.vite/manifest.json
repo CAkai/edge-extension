@@ -5,9 +5,9 @@
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_user.store-D9xDEaoe.js": {
-    "file": "assets/user.store-D9xDEaoe.js",
-    "name": "user.store"
+  "_index-DJZc-dMi.js": {
+    "file": "assets/index-DJZc-dMi.js",
+    "name": "index"
   },
   "index.ts-loader.js": {
     "file": "assets/index.ts-loader-C6RUcyvi.js",
@@ -26,21 +26,21 @@
     "isEntry": true
   },
   "src/popup/index.html": {
-    "file": "assets/index.html-DySMe4qw.js",
+    "file": "assets/index.html-DUeL3J4f.js",
     "name": "index.html",
     "src": "src/popup/index.html",
     "isEntry": true,
     "imports": [
-      "_user.store-D9xDEaoe.js"
+      "_index-DJZc-dMi.js"
     ]
   },
   "src/side-panel/index.html": {
-    "file": "assets/index.html-CfpI6ALL.js",
+    "file": "assets/index.html-D5Tqfu51.js",
     "name": "index.html",
     "src": "src/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_user.store-D9xDEaoe.js"
+      "_index-DJZc-dMi.js"
     ],
     "css": [
       "assets/index-DU5WaIaT.css"

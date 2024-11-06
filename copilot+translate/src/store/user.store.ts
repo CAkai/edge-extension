@@ -2,7 +2,7 @@
  * @file user.store.ts
  * @description 類似 Angular 的 Service，統一管理 User 的狀態，讓所有元件都可以存取。
  */
-import { createSlice, configureStore, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export type User = {
     // access_token 是儲存 iCloud 的 Token，用來認證所有與 iCloud 有關的 API。
@@ -72,7 +72,7 @@ export const loadFromStorage = createAsyncThunk(
     'user/loadFromStorage',
     async (_, { dispatch, getState }) => {
         // 如果已經有 access_token，表示已經登入過了，直接返回
-        const {user} = getState() as UserState;
+        const {user} = getState() as {user: User};
         if (user.access_token) {
             return user;
         }
@@ -122,7 +122,7 @@ export const loadFromStorage = createAsyncThunk(
 // ? 參考 https://cn.redux.js.org/tutorials/fundamentals/part-6-async-logic
 // ? 建立一個 Async Thunk。當調用 save() 函數時，會把資料同步寫到 chrome.storage.local 以及 localStorage，這樣能讓使用者可以直接登入 iCloud。
 // ? 以及調用 load() 函數時，會從 chrome.storage.local 或者 localStorage 取得 iCloud Token。
-const userSlice = createSlice({
+export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
@@ -183,15 +183,3 @@ const userSlice = createSlice({
             })
     }
 })
-
-// 定義 Redux store，使用者可以透過 store.dispatch 來發送 action
-const userStore = configureStore({
-    reducer: {
-        user: userSlice.reducer,
-    }
-})
-
-// UserState 要記得下 export 來提供 slices 使用
-export type UserState = ReturnType<typeof userStore.getState>
-
-export default userStore

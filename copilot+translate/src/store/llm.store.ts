@@ -1,4 +1,4 @@
-import { createSlice, configureStore } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 export type LLM = {
     id: string;
@@ -38,18 +38,39 @@ type OpenAIModel = {
 
 const initialState: LLM[] = [];
 
-const llmSlice = createSlice({
+export const loadLlmModels = createAsyncThunk(
+    'llm/loadModels',
+    async () => {
+        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0ZmEwYjRkLTk2MzItNDYxMC05NzQ1LTZjOGVlODAwNzE5MSJ9.chVpe8emNjW8cW5I15i2EOA7zHhs2XlZfn2DPPFlDhk";
+        console.log(1);
+        // 到 iCloud 取得使用者資料
+        return await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/models", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+            },
+        })
+            .then((res) => res.json())
+            .then((res) => {
+                console.log(2);
+                const data: LLM[] = res.data as LLM[];
+                return data.filter((llm) => llm.id !== "arena-model");
+            })
+            .catch((err) => {
+                console.error("error", err);
+            });
+    }
+);
+
+export const llmSlice = createSlice({
     name: 'llm',
     initialState,
-    reducers: {
+    reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(loadLlmModels.fulfilled, (_, {payload}) => {
+            console.log(payload);
+            if (!payload) return [];
+            return Array.from(payload);
+        });
     }
 })
-
-// 定義 Redux store，使用者可以透過 store.dispatch 來發送 action
-const llmStore = configureStore({
-    reducer: {
-        theme: llmSlice.reducer,
-    }
-})
-
-export default llmStore

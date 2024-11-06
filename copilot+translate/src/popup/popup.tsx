@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import userStore, { UserState, loadFromStorage } from "../store/user.store";
+import {loadFromStorage } from "../store/user.store";
+import { useAppDispatch, useAppSelector } from "../store";
 
 export default function Popup() {
+  const dispatch = useAppDispatch();
   // useSelector 會自動訂閱 Redux store 的變化，當 store 變化時，會重新渲染元件
-    const user = useSelector((state: UserState) => state.user);
+    const user = useAppSelector(state => state.user);
     useEffect(() => {
-        userStore.dispatch(loadFromStorage());
-    }, []);
+        dispatch(loadFromStorage());
+    }, [dispatch]);
   const [count, setCount] = useState(0);
 
   return (
