@@ -1,7 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { saveToStorage } from '../store/user.store';
+import { loadFromStorage } from '../store/user.store';
 import { useAppDispatch, useAppSelector } from '../store';
 
 // 定義登入請求的資料格式
@@ -12,9 +12,7 @@ const LoginRequestSchema = z.object({
 
 type LoginRequest = z.infer<typeof LoginRequestSchema>;
 
-const submit = (data: LoginRequest) => {
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const dispatch = useAppDispatch();
+const submit = (data: LoginRequest, dispatch: ReturnType<typeof useAppDispatch>) => {
     fetch(`${import.meta.env.VITE_ICLOUD_URL}api/v1/login`, {
         method: 'POST',
         headers: {
@@ -24,15 +22,17 @@ const submit = (data: LoginRequest) => {
     })
         .then(response => response.json())
         .then(data => {
-            dispatch(saveToStorage(data));
+            // 因為 iCloud 不會有 webui_token，所以這邊要初始化 webui_token
+            dispatch(loadFromStorage({ ...data, webui_info: { token: '' } }));
             console.log('登入成功');
         })
         .catch(console.error);
 };
 
 export default function Login() {
+    const dispatch = useAppDispatch();
     const theme = useAppSelector(state => state.theme);
-    const isLight = (theme as string) === 'light'; // 如果直接寫 store.getState().theme 會報錯，因為 TypeScript 不知道 store.getState().theme 是什麼型別
+    const isLight = theme === 'light';
     const textColor = isLight ? 'text-gray-900' : 'text-gray-100';
     const bgColor = isLight ? 'bg-slate-50' : 'bg-gray-800';
 
@@ -60,7 +60,7 @@ export default function Login() {
                 </div>
 
                 <div className="mt-10 w-full">
-                    <form onSubmit={handleSubmit(submit)} className="space-y-6">
+                    <form onSubmit={handleSubmit((data) => submit(data, dispatch))} className="space-y-6">
                         <div>
                             <div className="flex items-center justify-between">
                                 <label htmlFor="empid" className={`block text-sm font-medium leading-6 ${textColor}`}>

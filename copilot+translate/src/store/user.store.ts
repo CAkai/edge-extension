@@ -4,6 +4,18 @@
  */
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+export type OpenWebUIInfo = {
+
+    id: string;
+    email: string;
+    name: string;
+    role: string;
+    profile_image_url: string;
+    token: string;
+    token_type: string;
+    expires_at: number;
+}
+
 export type User = {
     // access_token 是儲存 iCloud 的 Token，用來認證所有與 iCloud 有關的 API。
     // 如果有人已經登入過 iCloud，則會在 localStorage 中儲存 access_token，那我們就可以從 localStorage 中取得 access_token。
@@ -21,6 +33,8 @@ export type User = {
     email: string;
     // 權限角色，目前只有 admin 跟 user 兩種
     role: string;
+    // Open WebUI 的登入資訊
+    webui_info: OpenWebUIInfo;
 };
 
 const initialState: User = {
@@ -30,7 +44,17 @@ const initialState: User = {
     department: '',
     fab: '',
     email: '',
-    role: ''
+    role: '',
+    webui_info: {
+        id: '',
+        email: '',
+        name: '',
+        role: '',
+        profile_image_url: '',
+        token: '',
+        token_type: '',
+        expires_at: 0
+    }
 }
 
 // 當調用 save() 函數時，會把資料同步寫到 chrome.storage.local 以及 localStorage，這樣能讓使用者可以直接登入 iCloud。
@@ -70,53 +94,105 @@ async function getLocalStorage() {
 // 如果沒有找到 Token，則會回傳 initialState。
 export const loadFromStorage = createAsyncThunk(
     'user/loadFromStorage',
-    async (_, { dispatch, getState }) => {
-        // 如果已經有 access_token，表示已經登入過了，直接返回
-        const {user} = getState() as {user: User};
-        if (user.access_token) {
+    async (user: User | undefined, { dispatch, getState }) => {
+        // 如果沒有傳入 user，表示要直接抓取當前的值，
+        // 因此從 getState() 取得 user
+        if (!user) {
+            const st = getState() as { user: User };
+            user = st.user;
+        }
+
+        // 如果已經有 access_token 和 webui_token，表示已經登入過了，直接返回
+        if (user.access_token && user.webui_info.token) {
             return user;
         }
 
-        // 從 chrome.storage.local 取得 icloudToken
-        const result = await chrome.storage.local.get('icloudToken');
-        let token = result.icloudToken;
-        // 如果沒有找到 icloudToken，則從 localStorage 取得 icloudToken
-        if (!Object.prototype.hasOwnProperty.call(result, 'icloudToken')) {
-            const data = await getLocalStorage();
-            if (data) {
-                token = data[import.meta.env.VITE_ICLOUD_STORAGE_KEY];
-            }
-        }
-
-        if (!token) {
-            return initialState;
-        }
-
-        // 到 iCloud 取得使用者資料
-        const resp = await fetch(import.meta.env.VITE_ICLOUD_URL + "api/v1/auth", {
-            method: "GET",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-            },
-        })
-            .then((res) => res.json())
-            .then((res) => {
-                if (res.error) {
-                    console.error(`連線到 iCloud 時，發生了錯誤：${res.error}`);
-                    return {};
+        // 取得 access_token
+        if (!user.access_token) {
+            // 從 chrome.storage.local 取得 icloudToken
+            const result = await chrome.storage.local.get('icloudToken');
+            let token = result.icloudToken;
+            // 如果沒有找到 icloudToken，則從 localStorage 取得 icloudToken
+            if (!Object.prototype.hasOwnProperty.call(result, 'icloudToken')) {
+                const data = await getLocalStorage();
+                if (data) {
+                    token = data[import.meta.env.VITE_ICLOUD_STORAGE_KEY];
                 }
+            }
 
-                console.log("搜尋到 iCloud Token，正在自動登入...");
-                return {
-                    ...res,
-                    access_token: token
-                };
+            if (!token) {
+                return initialState;
+            }
+
+            // 到 iCloud 取得使用者資料
+            const resp = await fetch(import.meta.env.VITE_ICLOUD_URL + "api/v1/auth", {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                },
             })
-            .catch((err) => {
-                console.error("error", err);
-            });
-        dispatch(saveToStorage(resp));
-        return resp as User
+                .then((res) => res.json())
+                .then((res) => {
+                    if (res.error) {
+                        console.error(`連線到 iCloud 時，發生了錯誤：${res.error}`);
+                        return {};
+                    }
+
+                    console.log("已搜尋到 iCloud Token");
+                    return res;
+                })
+                .catch((err) => {
+                    console.error("error", err);
+                });
+
+            user = {
+                ...user,
+                ...resp,
+                access_token: token
+            } as User;
+        }
+
+        // 取得 webui_token
+        // 使用 id 以及 access_token 到 Open WebUI 來取得 webui_token
+        // 這裡不把 webui_token 存到 chrome.storage.local，因為 webui_token 會在一段時間後過期，所以每次都要重新取得
+        if (!user.webui_info.token) {
+            console.log("正在自動登入 Open WebUI...");
+            const resp = await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/v1/auths/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: user.id + "@umc.com",
+                    password: user.access_token,
+                }),
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.detail) {
+                        console.error(`連線到 Open WebUI 時，發生了錯誤：${data.detail}`);
+                        return { error: data.detail };
+                    }
+                    return data;
+                })
+                .catch((err) => {
+                    console.error("error", err);
+                });
+
+            if (resp.error) return initialState;
+
+            user = {
+                ...user,
+                webui_info: {
+                    ...resp
+                }
+            };
+        }
+
+        // 將使用者資料存到 chrome.storage.local 以及 localStorage
+        dispatch(saveToStorage(user));
+
+        return user;
     });
 
 // ? 參考 https://cn.redux.js.org/tutorials/fundamentals/part-6-async-logic
@@ -137,7 +213,10 @@ export const userSlice = createSlice({
                 department: action.payload.department,
                 fab: action.payload.fab,
                 email: action.payload.email,
-                role: action.payload.role
+                role: action.payload.role,
+                webui_info: {
+                    ...action.payload.webui_info
+                }
             }
         },
         load: (state) => {
@@ -150,33 +229,12 @@ export const userSlice = createSlice({
         builder
             // 調用 save 成功後，會回傳新的 state。
             .addCase(saveToStorage.fulfilled, (state, action) => {
-                return {
-                    // 設定副本
-                    ...state,
-                    // 覆蓋原本的 state
-                    access_token: action.payload.access_token,
-                    id: action.payload.id,
-                    name: action.payload.name,
-                    department: action.payload.department,
-                    fab: action.payload.fab,
-                    email: action.payload.email,
-                    role: action.payload.role
-                }
+                return userSlice.caseReducers.save(state, action);
+                
             })
             // 調用 load 成功後，會回傳新的 state。
             .addCase(loadFromStorage.fulfilled, (state, action) => {
-                return {
-                    // 設定副本
-                    ...state,
-                    // 覆蓋原本的 state
-                    access_token: action.payload.access_token,
-                    id: action.payload.id,
-                    name: action.payload.name,
-                    department: action.payload.department,
-                    fab: action.payload.fab,
-                    email: action.payload.email,
-                    role: action.payload.role
-                }
+                return userSlice.caseReducers.save(state, action);
             })
             .addCase(loadFromStorage.rejected, (state) => {
                 return { ...state }

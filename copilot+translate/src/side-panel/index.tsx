@@ -7,7 +7,7 @@ import store from "../store";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
       <Provider store={store}>
-        <div className="h-dvh min-w-[360px] p-1">
+        <div className="h-dvh min-w-[360px]">
           <SidePanel />
         </div>
       </Provider>

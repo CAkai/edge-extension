@@ -40,9 +40,9 @@ const initialState: LLM[] = [];
 
 export const loadLlmModels = createAsyncThunk(
     'llm/loadModels',
-    async () => {
-        const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImY0ZmEwYjRkLTk2MzItNDYxMC05NzQ1LTZjOGVlODAwNzE5MSJ9.chVpe8emNjW8cW5I15i2EOA7zHhs2XlZfn2DPPFlDhk";
-        console.log(1);
+    async (token: string) => {
+        if (!token) return;
+
         // 到 iCloud 取得使用者資料
         return await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/models", {
             method: "GET",
@@ -52,7 +52,7 @@ export const loadLlmModels = createAsyncThunk(
         })
             .then((res) => res.json())
             .then((res) => {
-                console.log(2);
+                console.log("res", res);
                 const data: LLM[] = res.data as LLM[];
                 return data.filter((llm) => llm.id !== "arena-model");
             })
@@ -68,7 +68,6 @@ export const llmSlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder.addCase(loadLlmModels.fulfilled, (_, {payload}) => {
-            console.log(payload);
             if (!payload) return [];
             return Array.from(payload);
         });
