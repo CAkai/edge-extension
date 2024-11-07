@@ -4,3 +4,18 @@ textarea {
     outline: none;
     resize: none;
 }
+
+.scale-animation {
+    transform-origin: 0 100%; /* 修改動畫播放的方向 */
+    transition: transform 200ms, opacity 200ms;
+}
+
+.scale-off {
+    transform: scale(0);
+    opacity: 0;
+}
+
+.scale-on {
+    transform: scale(1);
+    opacity: 1;
+}
