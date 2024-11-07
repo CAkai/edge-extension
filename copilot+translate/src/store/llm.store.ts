@@ -52,7 +52,6 @@ export const loadLlmModels = createAsyncThunk(
         })
             .then((res) => res.json())
             .then((res) => {
-                console.log("res", res);
                 const data: LLM[] = res.data as LLM[];
                 return data.filter((llm) => llm.id !== "arena-model");
             })

@@ -64,8 +64,37 @@ export const saveToStorage = createAsyncThunk(
         void chrome.storage.local.set({ icloudToken: user.access_token });
         localStorage.setItem(import.meta.env.VITE_ICLOUD_STORAGE_KEY, user.access_token);
         return { ...user }
-    });
+    }
+);
 
+// signupWebUI 函數會在使用者第一次登入時，自動註冊 Open WebUI。
+// 有可能還沒登入過 Open WebUI，所以要先註冊。
+async function signupWebUI(user: User) {
+    console.log("正在註冊 Open WebUI...");
+    return await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/v1/auths/signup", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name: user.name,
+            email: user.id + "@umc.com",
+            password: user.access_token,
+            profile_image_url: ""
+        }),
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.detail) {
+                console.error(`無法註冊 Open WebUI，發生了錯誤：${data.detail}`);
+                return;
+            }
+            return data;
+        })
+        .catch((err) => {
+            console.error("error", err);
+        });
+}
 
 // getLocalStorage 函數會從當前的 tab 取得 localStorage 的資料。
 async function getLocalStorage() {
@@ -152,12 +181,13 @@ export const loadFromStorage = createAsyncThunk(
             } as User;
         }
 
+
         // 取得 webui_token
         // 使用 id 以及 access_token 到 Open WebUI 來取得 webui_token
         // 這裡不把 webui_token 存到 chrome.storage.local，因為 webui_token 會在一段時間後過期，所以每次都要重新取得
         if (!user.webui_info.token) {
             console.log("正在自動登入 Open WebUI...");
-            const resp = await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/v1/auths/signin", {
+            let resp = await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/v1/auths/signin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -170,7 +200,7 @@ export const loadFromStorage = createAsyncThunk(
                 .then((res) => res.json())
                 .then((data) => {
                     if (data.detail) {
-                        console.error(`連線到 Open WebUI 時，發生了錯誤：${data.detail}`);
+                        console.log(`連線到 Open WebUI 時，發生了錯誤：${data.detail}`);
                         return { error: data.detail };
                     }
                     return data;
@@ -179,7 +209,10 @@ export const loadFromStorage = createAsyncThunk(
                     console.error("error", err);
                 });
 
-            if (resp.error) return initialState;
+            if (resp.error) {
+                resp = await signupWebUI(user);
+                if (!resp) return initialState;
+            }
 
             user = {
                 ...user,
