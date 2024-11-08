@@ -6,6 +6,7 @@ import { themeSlice } from "./theme.store"
 import { userSlice } from "./user.store"
 import { useDispatch, useSelector, useStore } from "react-redux"
 import { chatSlice } from "./chat.store"
+import { messageSlice } from "./message.store"
 
 // 把所有的 reducer 集中在一個地方，透過 combineReducers 來合併
 const store = configureStore({
@@ -13,7 +14,8 @@ const store = configureStore({
         theme: themeSlice.reducer,
         user: userSlice.reducer,
         llm: llmSlice.reducer,
-        chat: chatSlice.reducer
+        chat: chatSlice.reducer,
+        message: messageSlice.reducer,
     }
 })
 

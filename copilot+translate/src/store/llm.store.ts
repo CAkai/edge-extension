@@ -36,7 +36,13 @@ type OpenAIModel = {
     owned_by: string;
 };
 
-const initialState: LLM[] = [];
+const initialState: {
+    selected: string;
+    models: LLM[];
+} = {
+    selected: "",
+    models: [],
+};
 
 export const loadLlmModels = createAsyncThunk(
     'llm/loadModels',
@@ -52,8 +58,17 @@ export const loadLlmModels = createAsyncThunk(
         })
             .then((res) => res.json())
             .then((res) => {
-                const data: LLM[] = res.data as LLM[];
-                return data.filter((llm) => llm.id !== "arena-model");
+                let data: LLM[] = res.data as LLM[];
+                data = data.filter((llm) => llm.id !== "arena-model");
+
+                if (data.length > 0) {
+                    return {
+                        selected: data[0].id,
+                        models: data,
+                    }
+                } else {
+                    return initialState;
+                }
             })
             .catch((err) => {
                 console.error("error", err);
@@ -64,11 +79,15 @@ export const loadLlmModels = createAsyncThunk(
 export const llmSlice = createSlice({
     name: 'llm',
     initialState,
-    reducers: {},
+    reducers: {
+        selectModel: (state, action) => {
+            state.selected = action.payload;
+        }
+    },
     extraReducers: (builder) => {
-        builder.addCase(loadLlmModels.fulfilled, (_, {payload}) => {
-            if (!payload) return [];
-            return Array.from(payload);
+        builder.addCase(loadLlmModels.fulfilled, (state, {payload}) => {
+            if (!payload) return {...state};
+            return {...payload};
         });
     }
 })

@@ -1,16 +1,40 @@
 import SendIcon from './public/send.svg?react';
 import LlmIcon from './public/model.svg?react';
 import './chat.css';
-import { ReactElement, useEffect, useState } from 'react';
+import React, { createRef, ReactElement, useEffect, useState } from 'react';
 import { loadLlmModels } from '../store/llm.store';
-import { useAppDispatch, useAppSelector } from '../store';
+import { RootState, useAppDispatch, useAppSelector } from '../store';
+import { useStore } from 'react-redux';
 
 function MessageBox() {
-    return (
-        <div className="h-5/6 border border-black">
-            <h1>Message Box</h1>
-        </div>
-    );
+    const messages = useAppSelector(state => state.message);
+    const [messageList, setMessageList] = useState<ReactElement[]>([]);
+    const messagesEndRef = createRef<HTMLDivElement>();
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+      }
+
+    useEffect(() => {
+        setMessageList(
+            messages.map((m, i) => (
+                <div key={i} className={`p-1 flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                    <div
+                        className={`p-2 bg-gray-200 rounded-lg max-w-[95%] ${
+                            m.role === 'user' ? 'bg-blue-300' : 'bg-gray-200'
+                        }`}>
+                        {m.content}
+                    </div>
+                </div>
+            )),
+        );
+        scrollToBottom();
+    }, [messages]);
+
+    return <div className="flex flex-col gap-1 overflow-auto">
+        {messageList}
+        <div ref={messagesEndRef} />
+        </div>;
 }
 
 function ModelButton() {
@@ -25,26 +49,30 @@ function ModelButton() {
     }, [dispatch, user]);
 
     useEffect(() => {
+        const selectedModel = llm?.selected ?? "";
         setModels(
-            llm?.map(m => (
-                <a
-                    href="#"
-                    className="block px-4 py-2 text-sm text-gray-700"
+            llm?.models.map((m, i) => (
+                <button
+                    className={`w-full text-left block px-4 py-2 text-sm text-gray-700 ${selectedModel === m.id ? 'bg-gray-200' : ''} hover:bg-gray-100`}
                     role="menuitem"
                     tabIndex={-1}
-                    id="menu-item-0">
+                    onClick={() => {
+                        dispatch({ type: 'llm/selectModel', payload: m.id });
+                        setIsExpanded(false);
+                    }}
+                    id={`menu-item-${i}`}>
                     {m.name}
-                </a>
+                </button>
             )) ?? [],
         );
-    }, [llm]);
+    }, [llm, dispatch]);
 
     return (
         <div className="relative inline-block text-left">
             <div>
                 <button
                     type="button"
-                    className="inline-flex w-full justify-center gap-x-0.5 rounded-md bg-white p-1 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                    className="inline-flex w-full justify-center gap-x-0.5 rounded-md p-1 bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     id="menu-button"
                     aria-expanded={isExpanded}
                     aria-haspopup="menu"
@@ -67,12 +95,14 @@ function ModelButton() {
                 </button>
             </div>
             <div
-                className={`absolute left-0 bottom-[2.5rem] z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none scale-animation ${isExpanded ? 'scale-on' : 'scale-off'}`}
+                className={`absolute left-0 bottom-[2.5rem] z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none scale-animation ${
+                    isExpanded ? 'scale-on' : 'scale-off'
+                }`}
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
                 tabIndex={-1}>
-                <div className="py-1" role="none">
+                <div role="none">
                     {models}
                 </div>
             </div>
@@ -80,8 +110,65 @@ function ModelButton() {
     );
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const generateChatCompletion = async (token: string = '', body: object, dispatch: any) => {
+    await fetch(`${import.meta.env.VITE_OPEN_WEBUI_URL}api/chat/completions`, {
+        method: 'POST',
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(body),
+    }).then(response => {
+        if (response.ok && response.body) {
+            const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
+
+            const newMessage = {
+                role: 'system',
+                content: '',
+            };
+            
+            // 這裡一定要先加入一個空的訊息，否則會有畫面卡住的問題。
+            // 而且還要用副本，否則會跳出 Readonly 的錯誤
+            dispatch({ type: 'message/addMessage', payload: {...newMessage} });
+
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const readStream: any = () =>
+                reader.read().then(({ value, done }) => {
+                    if (done) {
+                        reader.cancel();
+                        return Promise.resolve();
+                    }
+
+                    // parse the data
+                    const data = /{.*}/.exec(value);
+                    if (!data || !data[0]) {
+                        return readStream();
+                    }
+
+                    const res = JSON.parse(data[0]);
+                    newMessage.content += res?.choices?.[0]?.delta?.content ?? "";
+                    // 用副本更新內容，否則會跳出 Readonly 的錯誤
+                    dispatch({ type: 'message/updateLastMessage', payload: {...newMessage} });
+
+                    // do something if success
+                    // and cancel the stream
+                    // reader.cancel().catch(() => null);
+
+                    return readStream();
+                });
+            return readStream();
+        } else {
+            return Promise.reject(response);
+        }
+    });
+};
+
 const MessageInput = () => {
     const [text, setText] = useState('');
+    const store = useStore();
+    const dispatch = useAppDispatch();
+    const selectedModel = useAppSelector(state => state.llm.selected);
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value);
@@ -98,14 +185,33 @@ const MessageInput = () => {
         // 因為 shift + Enter 預設就是換行，所以這邊不需要做任何事情
     };
 
-    const send = () => {
+    const send = async () => {
+        const st = store.getState() as RootState;
+        dispatch({ type: 'message/addMessage', payload: { role: 'user', content: text } });
+
+        void generateChatCompletion(
+            st.user.webui_info.token,
+            {
+                model: st.llm.selected,
+                stream: true,
+                messages: [
+                    {
+                        role: 'user',
+                        content: text,
+                    },
+                ],
+            },
+            dispatch,
+        );
+
         setText(''); // 清空輸入框
     };
 
     return (
-        <div className="h-1/6 flex flex-col justify-end">
-            <div>
+        <div className="flex flex-col justify-end">
+            <div className="flex gap-1 items-center">
                 <ModelButton />
+                <p>{selectedModel}</p>
             </div>
             <div className="rounded-lg border border-black w-full h-28 relative">
                 <textarea
@@ -125,7 +231,7 @@ const MessageInput = () => {
 
 export default function Chat() {
     return (
-        <div className="h-full w-full p-2">
+        <div className="h-full w-full p-2 flex flex-col justify-between">
             <MessageBox />
             <MessageInput />
         </div>
