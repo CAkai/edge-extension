@@ -33,7 +33,7 @@ function MessageBox() {
         scrollToBottom();
     }, [messages]);
 
-    return <div className="flex flex-col gap-1 overflow-auto">
+    return <div className="flex flex-col gap-1 overflow-auto no-scrollbar">
         {messageList}
         {/* 讓網頁能夠定位到最底部 */}
         <div ref={messagesEndRef} />
@@ -205,20 +205,16 @@ const MessageInput = () => {
     };
 
     const send = async () => {
-        const st = store.getState() as RootState;
+        // 先寫入訊息，再讀取資料，才能取得最新的訊息
         dispatch({ type: 'message/addMessage', payload: { role: 'user', content: text } });
+        const st = store.getState() as RootState;
 
         void generateChatCompletion(
             st.user.webui_info.token,
             {
                 model: st.llm.selected,
                 stream: true,
-                messages: [
-                    {
-                        role: 'user',
-                        content: text,
-                    },
-                ],
+                messages: st.message.map(m => ({ role: m.role === 'user' ? "user" : "system", content: m.content })),
             },
             dispatch,
         );
