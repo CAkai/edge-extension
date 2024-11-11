@@ -13,8 +13,8 @@ function MessageBox() {
     const messagesEndRef = createRef<HTMLDivElement>();
 
     const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-      }
+        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     useEffect(() => {
         setMessageList(
@@ -33,11 +33,13 @@ function MessageBox() {
         scrollToBottom();
     }, [messages]);
 
-    return <div className="flex flex-col gap-1 overflow-auto no-scrollbar">
-        {messageList}
-        {/* 讓網頁能夠定位到最底部 */}
-        <div ref={messagesEndRef} />
-        </div>;
+    return (
+        <div className="flex flex-col gap-1 overflow-auto no-scrollbar">
+            {messageList}
+            {/* 讓網頁能夠定位到最底部 */}
+            <div ref={messagesEndRef} />
+        </div>
+    );
 }
 
 function ModelButton() {
@@ -55,11 +57,13 @@ function ModelButton() {
 
     // 更新模型列表
     useEffect(() => {
-        const selectedModel = llm?.selected ?? "";
+        const selectedModel = llm?.selected ?? '';
         setModels(
             llm?.models.map((m, i) => (
                 <button
-                    className={`w-full text-left block px-4 py-2 text-sm text-gray-700 ${selectedModel === m.id ? 'bg-gray-200' : ''} hover:bg-gray-100`}
+                    className={`w-full text-left block px-4 py-2 text-sm text-gray-700 ${
+                        selectedModel === m.id ? 'bg-gray-200' : ''
+                    } hover:bg-gray-100`}
                     role="menuitem"
                     tabIndex={-1}
                     onClick={() => {
@@ -121,9 +125,7 @@ function ModelButton() {
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
                 tabIndex={-1}>
-                <div role="none">
-                    {models}
-                </div>
+                <div role="none">{models}</div>
             </div>
         </div>
     );
@@ -146,10 +148,10 @@ const generateChatCompletion = async (token: string = '', body: GenerateRequest,
                 role: body.model,
                 content: '',
             };
-            
+
             // 這裡一定要先加入一個空的訊息，否則會有畫面卡住的問題。
             // 而且還要用副本，否則會跳出 Readonly 的錯誤
-            dispatch({ type: 'message/addMessage', payload: {...newMessage} });
+            dispatch({ type: 'message/addMessage', payload: { ...newMessage } });
 
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const readStream: any = () =>
@@ -166,9 +168,9 @@ const generateChatCompletion = async (token: string = '', body: GenerateRequest,
                     }
 
                     const res = JSON.parse(data[0]);
-                    newMessage.content += res?.choices?.[0]?.delta?.content ?? "";
+                    newMessage.content += res?.choices?.[0]?.delta?.content ?? '';
                     // 用副本更新內容，否則會跳出 Readonly 的錯誤
-                    dispatch({ type: 'message/updateLastMessage', payload: {...newMessage} });
+                    dispatch({ type: 'message/updateLastMessage', payload: { ...newMessage } });
 
                     // do something if success
                     // and cancel the stream
@@ -199,28 +201,44 @@ const MessageInput = () => {
     const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            send();
+            send(text);
+            setText(''); // 清空輸入框
         }
         // 因為 shift + Enter 預設就是換行，所以這邊不需要做任何事情
     };
 
-    const send = async () => {
+    // 送出訊息的動作函數
+    const send = async (input: string) => {
         // 先寫入訊息，再讀取資料，才能取得最新的訊息
-        dispatch({ type: 'message/addMessage', payload: { role: 'user', content: text } });
+        dispatch({ type: 'message/addMessage', payload: { role: 'user', content: input } });
         const st = store.getState() as RootState;
-
-        void generateChatCompletion(
+        await generateChatCompletion(
             st.user.webui_info.token,
             {
                 model: st.llm.selected,
                 stream: true,
-                messages: st.message.map(m => ({ role: m.role === 'user' ? "user" : "system", content: m.content })),
+                messages: st.message.map(m => ({ role: m.role === 'user' ? 'user' : 'system', content: m.content })),
             },
             dispatch,
         );
-
-        setText(''); // 清空輸入框
     };
+
+    // 監聽右鍵選單的事件
+    useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const handleClipboard = (request: { type: string; value: string }, _: any, sendResponse: any) => {
+            if (request && request.type === 'clipboard') {
+                send(request.value);
+                sendResponse('已貼上至 Side Panel'); // 這個一定要寫，不然會跳「 The message port closed before a response was received.」
+            }
+        };
+
+        chrome.runtime.onMessage.addListener(handleClipboard);
+
+        return () => {
+            chrome.runtime.onMessage.removeListener(handleClipboard);
+        };
+    }, []);
 
     return (
         <div className="flex flex-col justify-end">
@@ -236,7 +254,12 @@ const MessageInput = () => {
                     value={text}
                     onKeyDown={handleKeyDown}
                     onChange={handleChange}></textarea>
-                <button className="absolute bottom-1 right-1" onClick={send}>
+                <button
+                    className="absolute bottom-1 right-1"
+                    onClick={() => {
+                        send(text);
+                        setText(''); // 清空輸入框
+                    }}>
                     <SendIcon style={{ width: '20px', height: '20px' }} />
                 </button>
             </div>

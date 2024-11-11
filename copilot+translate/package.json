@@ -17,7 +17,7 @@
     "react-redux": "^9.1.2"
   },
   "devDependencies": {
-    "@crxjs/vite-plugin": "2.0.0-beta.26",
+    "@crxjs/vite-plugin": "2.0.0-beta.28",
     "@eslint/js": "^9.13.0",
     "@hookform/resolvers": "^3.9.0",
     "@types/chrome": "^0.0.270",

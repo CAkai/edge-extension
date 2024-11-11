@@ -34,5 +34,9 @@
     "welcomeToICloudExtension": {
         "description": "歡迎使用 iCloud AI 助手",
         "message": "歡迎使用 iCloud AI 助手"
+    },
+    "ask": {
+        "description": "詢問",
+        "message": "詢問"
     }
 }

@@ -10,4 +10,6 @@ Content scripts 是在 Web 頁面內運行的 javascript 腳本。通過使用�
 不能訪問 web 頁面或其它 content script 中定義的函數和變量
 不能做 cross-site XMLHttpRequests
 這些限制其實並不像看上去那麼糟糕。Content scripts 可以使用 messages 機制與它所在的擴展通信，來間接使用 chrome.*接口，或訪問擴展數據。Content scripts 還可以通過共享的 DOM 來與 web 頁面通信。更多功能參見執行環境。
+
+！如果發現 content-script 沒有載入，請檢查 popup.html 是否有匯入。
 */

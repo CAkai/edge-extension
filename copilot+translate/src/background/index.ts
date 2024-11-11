@@ -9,13 +9,15 @@ chrome.runtime.onInstalled.addListener(() => {
   // 註冊右鍵菜單
   chrome.contextMenus.create({
     id: CONTEXTMENU_ID,
-    title: chrome.i18n.getMessage("extensionName"),
+    title: `${chrome.i18n.getMessage("ask")} ${chrome.i18n.getMessage("extensionName")}`,
     contexts: ["all"],
   });
 });
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener((info) => {
   if (info.menuItemId === CONTEXTMENU_ID) {
-    chrome.tabs.sendMessage(tab?.windowId ?? 0, { type: 'openSidePanel' });
+    chrome.runtime.sendMessage({type:"clipboard", value: info.selectionText}, (response) => {
+      console.log(response);
+    })
   }
 });

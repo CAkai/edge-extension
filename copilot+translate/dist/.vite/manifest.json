@@ -1,12 +1,12 @@
 {
   "../@crx/manifest": {
-    "file": "assets/crx-manifest.js-lo4wXexS.js",
+    "file": "assets/crx-manifest.js-l1gu9z49.js",
     "name": "crx-manifest.js",
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_index-pM8fKheR.js": {
-    "file": "assets/index-pM8fKheR.js",
+  "_index-ClezgvRS.js": {
+    "file": "assets/index-ClezgvRS.js",
     "name": "index"
   },
   "index.ts-loader.js": {
@@ -14,7 +14,7 @@
     "src": "index.ts-loader.js"
   },
   "src/background/index.ts": {
-    "file": "assets/index.ts-CiB80v9N.js",
+    "file": "assets/index.ts-BBkfrMLL.js",
     "name": "index.ts",
     "src": "src/background/index.ts",
     "isEntry": true
@@ -26,21 +26,22 @@
     "isEntry": true
   },
   "src/popup/index.html": {
-    "file": "assets/index.html-BOJ1xpBs.js",
+    "file": "assets/index.html-Di0QnRMV.js",
     "name": "index.html",
     "src": "src/popup/index.html",
     "isEntry": true,
     "imports": [
-      "_index-pM8fKheR.js"
+      "_index-ClezgvRS.js",
+      "src/content/index.ts"
     ]
   },
   "src/side-panel/index.html": {
-    "file": "assets/index.html-DeKQmlUo.js",
+    "file": "assets/index.html-CDb_aXop.js",
     "name": "index.html",
     "src": "src/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_index-pM8fKheR.js"
+      "_index-ClezgvRS.js"
     ],
     "css": [
       "assets/index-Ckt-XrIg.css"

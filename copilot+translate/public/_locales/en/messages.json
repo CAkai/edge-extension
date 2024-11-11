@@ -34,5 +34,9 @@
     "welcomeToICloudExtension": {
         "description": "Welcome to iCloud Copilot & Translate",
         "message": "Welcome to iCloud Copilot & Translate"
+    },
+    "ask": {
+        "description": "ask",
+        "message": "ask"
     }
 }

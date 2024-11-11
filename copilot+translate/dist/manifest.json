@@ -34,8 +34,6 @@
         "assets/index.ts-loader-C6RUcyvi.js"
       ],
       "matches": [
-        "http://*/*",
-        "https://*/*",
         "<all_urls>"
       ]
     }
@@ -51,17 +49,7 @@
         "*.svg",
         "icon-128.png",
         "icon-48.png",
-        "icon-16.png"
-      ],
-      "use_dynamic_url": false
-    },
-    {
-      "matches": [
-        "<all_urls>",
-        "http://*/*",
-        "https://*/*"
-      ],
-      "resources": [
+        "icon-16.png",
         "assets/index.ts-l0sNRNKZ.js"
       ],
       "use_dynamic_url": false

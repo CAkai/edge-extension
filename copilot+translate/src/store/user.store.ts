@@ -213,7 +213,7 @@ export const loadFromStorage = createAsyncThunk(
                 resp = await signupWebUI(user);
                 if (!resp) return initialState;
             }
-
+            console.log("成功登入 Open WebUI");
             user = {
                 ...user,
                 webui_info: {
@@ -224,7 +224,8 @@ export const loadFromStorage = createAsyncThunk(
 
         // 將使用者資料存到 chrome.storage.local 以及 localStorage
         dispatch(saveToStorage(user));
-
+        console.log("更新使用者資料。")
+        
         return user;
     });
 
