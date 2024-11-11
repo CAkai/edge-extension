@@ -38,16 +38,19 @@ function MessageBox() {
 }
 
 function ModelButton() {
+    const buttonRef = createRef<HTMLDivElement>();
     const dispatch = useAppDispatch();
     const llm = useAppSelector(state => state.llm);
     const user = useAppSelector(state => state.user);
     const [models, setModels] = useState<ReactElement[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
 
+    // 載入模型列表
     useEffect(() => {
         dispatch(loadLlmModels(user.webui_info.token));
     }, [dispatch, user]);
 
+    // 更新模型列表
     useEffect(() => {
         const selectedModel = llm?.selected ?? "";
         setModels(
@@ -67,8 +70,21 @@ function ModelButton() {
         );
     }, [llm, dispatch]);
 
+    // 監聽點擊事件，如果點擊的地方不是在 button 上，就關閉選單
+    useEffect(() => {
+        const handleClickOutside = (e: MouseEvent) => {
+            // e.target 要轉型成 Node，否則會報錯「EventTarget | null is not assignable to type Node」
+            if (buttonRef.current && !buttonRef.current.contains(e.target as Node)) {
+                setIsExpanded(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => document.removeEventListener('mousedown', handleClickOutside);
+    }, [buttonRef]);
+
     return (
-        <div className="relative inline-block text-left">
+        <div ref={buttonRef} className="relative inline-block text-left">
             <div>
                 <button
                     type="button"
