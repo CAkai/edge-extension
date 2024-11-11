@@ -1,5 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface GenerateRequest {
+  model: string
+  stream: boolean
+  messages: Message[]
+}
+
 export interface Message {
   role: string
   content: string

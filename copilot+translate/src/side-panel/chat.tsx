@@ -5,6 +5,7 @@ import React, { createRef, ReactElement, useEffect, useState } from 'react';
 import { loadLlmModels } from '../store/llm.store';
 import { RootState, useAppDispatch, useAppSelector } from '../store';
 import { useStore } from 'react-redux';
+import { GenerateRequest } from '../store/message.store';
 
 function MessageBox() {
     const messages = useAppSelector(state => state.message);
@@ -18,10 +19,11 @@ function MessageBox() {
     useEffect(() => {
         setMessageList(
             messages.map((m, i) => (
-                <div key={i} className={`p-1 flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                <div key={i} className={`p-1 flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
+                    {m.role === 'user' ? false : <p>{m.role}</p>}
                     <div
-                        className={`p-2 bg-gray-200 rounded-lg max-w-[95%] ${
-                            m.role === 'user' ? 'bg-blue-300' : 'bg-gray-200'
+                        className={`p-2 rounded-lg w-fit max-w-[95%] ${
+                            m.role === 'user' ? 'bg-gray-200' : 'bg-slate-50'
                         }`}>
                         {m.content}
                     </div>
@@ -33,6 +35,7 @@ function MessageBox() {
 
     return <div className="flex flex-col gap-1 overflow-auto">
         {messageList}
+        {/* 讓網頁能夠定位到最底部 */}
         <div ref={messagesEndRef} />
         </div>;
 }
@@ -127,7 +130,7 @@ function ModelButton() {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const generateChatCompletion = async (token: string = '', body: object, dispatch: any) => {
+const generateChatCompletion = async (token: string = '', body: GenerateRequest, dispatch: any) => {
     await fetch(`${import.meta.env.VITE_OPEN_WEBUI_URL}api/chat/completions`, {
         method: 'POST',
         headers: {
@@ -140,7 +143,7 @@ const generateChatCompletion = async (token: string = '', body: object, dispatch
             const reader = response.body.pipeThrough(new TextDecoderStream()).getReader();
 
             const newMessage = {
-                role: 'system',
+                role: body.model,
                 content: '',
             };
             
