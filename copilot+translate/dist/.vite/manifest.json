@@ -5,8 +5,8 @@
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_index-D5VZUFDv.js": {
-    "file": "assets/index-D5VZUFDv.js",
+  "_index-Drom4tkl.js": {
+    "file": "assets/index-Drom4tkl.js",
     "name": "index"
   },
   "index.ts-loader.js": {
@@ -26,22 +26,22 @@
     "isEntry": true
   },
   "src/popup/index.html": {
-    "file": "assets/index.html-C-JGebtN.js",
+    "file": "assets/index.html-BQKg4le2.js",
     "name": "index.html",
     "src": "src/popup/index.html",
     "isEntry": true,
     "imports": [
-      "_index-D5VZUFDv.js",
+      "_index-Drom4tkl.js",
       "src/content/index.ts"
     ]
   },
   "src/side-panel/index.html": {
-    "file": "assets/index.html-Bu9F3eFE.js",
+    "file": "assets/index.html-BN9NQQA9.js",
     "name": "index.html",
     "src": "src/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_index-D5VZUFDv.js"
+      "_index-Drom4tkl.js"
     ],
     "css": [
       "assets/index-Ckt-XrIg.css"
