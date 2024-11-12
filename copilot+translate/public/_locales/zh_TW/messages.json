@@ -38,5 +38,13 @@
     "ask": {
         "description": "詢問",
         "message": "詢問"
+    },
+    "translateICloudAI": {
+        "descriptiion": "貼到 {{extensionName}} 翻譯",
+        "message": "貼到 {{extensionName}} 翻譯"
+    },
+    "translateContent": {
+        "description": "請將 「{{content}}」 翻譯成繁體中文",
+        "message": "請將 「{{content}}」 翻譯成繁體中文"
     }
 }
