@@ -3,10 +3,18 @@
 	"tasks": [
 		{
 			"type": "npm",
-			"script": "build",
+			"script": "build:development",
 			"group": "build",
 			"problemMatcher": [],
-			"label": "建置",
+			"label": "建置：開發",
+			"detail": "建置專案為 Chrome Extension"
+		},
+		{
+			"type": "npm",
+			"script": "build:production",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "建置：正式",
 			"detail": "建置專案為 Chrome Extension"
 		},
 		{
