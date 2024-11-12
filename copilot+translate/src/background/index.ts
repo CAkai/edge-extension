@@ -16,8 +16,16 @@ chrome.runtime.onInstalled.addListener(() => {
 
 chrome.contextMenus.onClicked.addListener((info) => {
   if (info.menuItemId === CONTEXTMENU_ID) {
-    chrome.runtime.sendMessage({type:"clipboard", value: info.selectionText}, (response) => {
-      console.log(response);
-    })
+    console.log(info);
+    chrome.sidePanel.open(
+      {
+        tabId: 0,
+      },
+      () => {
+        console.log('open side panel');
+        chrome.runtime.sendMessage({ type: "clipboard", value: info.selectionText }, (response) => {
+          console.log(response);
+        })
+      });
   }
 });
