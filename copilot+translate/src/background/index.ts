@@ -21,6 +21,11 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
+// 点击 action 时弹出边栏
+chrome.sidePanel
+  .setPanelBehavior({ openPanelOnActionClick: true })
+  .catch((error) => console.error(error));
+
 chrome.contextMenus.onClicked.addListener((info) => {
   switch (info.menuItemId) {
     case CONTEXTMENU_ASK_ID:

@@ -14,7 +14,7 @@
     "src": "index.ts-loader.js"
   },
   "src/background/index.ts": {
-    "file": "assets/index.ts-DGoXnJ0d.js",
+    "file": "assets/index.ts-DFHyRDFG.js",
     "name": "index.ts",
     "src": "src/background/index.ts",
     "isEntry": true
