@@ -987,6 +987,10 @@ video {
   /* Firefox */
 }
 
+.\[key\:string\] {
+  key: string;
+}
+
 /* add the code bellow */
 
 .placeholder\:text-gray-400::-moz-placeholder {

@@ -5,8 +5,8 @@
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_index-Drom4tkl.js": {
-    "file": "assets/index-Drom4tkl.js",
+  "_index-vuAu3sN4.js": {
+    "file": "assets/index-vuAu3sN4.js",
     "name": "index"
   },
   "index.ts-loader.js": {
@@ -14,7 +14,7 @@
     "src": "index.ts-loader.js"
   },
   "src/background/index.ts": {
-    "file": "assets/index.ts-DFHyRDFG.js",
+    "file": "assets/index.ts-DSTyMdr0.js",
     "name": "index.ts",
     "src": "src/background/index.ts",
     "isEntry": true
@@ -26,25 +26,25 @@
     "isEntry": true
   },
   "src/popup/index.html": {
-    "file": "assets/index.html-BQKg4le2.js",
+    "file": "assets/index.html-Dgf-Wxh1.js",
     "name": "index.html",
     "src": "src/popup/index.html",
     "isEntry": true,
     "imports": [
-      "_index-Drom4tkl.js",
+      "_index-vuAu3sN4.js",
       "src/content/index.ts"
     ]
   },
   "src/side-panel/index.html": {
-    "file": "assets/index.html-BN9NQQA9.js",
+    "file": "assets/index.html-KdjmwrWj.js",
     "name": "index.html",
     "src": "src/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_index-Drom4tkl.js"
+      "_index-vuAu3sN4.js"
     ],
     "css": [
-      "assets/index-Ckt-XrIg.css"
+      "assets/index-D41XIECN.css"
     ]
   }
 }

@@ -21,26 +21,46 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-// 点击 action 时弹出边栏
+// 點擊擴充功能圖示時，打開側邊欄
 chrome.sidePanel
   .setPanelBehavior({ openPanelOnActionClick: true })
   .catch((error) => console.error(error));
 
-chrome.contextMenus.onClicked.addListener((info) => {
+function OpenSidePanel(id: number, callback: () => void) {
+  chrome.sidePanel.open({ windowId: id })
+    .then(() => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const cb = async (result: { [key: string]: any }) => {
+        if (result.isInChat) {
+          callback();
+        } else {
+          setTimeout(() => {
+            chrome.storage.local.get("isInChat", cb);
+          }, 200);
+        }
+      }
+      // 因為背景頁無法直接讀取 React 的 store，所以利用 chrome.storage.local.isInChat 記錄是否在聊天頁面。
+      chrome.storage.local.get("isInChat", cb);
+    })
+    .catch((error) => console.error(error));
+}
+
+chrome.contextMenus.onClicked.addListener((info, tab) => {
   switch (info.menuItemId) {
     case CONTEXTMENU_ASK_ID:
-      chrome.runtime.sendMessage({ type: "clipboard", value: info.selectionText }, (response) => {
-        console.log(response);
-      })
+      // 打開側邊欄
+      OpenSidePanel(tab?.windowId ?? 1, () => {
+        chrome.runtime.sendMessage({ type: "clipboard", value: info.selectionText }, (response) => console.log(response));
+      });
       break;
     case CONTEXTMENU_TRANSLATE_ID:
-      chrome.runtime.sendMessage({
-        type: "clipboard",
-        value: chrome.i18n.getMessage("translateContent").replace("{{content}}", info.selectionText ?? "")
-      },
-      (response) => {
-        console.log(response);
-      })
+      OpenSidePanel(tab?.windowId ?? 1, () => {
+        chrome.runtime.sendMessage({
+          type: "clipboard",
+          value: chrome.i18n.getMessage("translateContent").replace("{{content}}", info.selectionText ?? "")
+        },
+          (response) => console.log(response))
+      });
       break;
     default:
       break;

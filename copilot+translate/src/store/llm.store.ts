@@ -46,8 +46,10 @@ const initialState: {
 
 export const loadLlmModels = createAsyncThunk(
     'llm/loadModels',
-    async (token: string) => {
-        if (!token) return;
+    async (token: string, { getState }) => {
+        const state = getState() as { llm: { selected: string; models: LLM[] } };
+
+        if (!token) return state.llm;
 
         // 到 iCloud 取得使用者資料
         return await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/models", {
@@ -67,11 +69,12 @@ export const loadLlmModels = createAsyncThunk(
                         models: data,
                     }
                 } else {
-                    return initialState;
+                    return state.llm;
                 }
             })
             .catch((err) => {
                 console.error("error", err);
+                return state.llm;
             });
     }
 );
@@ -80,14 +83,22 @@ export const llmSlice = createSlice({
     name: 'llm',
     initialState,
     reducers: {
+        // 一定要寫一個 set 的 reducer，extraReducers 不會更新 initialState
+        set: (state, action) => {
+            return {
+                ...state,
+                selected: action.payload.selected,
+                models: action.payload.models,
+            }
+        },
         selectModel: (state, action) => {
             state.selected = action.payload;
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(loadLlmModels.fulfilled, (state, {payload}) => {
-            if (!payload) return {...state};
-            return {...payload};
+        builder.addCase(loadLlmModels.fulfilled, (state, action) => {
+            if (!action.payload || action.payload.selected === "") return { ...state };
+            return llmSlice.caseReducers.set(state, action);
         });
     }
 })
