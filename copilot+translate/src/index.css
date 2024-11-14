@@ -858,9 +858,9 @@ video {
   line-height: 2rem;
 }
 
-.text-base {
-  font-size: 1rem;
-  line-height: 1.5rem;
+.text-lg {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
 }
 
 .text-sm {
@@ -871,6 +871,11 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
 }
 
 .font-bold {
@@ -985,10 +990,6 @@ video {
   /* IE and Edge */
   scrollbar-width: none;
   /* Firefox */
-}
-
-.\[key\:string\] {
-  key: string;
 }
 
 /* add the code bellow */

@@ -22,7 +22,7 @@ function MessageBox() {
                 <div key={i} className={`p-1 flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'}`}>
                     {m.role === 'user' ? false : <p>{m.role}</p>}
                     <div
-                        className={`p-2 rounded-lg w-fit max-w-[95%] ${
+                        className={`p-2 rounded-lg w-fit max-w-[95%] text-base ${
                             m.role === 'user' ? 'bg-gray-200' : 'bg-slate-50'
                         }`}>
                         {m.content}
