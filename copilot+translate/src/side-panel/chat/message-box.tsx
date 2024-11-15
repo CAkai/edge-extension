@@ -25,6 +25,7 @@ export default function MessageBox() {
             )),
         );
         scrollToBottom();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messages]);
 
     return (

@@ -50,5 +50,9 @@
     "waitingForResponse": {
         "description": "waiting response",
         "message": "waiting response"
+    },
+    "newChat": {
+        "description": "new chat",
+        "message": "new chat"
     }
 }

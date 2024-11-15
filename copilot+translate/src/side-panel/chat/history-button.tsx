@@ -1,7 +1,8 @@
 import { createRef, useState, ReactElement, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store";
-import { getChatList } from "../../store/chat.store";
+import { fetchChat, getChatList } from "../../store/chat.store";
 import HistoryIcon from '../public/history.svg?react';
+
 
 // 歷史訊息按鈕，會同步 Open WebUI
 export default function HistoryButton() {
@@ -9,8 +10,25 @@ export default function HistoryButton() {
     const dispatch = useAppDispatch();
     const hist = useAppSelector(state => state.chat);
     const user = useAppSelector(state => state.user);
-    const [models, setModels] = useState<ReactElement[]>([]);
+    const [chats, setChats] = useState<ReactElement[]>([]);
     const [isExpanded, setIsExpanded] = useState(false);
+
+    const newChat = () => {
+        return (
+            <button
+                className="w-full text-left block px-4 py-2 text-sm text-gray-700hover:bg-gray-100"
+                role="menuitem"
+                tabIndex={-1}
+                onClick={() => {
+                    dispatch({ type: 'message/clearMessage' });
+                    dispatch({type: 'chat/select', payload: ''});
+                    setIsExpanded(false);
+                }}
+                id={`chat-hist+1`}>
+                {chrome.i18n.getMessage('newChat')}
+            </button>
+        )
+    }
 
     // 載入歷史訊息
     useEffect(() => {
@@ -20,22 +38,25 @@ export default function HistoryButton() {
     // 更新歷史訊息列表
     useEffect(() => {
         const selected = hist?.selected ?? '';
-        setModels(
-            hist?.chats.map((m, i) => (
-                <button
-                    className={`w-full text-left block px-4 py-2 text-sm text-gray-700 ${selected === m.id ? 'bg-gray-200' : ''
-                        } hover:bg-gray-100`}
-                    role="menuitem"
-                    tabIndex={-1}
-                    onClick={() => {
-                        dispatch({ type: 'chat/select', payload: m.id });
-                        setIsExpanded(false);
-                    }}
-                    id={`chat-hist-${i}`}>
-                    {m.title}
-                </button>
-            )) ?? [],
-        );
+        const chatList = hist?.chats.map((m, i) => (
+            <button
+                className={`w-full text-left block px-4 py-2 text-sm text-gray-700 ${selected === m.id ? 'bg-gray-200' : ''
+                    } hover:bg-gray-100`}
+                role="menuitem"
+                tabIndex={-1}
+                onClick={() => {
+                    dispatch({ type: 'chat/select', payload: m.id });
+                    setIsExpanded(false);
+                    fetchChat(user.webui_info.token, m.id, dispatch);
+                }}
+                id={`chat-hist-${i}`}>
+                {m.title}
+            </button>
+        )) ?? [];
+        // 加入新聊天
+        chatList.push(newChat());
+        setChats(chatList);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [hist, dispatch]);
 
     // 監聽點擊事件，如果點擊的地方不是在 button 上，就關閉選單
@@ -84,7 +105,7 @@ export default function HistoryButton() {
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
                 tabIndex={-1}>
-                <div role="none">{models}</div>
+                <div role="none">{chats}</div>
             </div>
         </div>
     );

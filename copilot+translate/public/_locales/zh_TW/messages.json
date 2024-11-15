@@ -50,5 +50,9 @@
     "waitingForResponse": {
         "description": "等待回應中",
         "message": "等待回應中"
+    },
+    "newChat": {
+        "description": "新對話",
+        "message": "新對話"
     }
 }

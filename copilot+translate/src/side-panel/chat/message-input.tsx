@@ -113,6 +113,7 @@ export default function MessageInput() {
         return () => {
             chrome.runtime.onMessage.removeListener(handleClipboard);
         };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
