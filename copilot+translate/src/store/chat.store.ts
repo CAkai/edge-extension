@@ -18,7 +18,7 @@ export const getChatList = createAsyncThunk(
         const state = getState() as { chat: { selected: string; models: Chat[] } };
 
         if (!token) return;
-        console.log("webui token", token);
+
         // 到 iCloud 取得使用者資料
         return await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/v1/chats/list", {
             method: "GET",
@@ -54,7 +54,6 @@ export const chatSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addCase(getChatList.fulfilled, (state, {payload}) => {
-            console.log(payload);
             if (!payload) return {...state}
             return {
                 ...state,

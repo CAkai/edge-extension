@@ -1,26 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface GenerateRequest {
-  model: string
-  stream: boolean
-  messages: Message[]
+    model: string
+    stream: boolean
+    messages: Message[]
 }
 
 export interface Message {
-  role: string
-  content: string
-  images?: Uint8Array[] | string[]
-  tool_calls?: ToolCall[]
+    role: string
+    content: string
+    images?: Uint8Array[] | string[]
+    tool_calls?: ToolCall[]
 }
 
 interface ToolCall {
-  function: {
-    name: string;
-    arguments: {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      [key: string]: any;
+    function: {
+        name: string;
+        arguments: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            [key: string]: any;
+        };
     };
-  };
 }
 
 const initialState: Message[] = [];
@@ -30,13 +30,18 @@ export const messageSlice = createSlice({
     initialState,
     reducers: {
         addMessage: (state, action) => {
-            state.push(action.payload);
+            const newState = Array.from(state);
+            newState.push(action.payload);
+            return newState;
         },
         clearMessage: () => {
             return [];
         },
         updateLastMessage: (state, action) => {
-            state[state.length - 1] = action.payload;
+            const newState = Array.from(state);
+            newState.pop();
+            newState.push(action.payload);
+            return newState;
         }
     },
 })

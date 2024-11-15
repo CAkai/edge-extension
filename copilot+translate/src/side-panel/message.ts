@@ -48,7 +48,7 @@ export interface Options {
 
 export interface GenerateRequest {
   model: string
-  prompt: string
+  prompt?: string
   suffix?: string
   system?: string
   template?: string
@@ -58,7 +58,6 @@ export interface GenerateRequest {
   format?: string
   images?: Uint8Array[] | string[]
   keep_alive?: string | number
-
   options?: Partial<Options>
 }
 

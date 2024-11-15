@@ -46,5 +46,9 @@
     "translateContent": {
         "description": "請將 「{{content}}」 翻譯成繁體中文",
         "message": "請將 「{{content}}」 翻譯成繁體中文"
+    },
+    "waitingForResponse": {
+        "description": "等待回應中",
+        "message": "等待回應中"
     }
 }
