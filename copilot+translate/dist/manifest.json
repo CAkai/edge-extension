@@ -5,9 +5,9 @@
   "version": "0.1.0",
   "description": "__MSG_extensionDescription__",
   "icons": {
-    "16": "icon-16.png",
-    "48": "icon-48.png",
-    "128": "icon-128.png"
+    "16": "logo/16.png",
+    "48": "logo/48.png",
+    "128": "logo/128.png"
   },
   "host_permissions": [
     "<all_urls>"
@@ -25,13 +25,15 @@
     "type": "module"
   },
   "action": {
-    "default_popup": "src/popup/index.html",
-    "default_icon": "icon-48.png"
+    "default_icon": "logo/48.png"
+  },
+  "options_ui": {
+    "page": "src/pages/options/index.html"
   },
   "content_scripts": [
     {
       "js": [
-        "assets/index.ts-loader-C6RUcyvi.js"
+        "assets/content-script.ts-loader-BtKz00Ta.js"
       ],
       "matches": [
         "http://*/*",
@@ -49,9 +51,9 @@
         "*.js",
         "*.css",
         "*.svg",
-        "icon-128.png",
-        "icon-48.png",
-        "icon-16.png"
+        "logo/128.png",
+        "logo/48.png",
+        "logo/16.png"
       ],
       "use_dynamic_url": false
     },
@@ -62,12 +64,12 @@
         "https://*/*"
       ],
       "resources": [
-        "assets/index.ts-l0sNRNKZ.js"
+        "assets/content-script.ts-Ctig9oYa.js"
       ],
       "use_dynamic_url": false
     }
   ],
   "side_panel": {
-    "default_path": "src/side-panel/index.html"
+    "default_path": "src/pages/side-panel/index.html"
   }
 }

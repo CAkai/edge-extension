@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 /// <reference types="vite-plugin-svgr/client" />
 
+//#region SVG 匯入工具的設定
 declare module '*.svg' {
     import * as React from 'react';
 
@@ -29,3 +30,4 @@ svgr({
     //  A minimatch pattern, or array of patterns, which specifies the files in the build the plugin should ignore. By default no files are ignored.
     exclude: "",
   });
+//#endregion

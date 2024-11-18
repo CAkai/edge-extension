@@ -5,56 +5,34 @@
   "version": "0.1.0",
   "description": "__MSG_extensionDescription__",
   "icons": {
-    "16": "icon-16.png",
-    "48": "icon-48.png",
-    "128": "icon-128.png"
+      "16": "logo/16.png",
+      "48": "logo/48.png",
+      "128": "logo/128.png"
   },
-  "host_permissions": [
-    "<all_urls>"
-  ],
-  "permissions": [
-    "tabs",
-    "activeTab",
-    "scripting",
-    "storage",
-    "sidePanel",
-    "contextMenus"
-  ],
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["tabs", "activeTab", "scripting", "storage", "sidePanel", "contextMenus"],
   "background": {
-    "service_worker": "src/background/index.ts"
+      "service_worker": "src/core/service-worker.ts"
   },
   "action": {
-    "default_popup": "src/popup/index.html",
-    "default_icon": "icon-48.png"
+      "default_icon": "logo/48.png"
+  },
+  "options_ui": {
+      "page": "src/pages/options/index.html"
   },
   "content_scripts": [
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*",
-        "<all_urls>"
-      ],
-      "js": [
-        "src/content/index.ts"
-      ]
-    }
+      {
+          "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+          "js": ["src/pages/side-panel/content-script.ts"]
+      }
   ],
   "web_accessible_resources": [
-    {
-      "resources": [
-        "*.js",
-        "*.css",
-        "*.svg",
-        "icon-128.png",
-        "icon-48.png",
-        "icon-16.png"
-      ],
-      "matches": [
-        "<all_urls>"
-      ]
-    }
+      {
+          "resources": ["*.js", "*.css", "*.svg", "logo/128.png", "logo/48.png", "logo/16.png"],
+          "matches": ["<all_urls>"]
+      }
   ],
   "side_panel": {
-    "default_path": "src/side-panel/index.html"
+      "default_path": "src/pages/side-panel/index.html"
   }
 }

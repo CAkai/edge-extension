@@ -1,47 +1,47 @@
 {
   "../@crx/manifest": {
-    "file": "assets/crx-manifest.js-lo4wXexS.js",
+    "file": "assets/crx-manifest.js-B4PtDyKN.js",
     "name": "crx-manifest.js",
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_index-B0JJ2FMZ.js": {
-    "file": "assets/index-B0JJ2FMZ.js",
-    "name": "index"
+  "_modulepreload-polyfill-B5Qt9EMX.js": {
+    "file": "assets/modulepreload-polyfill-B5Qt9EMX.js",
+    "name": "modulepreload-polyfill"
   },
-  "index.ts-loader.js": {
-    "file": "assets/index.ts-loader-C6RUcyvi.js",
-    "src": "index.ts-loader.js"
+  "content-script.ts-loader.js": {
+    "file": "assets/content-script.ts-loader-BtKz00Ta.js",
+    "src": "content-script.ts-loader.js"
   },
-  "src/background/index.ts": {
-    "file": "assets/index.ts-DSTyMdr0.js",
-    "name": "index.ts",
-    "src": "src/background/index.ts",
+  "src/core/service-worker.ts": {
+    "file": "assets/service-worker.ts-DSTyMdr0.js",
+    "name": "service-worker.ts",
+    "src": "src/core/service-worker.ts",
     "isEntry": true
   },
-  "src/content/index.ts": {
-    "file": "assets/index.ts-l0sNRNKZ.js",
-    "name": "index.ts",
-    "src": "src/content/index.ts",
-    "isEntry": true
-  },
-  "src/popup/index.html": {
-    "file": "assets/index.html-BpN3-jEW.js",
+  "src/pages/options/index.html": {
+    "file": "assets/index.html-BaqiWAvl.js",
     "name": "index.html",
-    "src": "src/popup/index.html",
+    "src": "src/pages/options/index.html",
     "isEntry": true,
     "imports": [
-      "_index-B0JJ2FMZ.js",
-      "src/content/index.ts"
+      "_modulepreload-polyfill-B5Qt9EMX.js"
     ]
   },
-  "src/side-panel/index.html": {
-    "file": "assets/index.html-C9qz8yWN.js",
+  "src/pages/side-panel/content-script.ts": {
+    "file": "assets/content-script.ts-Ctig9oYa.js",
+    "name": "content-script.ts",
+    "src": "src/pages/side-panel/content-script.ts",
+    "isEntry": true
+  },
+  "src/pages/side-panel/index.html": {
+    "file": "assets/index.html-CrwEvOip.js",
     "name": "index.html",
-    "src": "src/side-panel/index.html",
+    "src": "src/pages/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_index-B0JJ2FMZ.js"
+      "_modulepreload-polyfill-B5Qt9EMX.js",
+      "src/pages/side-panel/content-script.ts"
     ],
     "css": [
       "assets/index-C0uTmyxP.css"
