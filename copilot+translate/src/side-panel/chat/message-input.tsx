@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useStore } from "react-redux";
 import { useAppDispatch, useAppSelector, RootState } from "../../store";
-import { ChatRequest } from "../message";
+import { ChatRequest } from "../../store/message";
 import HistoryButton from "./history-button";
 import ModelButton from "./model-button";
 import SendIcon from '../public/send.svg?react';

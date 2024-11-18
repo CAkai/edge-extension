@@ -40,10 +40,11 @@ export default function HistoryButton() {
         const selected = hist?.selected ?? '';
         const chatList = hist?.chats.map((m, i) => (
             <button
-                className={`w-full text-left block px-4 py-2 text-sm text-gray-700 ${selected === m.id ? 'bg-gray-200' : ''
+                className={`w-full text-left block whitespace-nowrap overflow-hidden overflow-ellipsis px-4 py-2 text-sm text-gray-700 ${selected === m.id ? 'bg-gray-200' : ''
                     } hover:bg-gray-100`}
                 role="menuitem"
                 tabIndex={-1}
+                title={m.title}
                 onClick={() => {
                     dispatch({ type: 'chat/select', payload: m.id });
                     setIsExpanded(false);
