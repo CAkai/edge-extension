@@ -1,15 +1,29 @@
 {
     "extensionName": {
-        "message": "iCloud Copilot & Translate",
-        "description": "title"
+        "message": "iCloud Copilot",
+        "description": "this extension's name"
     },
     "extensionDescription": {
         "message": "Provide an AI chatbot that interacts with you in a sidebar style. Not only that, through iCloud AI, provide translation function, and guarantee that data will not leak.",
-        "description": "description"
+        "description": "introduction of this extension, shown in the store or the extension page of the browser."
     },
-    "signInTitle": {
-        "description": "Sign in title",
-        "message": "Please sign in to your iCloud account"
+    "serviceWorker": {
+        "message": "Background Service",
+        "description": "Service Worker's name"
+    },
+    "sidePanel": {
+        "message": "Side Panel",
+        "description": "Side Panel's name"
+    },
+    "loaded_app": {
+        "message": "$app$ has successfully loaded!",
+        "description": "show the message that the extension has successfully loaded the specified function",
+        "placeholders": {
+            "app": {
+                "content": "$1",
+                "example": "側邊欄"
+            }
+        }
     },
     "empid": {
         "description": "Employee ID",
@@ -19,33 +33,65 @@
         "description": "Password",
         "message": "Password"
     },
-    "empidError": {
-        "description": "Employee ID error",
-        "message": "Please enter the correct employee ID"
+    "inputError_name": {
+        "message": "Please enter the correct $name$",
+        "description": "The content entered has a format error",
+        "placeholders": {
+            "name": {
+                "content": "$1",
+                "example": "Employee ID"
+            }
+        }
     },
-    "signIn": {
-        "description": "Sign in",
-        "message": "Sign in"
+    "login": {
+        "message": "Log In"
+    },
+    "loginTitle": {
+        "message": "Please log in your iCloud account"
     },
     "enterText": {
         "description": "Enter message",
         "message": "Enter message"
     },
-    "welcomeToICloudExtension": {
-        "description": "Welcome to iCloud Copilot & Translate",
-        "message": "Welcome to iCloud Copilot & Translate"
+    "welcome_extensionName": {
+        "message": "Welcome to use $extensionName$",
+        "description": "Give the user a welcome message",
+        "placeholders": {
+            "extensionName": {
+                "content": "$1",
+                "example": "iCloud Copilot"
+            }
+        }
     },
-    "ask": {
-        "description": "ask",
-        "message": "ask"
+    "ask_extensionName": {
+        "message": "Ask $extensionName$",
+        "description": "Paste the specified text into the sidebar for inquiry",
+        "placeholders": {
+            "extensionName": {
+                "content": "$1",
+                "example": "iCloud Copilot"
+            }
+        }
     },
-    "translateICloudAI": {
-        "descriptiion": "translate with {{extensionName}}",
-        "message": "translate with {{extensionName}}"
+    "translate_extensionName": {
+        "message": "Translate by $extensionName$",
+        "description": "Paste the specified text into the sidebar for translation",
+        "placeholders": {
+            "extensionName": {
+                "content": "$1",
+                "example": "iCloud Copilot"
+            }
+        }
     },
-    "translateContent": {
-        "description": "please translate '{{content}}' in English",
-        "message": "please translate '{{content}}' in English"
+    "translate_content": {
+        "message": "please translate '$content$' in English",
+        "description": "please translate '$content$' in English",
+        "placeholders": {
+            "content": {
+                "content": "$1",
+                "example": "Welcome"
+            }
+        }
     },
     "waitingForResponse": {
         "description": "waiting response",
@@ -54,5 +100,19 @@
     "newChat": {
         "description": "new chat",
         "message": "new chat"
+    },
+    "uploadImageToICloud": {
+        "message": "upload image to iCloud",
+        "description": "upload image to iCloud"
+    },
+    "hasUser_bool": {
+        "message": "Could Auto-Login：$bool$",
+        "description": "Whether the user has logged in",
+        "placeholders": {
+            "bool": {
+                "content": "$1",
+                "example": "true"
+            }
+        }
     }
 }

@@ -1,51 +1,96 @@
 {
     "extensionName": {
-        "message": "iCloud AI 助手",
-        "description": "標題"
+        "message": "iCloud Copilot",
+        "description": "擴充功能的名稱"
     },
     "extensionDescription": {
         "message": "提供側邊欄式的 AI 聊天機器人與您互動。不僅如此，透過 iCloud AI，提供翻譯功能，並保證資料不外流。",
-        "description": "描述"
+        "description": "擴充功能的簡介，顯示在商店或者瀏覽器的擴充功能頁面。"
     },
-    "signInTitle": {
-        "description": "登入標題",
-        "message": "請登入您的 iCloud 帳號"
+    "serviceWorker": {
+        "message": "背景服務",
+        "description": "Service Worker 的名稱"
+    },
+    "sidePanel": {
+        "message": "側邊欄",
+        "description": "側邊欄的名稱"
+    },
+    "loaded_app": {
+        "message": "$app$ 已成功載入！",
+        "description": "讓擴充功能發佈「指定功能」成功載入的訊息",
+        "placeholders": {
+            "app": {
+                "content": "$1",
+                "example": "側邊欄"
+            }
+        }
     },
     "empid": {
-        "description": "員工編號",
         "message": "工號"
     },
     "password": {
-        "description": "密碼",
         "message": "密碼"
     },
-    "empidError": {
-        "description": "工號錯誤",
-        "message": "請輸入正確的工號"
+    "inputError_name": {
+        "message": "請輸入正確的$name$",
+        "description": "輸入的內容發生了格式上的錯誤",
+        "placeholders": {
+            "name": {
+                "content": "$1",
+                "example": "工號"
+            }
+        }
     },
-    "signIn": {
-        "description": "登入",
+    "login": {
         "message": "登入"
+    },
+    "loginTitle": {
+        "message": "請登入您的 iCloud 帳號",
+        "description": "登入標題"
     },
     "enterText": {
         "description": "輸入訊息",
         "message": "輸入訊息"
     },
-    "welcomeToICloudExtension": {
-        "description": "歡迎使用 iCloud AI 助手",
-        "message": "歡迎使用 iCloud AI 助手"
+    "welcome_extensionName": {
+        "message": "歡迎使用 $extensionName$",
+        "description": "給予使用者歡迎詞",
+        "placeholders": {
+            "extensionName": {
+                "content": "$1",
+                "example": "iCloud Copilot"
+            }
+        }
     },
-    "ask": {
-        "description": "詢問",
-        "message": "詢問"
+    "ask_extensionName": {
+        "message": "詢問 $extensionName$",
+        "description": "將指定文字貼到側邊欄進行詢問",
+        "placeholders": {
+            "extensionName": {
+                "content": "$1",
+                "example": "iCloud Copilot"
+            }
+        }
     },
-    "translateICloudAI": {
-        "descriptiion": "貼到 {{extensionName}} 翻譯",
-        "message": "貼到 {{extensionName}} 翻譯"
+    "translate_extensionName": {
+        "message": "請 $extensionName$ 翻譯",
+        "description": "將指定文字貼到側邊欄進行翻譯",
+        "placeholders": {
+            "extensionName": {
+                "content": "$1",
+                "example": "iCloud Copilot"
+            }
+        }
     },
-    "translateContent": {
-        "description": "請將 「{{content}}」 翻譯成繁體中文",
-        "message": "請將 「{{content}}」 翻譯成繁體中文"
+    "translate_content": {
+        "message": "請將 「$content$」 翻譯成繁體中文",
+        "description": "請將 「$content$」 翻譯成繁體中文",
+        "placeholders": {
+            "content": {
+                "content": "$1",
+                "example": "Hello"
+            }
+        }
     },
     "waitingForResponse": {
         "description": "等待回應中",
@@ -54,5 +99,19 @@
     "newChat": {
         "description": "新對話",
         "message": "新對話"
+    },
+    "uploadImageToICloud": {
+        "description": "上傳圖片到 iCloud",
+        "message": "上傳圖片到 iCloud"
+    },
+    "hasUser_bool": {
+        "message": "能否自動登入：$bool$",
+        "description": "檢查瀏覽器是否有記錄登入資訊",
+        "placeholders": {
+            "bool": {
+                "content": "$1",
+                "example": "true"
+            }
+        }
     }
 }

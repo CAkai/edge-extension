@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "default_locale": "zh_TW",
   "name": "__MSG_extensionName__",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "__MSG_extensionDescription__",
   "icons": {
     "16": "logo/16.png",
@@ -16,32 +16,22 @@
     "tabs",
     "activeTab",
     "scripting",
-    "storage",
     "sidePanel",
-    "contextMenus"
+    "contextMenus",
+    "storage"
   ],
   "background": {
     "service_worker": "service-worker-loader.js",
     "type": "module"
   },
-  "action": {
-    "default_icon": "logo/48.png"
-  },
   "options_ui": {
-    "page": "src/pages/options/index.html"
+    "page": "src/apps/options/index.html"
   },
-  "content_scripts": [
-    {
-      "js": [
-        "assets/content-script.ts-loader-BtKz00Ta.js"
-      ],
-      "matches": [
-        "http://*/*",
-        "https://*/*",
-        "<all_urls>"
-      ]
-    }
-  ],
+  "side_panel": {
+    "default_path": "src/apps/side-panel/index.html",
+    "open_at_install": true,
+    "open_at_update": true
+  },
   "web_accessible_resources": [
     {
       "matches": [
@@ -56,20 +46,6 @@
         "logo/16.png"
       ],
       "use_dynamic_url": false
-    },
-    {
-      "matches": [
-        "<all_urls>",
-        "http://*/*",
-        "https://*/*"
-      ],
-      "resources": [
-        "assets/content-script.ts-Ctig9oYa.js"
-      ],
-      "use_dynamic_url": false
     }
-  ],
-  "side_panel": {
-    "default_path": "src/pages/side-panel/index.html"
-  }
+  ]
 }

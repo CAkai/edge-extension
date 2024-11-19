@@ -1,0 +1,1 @@
+export {themeStorage, getThemeProps} from './theme.store';

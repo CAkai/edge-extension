@@ -15,19 +15,35 @@
 
 ### 單一微服務(容器所代表的服務)
 - **:whale2:Docker**：服務建置工具。
-- **Copilot&Translate**：聊天機器人暨翻譯擴充套件。
+- **Copilot**：iCloud Copilot。
 
 ## 版本
 <!-- no toc -->
+- [0.1.0 - 2024-11-18](#010---2024-11-18)
 - [First Commit - 2024-10-08](#first-commit---2024-10-08)
 
 <br>
 
-## 0.1.0 - 2024-10-22
+## 0.2.0 - 2024-11-19
+
+## 0.1.0 - 2024-11-18
+[返回目錄](#版本)
 套用 [第三方框架][ts-react-chrome-extension]，採 TypeScript + React + Vite 開發。([f958417])
+
+### 新增：
+- **Copilot**：新增設定頁面，但目前沒有內容。([5513d34])
+- **Copilot**：新增側邊欄。目前提供 登入、聊天、同步 Open WebUI 的模型以及歷史對話 等功能。([1521537])
+- **Copilot**：新增右鍵選單。目前提供 詢問、翻譯 等功能。([042cb59])
+- **Copilot**：和 iCloud 使用同一帳號登入，並自動註冊 Open WebUI。([844bf43])
+
 
 [ts-react-chrome-extension]: https://github.com/Jonghakseo/chrome-extension-boilerplate-react-vite
 
+
+[1521537]: https://github.com/CAkai/edge-extension/commit/1521537a13d4816b845e653d4a297cca52bbd49a
+[5513d34]: https://github.com/CAkai/edge-extension/commit/5513d34bff709f5eee983244699400eddbea69c1
+[042cb59]: https://github.com/CAkai/edge-extension/commit/042cb59d0c26a74f1daeeb2c1903d527c0dd20a7
+[844bf43]: https://github.com/CAkai/edge-extension/commit/844bf43e513c26675c882877a091d1f3e3902149
 [f958417]: https://github.com/CAkai/edge-extension/commit/f958417d8749d26f9cc2f303c5360b2e02144241
 
 ## [First Commit] - 2024-10-08
