@@ -16,8 +16,8 @@
     "file": "assets/index-HtbmZJu6.js",
     "name": "index"
   },
-  "_user.store-hJE_KRxw.js": {
-    "file": "assets/user.store-hJE_KRxw.js",
+  "_user.store-BRRQ5lob.js": {
+    "file": "assets/user.store-BRRQ5lob.js",
     "name": "user.store",
     "imports": [
       "_index-HtbmZJu6.js"
@@ -34,24 +34,24 @@
     ]
   },
   "src/apps/server/index.ts": {
-    "file": "assets/index.ts-BerWAhFR.js",
+    "file": "assets/index.ts-My7GmXyM.js",
     "name": "index.ts",
     "src": "src/apps/server/index.ts",
     "isEntry": true,
     "imports": [
-      "_user.store-hJE_KRxw.js",
+      "_user.store-BRRQ5lob.js",
       "_index-HtbmZJu6.js"
     ]
   },
   "src/apps/side-panel/index.html": {
-    "file": "assets/index.html-CPLytD4U.js",
+    "file": "assets/index.html-WBSV_F_H.js",
     "name": "index.html",
     "src": "src/apps/side-panel/index.html",
     "isEntry": true,
     "imports": [
       "_client-CC29PUvC.js",
       "_index-HtbmZJu6.js",
-      "_user.store-hJE_KRxw.js"
+      "_user.store-BRRQ5lob.js"
     ],
     "css": [
       "assets/index-BmSnVBzP.css"
