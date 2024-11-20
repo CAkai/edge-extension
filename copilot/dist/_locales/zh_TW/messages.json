@@ -31,6 +31,10 @@
     "password": {
         "message": "密碼"
     },
+    "loginError": {
+        "message": "請檢查您的工號/密碼是否正確",
+        "description": "登入失敗的訊息"
+    },
     "inputError_name": {
         "message": "請輸入正確的$name$",
         "description": "輸入的內容發生了格式上的錯誤",

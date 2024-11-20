@@ -27,7 +27,7 @@ export default function Form({ schema, submit, children, className="" }: Compone
                     const childProps = {
                         ...child.props,
                         register: child.props.formFor ? register(child.props.formFor) : undefined,
-                        error: child.props.formFor ? errors[child.props.formFor]?.message ?? '' : undefined,
+                        error: child.props.formFor ? errors[child.props.formFor]?.message ?? '' : child.props.error,
                     };
                     return cloneElement(child, {
                         ...childProps,

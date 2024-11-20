@@ -7,6 +7,8 @@ export type DropdownItem = {
     value: string;
 }
 
+export type DropdownSelectEvent = (item: DropdownItem) => void | Promise<void>;
+
 type DropdownProps = {
     items: DropdownItem[];
     direction: "tr" | "br" | "tl" | "bl";
@@ -15,7 +17,8 @@ type DropdownProps = {
     selected?: DropdownItem;
     width?: string;
     height?: string;
-    onSelect?: (item: DropdownItem) => void;
+    disabled?: boolean;
+    onSelect?: DropdownSelectEvent;
 }
 
 // 下拉式列表的展開方向
@@ -28,13 +31,13 @@ const ANIMA_DIRECTION = {
 
 // 下拉式列表的位置
 const DROPDOWN_ORIGIN = {
-    tr: "left-0 bottom-[1.5rem]",
-    tl: "right-0 bottom-[1.5rem]",
+    tr: "left-0 bottom-[2rem]",
+    tl: "right-0 bottom-[2rem]",
     br: "left-0 top-[1.5rem]",
     bl: "right-0 top-[1.5rem]",
 }
 
-export default function Dropdown({ items, selected, direction, className="",children, width="fit-content", height="200px", onSelect }: DropdownProps) {
+export default function Dropdown({ items, selected, direction, children, disabled=false, className="", width="fit-content", height="200px", onSelect }: DropdownProps) {
     const clickOutsideRef = createRef<HTMLDivElement>();
     const [isExpanded, setIsExpanded] = useState(false);
     const [selectedItem, setSelectedItem] = useState(selected ?? items[0]);
@@ -61,6 +64,7 @@ export default function Dropdown({ items, selected, direction, className="",chil
         <div ref={clickOutsideRef} className={`relative inline-block text-left ${className}`}>
             <div>
                 <button
+                    disabled={disabled}
                     type="button"
                     className="inline-flex w-full justify-center gap-x-0.5 rounded-md p-1 bg-white text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     id="menu-button"

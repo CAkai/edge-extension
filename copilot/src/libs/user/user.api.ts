@@ -37,7 +37,7 @@ export async function fetchCloudUser(token: string): Promise<iCloudUser | null> 
 
 export const iCloudLoginFormSchema = z.object({
     username: z.string().regex(new RegExp(/^(000\d{5}|[zZ]\d{4})$/), { message: i18n('inputError_name', i18n("empid")) }),
-    password: z.string(),
+    password: z.string().min(1, { message: i18n('inputError_name', i18n("password")) }),
 });
 
 export type iCloudLoginForm = z.infer<typeof iCloudLoginFormSchema>;

@@ -9,11 +9,14 @@ import { useStorage } from "../../packages/storage";
 import Auth from "./auth/auth.page";
 import ChatBox from "./chat/chatbox.page";
 import { navStorage } from "../../libs/navigation";
+import { NAVIGATION_NAME } from "../../libs/navigation/navigation.constant";
 
 const queryClient = new QueryClient()
 
 export default function SidePanel() {
-  navStorage.set("side-panel");
+  // 綁定 SidePanel 到背景頁，讓 connect 事件能夠觸發
+  chrome.runtime.connect({ name: NAVIGATION_NAME.Sidepanel });
+  navStorage.set(NAVIGATION_NAME.Sidepanel);
   const user = useStorage(userStorage);
 
   return (

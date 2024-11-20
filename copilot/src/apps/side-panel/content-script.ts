@@ -13,4 +13,3 @@ Content scripts 是在 Web 頁面內運行的 javascript 腳本。通過使用�
 
 ！如果發現 content-script 沒有載入，請檢查 popup.html 是否有匯入。
 */
-console.log("content script loaded");

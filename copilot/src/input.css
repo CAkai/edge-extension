@@ -15,3 +15,10 @@
         scrollbar-width: none;  /* Firefox */
     }
 }
+
+textarea {
+    border-style: none;
+    border-color: Transparent;
+    outline: none;
+    resize: none;
+}

@@ -49,6 +49,10 @@
     "loginTitle": {
         "message": "Please log in your iCloud account"
     },
+    "loginError": {
+        "message": "Please check if your Employee ID/Password is correct",
+        "description": "Login failed message"
+    },
     "enterText": {
         "description": "Enter message",
         "message": "Enter message"

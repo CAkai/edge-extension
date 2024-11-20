@@ -5,17 +5,24 @@
 import { i18n } from "../../libs/alias";
 import { userStorage } from "../../libs/user/user.store";
 import { isNoUser } from "../../libs/user/user.type";
-import { LogDebug, LogSystem } from "../../packages/log";
+import { LogSystem } from "../../packages/log";
 import { registerContextMenuEvent } from "./contextmenu.service";
 import { registerSidePanelEvent } from "./sidepanel.service";
+import { navStorage } from "../../libs/navigation";
 
+navStorage.clear();
 LogSystem(i18n("loaded_app", i18n("serviceWorker")));
 registerContextMenuEvent();
 registerSidePanelEvent();
 
-// ! 因為抓不到 localstorage，所以沒辦法自動登入
-chrome.runtime.onConnect.addListener((port) => {
-    LogDebug(`Connected to ${port.name}`);
+// 當有任意服務連接時，觸發事件
+let isLoaded = false;
+chrome.runtime.onConnect.addListener(() => {
+    // 防止重複觸發
+    if (isLoaded) return;
+
+    isLoaded = true;
+
     // 背景服務啟動後，立即自動登入
     userStorage.load().then((user) => {
         LogSystem(i18n("hasUser_bool", isNoUser(user) ? "false" : "true"));

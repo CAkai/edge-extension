@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
-import Dropdown, { DropdownItem } from "../../../components/dropdown.widget";
+import Dropdown, { DropdownItem, DropdownSelectEvent } from "../../../components/dropdown.widget";
 import { getModels } from "../../../libs/llm/llm.api";
 import { userStorage } from "../../../libs/user";
 import LlmIcon from '../../../../public/svg/model.svg?react';
+import { useMessageStore } from "../../../libs/chat/chat.store";
 
-export default function ModelList() {
+type ModelListProps = {
+    model?: string;
+    onSelect?: DropdownSelectEvent;
+};
+
+export default function ModelList({ model, onSelect }: ModelListProps) {
     const [selectedModel, setSelectedModel] = useState<DropdownItem | undefined>(undefined);
     const [models, setModels] = useState<DropdownItem[]>([]);
-    
+    const isIdle = useMessageStore(state => state.isIdle);
+
     // 原本是用 useQuery，但因為執行太頻繁，出現 minify react error #301，
     // 所以改用 useEffect 來取得資料
     useEffect(() => {
@@ -25,14 +32,30 @@ export default function ModelList() {
         fetchModels().then((models) => {
             setModels(models);
             setSelectedModel(models[0]);
+            onSelect?.(models[0]);
         });
     }, []);
+
+    // 讀取外部的 model，並選擇對應的 model
+    useEffect(() => {
+        const selected = models.find((e) => e.value === model);
+        if (selected) setSelectedModel(selected);
+    }, [model]);
 
     // 因為 selectedModel 是 mutable 的，所以要複製一份
     const nextSelectedModel = selectedModel ? { ...selectedModel } : undefined;
     return (
         <div className="flex gap-1 items-center">
-            <Dropdown items={models} direction="br" selected={nextSelectedModel} onSelect={(newItem) => setSelectedModel({ ...newItem })}>
+            <Dropdown
+            items={models}
+            disabled={!isIdle()}
+            direction="tr"
+            selected={nextSelectedModel}
+            onSelect={(newItem) => {
+                const nextItem = { ...newItem };
+                setSelectedModel(nextItem);
+                onSelect?.(nextItem);
+            }}>
                 <LlmIcon style={{ width: '20px', height: '20px' }} />
             </Dropdown>
             <p>{selectedModel?.label ?? ''}</p>

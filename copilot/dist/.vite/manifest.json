@@ -1,71 +1,71 @@
 {
   "../@crx/manifest": {
-    "file": "assets/crx-manifest.js-DmsE75pL.js",
+    "file": "assets/crx-manifest.js-DvJg4qjF.js",
     "name": "crx-manifest.js",
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_index-jTOKpEbi.js": {
-    "file": "assets/index-jTOKpEbi.js",
+  "_index-lOtXKBCI.js": {
+    "file": "assets/index-lOtXKBCI.js",
     "name": "index"
   },
-  "_navigation.store-BNlAX0pi.js": {
-    "file": "assets/navigation.store-BNlAX0pi.js",
+  "_navigation.store-D970gqwf.js": {
+    "file": "assets/navigation.store-D970gqwf.js",
     "name": "navigation.store",
     "imports": [
-      "_index-jTOKpEbi.js"
+      "_index-lOtXKBCI.js"
     ]
   },
-  "_theme.store-CgDG_hds.js": {
-    "file": "assets/theme.store-CgDG_hds.js",
+  "_theme.store-BCoQnLbB.js": {
+    "file": "assets/theme.store-BCoQnLbB.js",
     "name": "theme.store",
     "imports": [
-      "_index-jTOKpEbi.js"
+      "_index-lOtXKBCI.js"
     ]
   },
   "content-script.ts-loader.js": {
-    "file": "assets/content-script.ts-loader-BtKz00Ta.js",
+    "file": "assets/content-script.ts-loader-CjiKemAw.js",
     "src": "content-script.ts-loader.js"
   },
   "src/apps/options/index.html": {
-    "file": "assets/index.html-CQ2BIrnb.js",
+    "file": "assets/index.html-DZr3IxGj.js",
     "name": "index.html",
     "src": "src/apps/options/index.html",
     "isEntry": true,
     "imports": [
-      "_theme.store-CgDG_hds.js",
-      "_index-jTOKpEbi.js"
+      "_theme.store-BCoQnLbB.js",
+      "_index-lOtXKBCI.js"
     ]
   },
   "src/apps/server/index.ts": {
-    "file": "assets/index.ts-BcfWH2la.js",
+    "file": "assets/index.ts-C_kwb4_1.js",
     "name": "index.ts",
     "src": "src/apps/server/index.ts",
     "isEntry": true,
     "imports": [
-      "_navigation.store-BNlAX0pi.js",
-      "_index-jTOKpEbi.js"
+      "_navigation.store-D970gqwf.js",
+      "_index-lOtXKBCI.js"
     ]
   },
   "src/apps/side-panel/content-script.ts": {
-    "file": "assets/content-script.ts-Ctig9oYa.js",
+    "file": "assets/content-script.ts-l0sNRNKZ.js",
     "name": "content-script.ts",
     "src": "src/apps/side-panel/content-script.ts",
     "isEntry": true
   },
   "src/apps/side-panel/index.html": {
-    "file": "assets/index.html-ct3C-DTO.js",
+    "file": "assets/index.html-BotWMK-C.js",
     "name": "index.html",
     "src": "src/apps/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_theme.store-CgDG_hds.js",
-      "_index-jTOKpEbi.js",
-      "_navigation.store-BNlAX0pi.js",
+      "_theme.store-BCoQnLbB.js",
+      "_index-lOtXKBCI.js",
+      "_navigation.store-D970gqwf.js",
       "src/apps/side-panel/content-script.ts"
     ],
     "css": [
-      "assets/index-ClbSLZGI.css"
+      "assets/index-B6u0paoi.css"
     ]
   }
 }

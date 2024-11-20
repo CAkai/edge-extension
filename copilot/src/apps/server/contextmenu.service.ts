@@ -23,7 +23,10 @@ export const CONTEXTMENUS: ContextMenu[] = [
         contexts: ["all"],
         onclick: (info, tab) => {
             openSidePanel(tab?.windowId ?? 1, () => {
-                notify({ type: "clipboard", value: info.selectionText }, (response) => console.log(response));
+                notify({
+                    type: "clipboard",
+                    value: i18n("ask_extensionName", info.selectionText ?? "")
+                }, (response) => console.log(response));
             });
         }
     },
@@ -59,10 +62,9 @@ export function registerContextMenuEvent() {
     });
     // 當右鍵點擊時，會執行函數內的動作。
     chrome.contextMenus.onClicked.addListener((info, tab) => {
-        CONTEXTMENUS.forEach((contextMenu) => {
-            if (info.menuItemId === contextMenu.id) {
-                void contextMenu?.onclick?.(info, tab);
-            }
-        });
+        const contextMenu = CONTEXTMENUS.find(c => c.id === info.menuItemId);
+        if (contextMenu) {
+            void contextMenu.onclick?.(info, tab);
+        }
     });
 }

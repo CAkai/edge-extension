@@ -18,8 +18,7 @@
     "scripting",
     "storage",
     "sidePanel",
-    "contextMenus",
-    "nativeMessaging"
+    "contextMenus"
   ],
   "background": {
     "service_worker": "service-worker-loader.js",
@@ -34,7 +33,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/content-script.ts-loader-BtKz00Ta.js"
+        "assets/content-script.ts-loader-CjiKemAw.js"
       ],
       "matches": [
         "<all_urls>"
@@ -53,7 +52,7 @@
         "logo/128.png",
         "logo/48.png",
         "logo/16.png",
-        "assets/content-script.ts-Ctig9oYa.js"
+        "assets/content-script.ts-l0sNRNKZ.js"
       ],
       "use_dynamic_url": false
     }

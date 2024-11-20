@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FormInput from "../../../components/form-input.widget";
 import Form from "../../../components/form.component";
 import Logo from "../../../components/logo.widget";
@@ -11,7 +12,17 @@ import { useStorage } from "../../../packages/storage";
 export default function Auth() {
     const theme = useStorage(themeStorage);
     const { textColor, bgColor } = getThemeProps(theme);
+    const [error, setError] = useState<string>("");
     navStorage.set("side-panel/auth");
+
+    const handleSubmiit = async (data: {[key: string]: string}) => {
+        const user = await userStorage.logInCloud(data as iCloudLoginForm);
+        if (!user.icloud.access_token) {
+            setError(i18n("loginError"));
+        } else {
+            setError("");
+        }
+    }
 
     return (
         <div
@@ -24,9 +35,9 @@ export default function Auth() {
             </div>
 
             <div className="mt-10 w-full">
-                <Form schema={iCloudLoginFormSchema} submit={async (data) => { await userStorage.logInCloud(data as iCloudLoginForm) }}>
-                    <FormInput formFor="username" label={i18n("empid")} textColor={textColor} />
-                    <FormInput className="mt-2" formFor="password" label={i18n("password")} type="password" textColor={textColor} />
+                <Form schema={iCloudLoginFormSchema} submit={handleSubmiit}>
+                    <FormInput formFor="username" label={i18n("empid")} textColor={textColor} error={error} />
+                    <FormInput className="mt-2" formFor="password" label={i18n("password")} type="password" textColor={textColor} error={error} />
                     <button
                         type="submit"
                         style={{ color: '#fff' }}
