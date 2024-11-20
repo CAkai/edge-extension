@@ -1,0 +1,13 @@
+.scale-animation {
+    transition: transform 200ms, opacity 200ms;
+}
+
+.scale-off {
+    transform: scale(0);
+    opacity: 0;
+}
+
+.scale-on {
+    transform: scale(1);
+    opacity: 1;
+}

@@ -4,8 +4,8 @@ services:
     restart: always
     init: true
     build:
-      context: ./copilot+translate
+      context: ./copilot
     volumes:
-      - ./copilot+translate/public:/app/public
-      - ./copilot+translate/src:/app/src
-      - ./copilot+translate/dist:/app/dist
+      - ./copilot/public:/app/public
+      - ./copilot/src:/app/src
+      - ./copilot/dist:/app/dist
