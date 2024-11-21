@@ -99,6 +99,7 @@ export type MessageInfo = {
     info: ChatUsage;
     // 檔案相關
     files?: ChatFile[];
+    citations?: ChatCitation[];
     // 模型相關
     model?: string;
     modelIdx?: number;
@@ -108,6 +109,21 @@ export type MessageInfo = {
     context?: string;
     done?: boolean;
     userContext?: string;
+}
+
+type ChatCitation = {
+    source: ChatFileNormal;
+    distances: number[];
+    document: string[];
+    metadata: ChatCitationMetadata[];
+}
+
+type ChatCitationMetadata = {
+    file_id: string;
+    hash: string;
+    name: string;
+    source: string;
+    embedding_config: string;
 }
 
 type ChatFile = ChatFileImage | ChatFileNormal;

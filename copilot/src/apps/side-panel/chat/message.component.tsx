@@ -7,6 +7,10 @@ import LoadingIcon from "../../../components/loading.widget";
 import "highlight.js/styles/github.css";
 import TermianlIcon from "../../../../public/svg/terminal.svg?react";
 import CopyButton from "../../../components/copy-button.component";
+import { useStorage } from "../../../packages/storage";
+import { getThemeProps, themeStorage } from "../../../libs/theme";
+import FileButton from "../../../components/file-button.component";
+import FileTagButton from "../../../components/file-tag-button.component";
 
 function components() {
     return {
@@ -50,18 +54,39 @@ type MessageBlockProps = {
 }
 
 export default function MessageBlock({ message }: MessageBlockProps) {
+    const theme = getThemeProps(useStorage(themeStorage));
+
+    const generateUserFile = () => {
+        if (message.role !== 'user') return null;
+        if (!message?.files?.length) return null;
+        return message.files
+            .filter(f => f.type === 'image' || f.type === 'file')
+            .map((f) => {
+                if (f.type === "image")
+                    return <img key={crypto.randomUUID()} src={f.url} alt="image" className="rounded-lg mb-1 w-fit max-w-[95%]" />;
+                else
+                    return <FileButton name={f.name} size={f.size} />
+            })
+    }
+
+    const generateBotFile = () => {
+        if (message.role === "user") return null;
+        if (!message?.citations?.length) return null;
+            
+        return (
+            <div className="flex text-xs font-medium items-center">
+                {message.citations.map((c, i) => {
+                    return <FileTagButton index={i + 1} name={c.source.name} />
+                })}
+            </div>
+        )
+    }
+
     return <div key={message.id} className={`p-1 flex flex-col ${message.role === 'user' ? 'items-end' : 'items-start'}`}>
-        {!message?.files?.length ?
-            null :
-            message.files
-                .filter(f => f.type === 'image')
-                .map((f) => {
-                    return <img key={crypto.randomUUID()} src={f.url} alt="file" className="rounded-lg mb-1 w-fit max-w-[95%]" />
-                })
-        }
+        {generateUserFile()}
         {message.role === 'user' ? false : <p>{message.role}</p>}
         <div
-            className={`p-2 rounded-lg w-fit max-w-[95%] text-base ${message.role === 'user' ? 'bg-gray-200' : 'bg-slate-50'
+            className={`p-2 rounded-lg w-fit max-w-[95%] text-base ${message.role === 'user' ? theme.bgColorUser : theme.bgColorBot
                 }`}>
             {message.content === '' ? <LoadingIcon /> :
                 <ReactMarkdown
@@ -71,6 +96,7 @@ export default function MessageBlock({ message }: MessageBlockProps) {
                     components={components()}>
                     {message.content}
                 </ReactMarkdown>}
+            {generateBotFile()}
         </div>
     </div>
 }

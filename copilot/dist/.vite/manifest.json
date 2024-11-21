@@ -16,8 +16,8 @@
       "_index-lOtXKBCI.js"
     ]
   },
-  "_theme.store-BCoQnLbB.js": {
-    "file": "assets/theme.store-BCoQnLbB.js",
+  "_theme.store-BF-zprCo.js": {
+    "file": "assets/theme.store-BF-zprCo.js",
     "name": "theme.store",
     "imports": [
       "_index-lOtXKBCI.js"
@@ -28,12 +28,12 @@
     "src": "content-script.ts-loader.js"
   },
   "src/apps/options/index.html": {
-    "file": "assets/index.html-CQv9-0BD.js",
+    "file": "assets/index.html-C8A4pjOb.js",
     "name": "index.html",
     "src": "src/apps/options/index.html",
     "isEntry": true,
     "imports": [
-      "_theme.store-BCoQnLbB.js",
+      "_theme.store-BF-zprCo.js",
       "_index-lOtXKBCI.js"
     ]
   },
@@ -54,18 +54,18 @@
     "isEntry": true
   },
   "src/apps/side-panel/index.html": {
-    "file": "assets/index.html-CdwElFaB.js",
+    "file": "assets/index.html-UzBVVXKQ.js",
     "name": "index.html",
     "src": "src/apps/side-panel/index.html",
     "isEntry": true,
     "imports": [
-      "_theme.store-BCoQnLbB.js",
+      "_theme.store-BF-zprCo.js",
       "_index-lOtXKBCI.js",
       "_navigation.store-D970gqwf.js",
       "src/apps/side-panel/content-script.ts"
     ],
     "css": [
-      "assets/index-BS-AYmkb.css"
+      "assets/index-B91VZEM1.css"
     ]
   }
 }

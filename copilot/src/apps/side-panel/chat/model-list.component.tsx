@@ -34,12 +34,14 @@ export default function ModelList({ model, onSelect }: ModelListProps) {
             setSelectedModel(models[0]);
             onSelect?.(models[0]);
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // 讀取外部的 model，並選擇對應的 model
     useEffect(() => {
         const selected = models.find((e) => e.value === model);
         if (selected) setSelectedModel(selected);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [model]);
 
     // 因為 selectedModel 是 mutable 的，所以要複製一份
@@ -47,15 +49,15 @@ export default function ModelList({ model, onSelect }: ModelListProps) {
     return (
         <div className="flex gap-1 items-center">
             <Dropdown
-            items={models}
-            disabled={!isIdle()}
-            direction="tr"
-            selected={nextSelectedModel}
-            onSelect={(newItem) => {
-                const nextItem = { ...newItem };
-                setSelectedModel(nextItem);
-                onSelect?.(nextItem);
-            }}>
+                items={models}
+                disabled={!isIdle()}
+                direction="tr"
+                selected={nextSelectedModel}
+                onSelect={(newItem) => {
+                    const nextItem = { ...newItem };
+                    setSelectedModel(nextItem);
+                    onSelect?.(nextItem);
+                }}>
                 <LlmIcon style={{ width: '20px', height: '20px' }} />
             </Dropdown>
             <p>{selectedModel?.label ?? ''}</p>
