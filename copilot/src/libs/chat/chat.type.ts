@@ -80,7 +80,7 @@ type ChatMeta = {
 }
 
 type ChatInfo = {
-    files: string[];
+    files: ChatFile[];
     models: string[];
     messages: MessageInfo[];
     history: {
@@ -89,21 +89,63 @@ type ChatInfo = {
     }
 }
 
-type MessageInfo = {
+export type MessageInfo = {
     id: string;
     role: string;
     content: string;
     timestamp: number;
     parentId: string;
     chiildrenIds: string[];
-    model?: string;
     info: ChatUsage;
+    // 檔案相關
+    files?: ChatFile[];
+    // 模型相關
+    model?: string;
     modelIdx?: number;
-    modelName?: string;
     models?: string[];
+    modelName?: string;
+    //
     context?: string;
     done?: boolean;
     userContext?: string;
+}
+
+type ChatFile = ChatFileImage | ChatFileNormal;
+
+type ChatFileImage = {
+    type: "image";
+    url: string;
+}
+
+type ChatFileNormal = {
+    id: string;
+    itemId: string;
+    type: "file";
+    url: string;
+    status: string;
+    error: string;
+    collection_name: string;
+    name: string;
+    size: number;
+    file: OpenWebUIFile[];
+}
+
+type OpenWebUIFile = {
+    id: string;
+    hash: string;
+    user_id: string;
+    filename: string;
+    created_at: number;
+    updated_at: number;
+    data: {content: string};
+    meta: OpenWebUIFileMeta;
+}
+
+type OpenWebUIFileMeta = {
+    collection_name: string;
+    content_type: string;
+    name: string;
+    size: number;
 }
 
 type ChatUsage = {

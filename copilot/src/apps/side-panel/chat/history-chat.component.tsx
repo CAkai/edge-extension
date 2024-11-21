@@ -3,16 +3,8 @@ import Dropdown, { DropdownItem, DropdownSelectEvent } from "../../../components
 import { userStorage } from "../../../libs/user";
 import HistoryIcon from '../../../../public/svg/history.svg?react';
 import { fetchChatList } from "../../../libs/chat/chat.api";
-import { i18n } from "../../../libs/alias";
 import { useMessageStore } from "../../../libs/chat/chat.store";
 
-function newChat(): DropdownItem {
-    return {
-        id: crypto.randomUUID(),
-        label: i18n("newChat"),
-        value: "",
-    }
-}
 export default function HistoryChat({ onSelect }: { onSelect: DropdownSelectEvent }) {
     const [selectedItem, setSelectedItem] = useState<DropdownItem | undefined>(undefined);
     const [items, setItems] = useState<DropdownItem[]>([]);
@@ -33,7 +25,6 @@ export default function HistoryChat({ onSelect }: { onSelect: DropdownSelectEven
             });
         }
         getList().then((list) => {
-            list.push(newChat());
             setItems(list);
             setSelectedItem(list[0]);
         });

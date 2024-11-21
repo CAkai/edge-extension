@@ -1,8 +1,8 @@
 import { create } from "zustand";
-import { Message } from "./chat.type";
+import { MessageInfo, Message } from "./chat.type";
 
 export interface MessageState {
-    messages: Message[];
+    messages: MessageInfo[];
     status: "idle" | "waiting" | "pending";
     done: () => void;
     wait: () => void;
@@ -10,7 +10,7 @@ export interface MessageState {
     isIdle: () => boolean;
     isWaiting: () => boolean;
     isPending: () => boolean;
-    setMessages: (by: Message[]) => void;
+    setMessages: (by: MessageInfo[]) => void;
     addMessage: (by: Message) => void;
     updateLastMessage: (by: string) => void;
     clearMessage: () => void;
@@ -27,7 +27,27 @@ export const useMessageStore = create<MessageState>((set, get) => ({
     isPending: () => get().status === "pending",
 
     setMessages: (by) => set(() => ({ status: "idle", messages: [...by] })),
-    addMessage: (by) => set((state) => ({ status: get().status, messages: [...state.messages, by] })),
+    addMessage: (by) => set((state) => {
+        const newMessage: MessageInfo = {
+            id: crypto.randomUUID(),
+            timestamp: new Date().getTime(),
+            parentId: "",
+            chiildrenIds: [],
+            files: [],
+            info: {
+                eval_count: 0,
+                eval_duration: 0,
+                load_duration: 0,
+                prompt_eval_count: 0,
+                total_duration: 0,
+            },
+            ...by,
+        };
+        return {
+            status: get().status,
+            messages: [...state.messages, newMessage]
+        };
+    }),
     updateLastMessage: (by) =>
         set((state) => {
             const nextMessages = [...state.messages];
@@ -36,7 +56,7 @@ export const useMessageStore = create<MessageState>((set, get) => ({
 
             const newMessage = nextMessages.pop();
             if (!newMessage) return get();
-            return { status: get().status, messages: [...nextMessages, { role: newMessage.role, content: newMessage.content + by }] };
+            return { status: get().status, messages: [...nextMessages, { ...newMessage, content: newMessage.content + by }] };
         }),
     clearMessage: () => set(() => ({ status: "idle", messages: [] })),
 }));

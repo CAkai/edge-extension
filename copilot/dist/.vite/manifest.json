@@ -28,7 +28,7 @@
     "src": "content-script.ts-loader.js"
   },
   "src/apps/options/index.html": {
-    "file": "assets/index.html-DZr3IxGj.js",
+    "file": "assets/index.html-CQv9-0BD.js",
     "name": "index.html",
     "src": "src/apps/options/index.html",
     "isEntry": true,
@@ -54,7 +54,7 @@
     "isEntry": true
   },
   "src/apps/side-panel/index.html": {
-    "file": "assets/index.html-CSrMllaO.js",
+    "file": "assets/index.html-CecFZw-I.js",
     "name": "index.html",
     "src": "src/apps/side-panel/index.html",
     "isEntry": true,

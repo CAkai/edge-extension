@@ -55,6 +55,7 @@ export default function ChatBox() {
     // 每次 messages 更新後，都要將網頁滾動到最底部
     useEffect(() => {
         scrollToBottom(anchorRef.current!);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messages]);
 
     // 有時候 model 會是空的，無法發送 api，所以要檢查 messages, model
@@ -64,6 +65,7 @@ export default function ChatBox() {
             addMessage({ role: model, content: "" });
             ask();
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messages, model]);
 
     // 因為 getChatHistory 有用到 Hook，所以必須在這裡宣告
@@ -71,13 +73,9 @@ export default function ChatBox() {
         // 取得 chat.id 對應的聊天紀錄
         const history = await fetchChat(user.webui.token, chat.value);
         if (!history) return;
+        console.log("history", history);
         setModel(history.chat.models[0])
-        setMessages(history.chat.messages.map((msg) => {
-            return {
-                role: msg.role,
-                content: msg.content,
-            }
-        }));
+        setMessages(history.chat.messages);
     };
 
     return (
