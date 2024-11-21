@@ -10,7 +10,7 @@
         "128": "logo/128.png"
     },
     "host_permissions": ["<all_urls>"],
-    "permissions": ["tabs", "activeTab", "scripting", "storage", "sidePanel", "contextMenus"],
+    "permissions": ["notifications", "tabs", "activeTab", "scripting", "storage", "sidePanel", "contextMenus"],
     "background": {
         "service_worker": "src/apps/server/index.ts"
     },
@@ -28,12 +28,11 @@
     ],
     "web_accessible_resources": [
         {
-            "resources": ["*.js", "*.css", "*.svg", "logo/128.png", "logo/48.png", "logo/16.png"],
+            "resources": ["*.js", "*.css", "*.svg", "logo/128.png", "logo/48.png", "logo/16.png", "images/*"],
             "matches": ["<all_urls>"]
         }
     ],
     "side_panel": {
         "default_path": "src/apps/side-panel/index.html"
     }
-  }
-  
+}

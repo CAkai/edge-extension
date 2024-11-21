@@ -13,6 +13,7 @@
     "<all_urls>"
   ],
   "permissions": [
+    "notifications",
     "tabs",
     "activeTab",
     "scripting",
@@ -52,6 +53,7 @@
         "logo/128.png",
         "logo/48.png",
         "logo/16.png",
+        "images/*",
         "assets/content-script.ts-l0sNRNKZ.js"
       ],
       "use_dynamic_url": false

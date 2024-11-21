@@ -46,6 +46,9 @@
     "login": {
         "message": "Log In"
     },
+    "noLogin": {
+        "message": "Not logged in"
+    },
     "loginTitle": {
         "message": "Please log in your iCloud account"
     },
@@ -108,6 +111,14 @@
     "uploadImageToICloud": {
         "message": "upload image to iCloud",
         "description": "upload image to iCloud"
+    },
+    "uploadSuccess": {
+        "message": "upload successfully",
+        "description": "upload success"
+    },
+    "uploadFailed": {
+        "message": "upload failed",
+        "description": "upload failed"
     },
     "hasUser_bool": {
         "message": "Could Auto-Login：$bool$",

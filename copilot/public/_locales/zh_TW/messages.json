@@ -48,6 +48,9 @@
     "login": {
         "message": "登入"
     },
+    "noLogin": {
+        "message": "未登入"
+    },
     "loginTitle": {
         "message": "請登入您的 iCloud 帳號",
         "description": "登入標題"
@@ -107,6 +110,14 @@
     "uploadImageToICloud": {
         "description": "上傳圖片到 iCloud",
         "message": "上傳圖片到 iCloud"
+    },
+    "uploadSuccess": {
+        "message": "上傳成功",
+        "description": "upload success"
+    },
+    "uploadFailed": {
+        "message": "上傳失敗",
+        "description": "upload failed"
     },
     "hasUser_bool": {
         "message": "能否自動登入：$bool$",
