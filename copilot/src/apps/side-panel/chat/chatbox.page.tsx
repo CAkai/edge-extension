@@ -73,7 +73,6 @@ export default function ChatBox() {
         // 取得 chat.id 對應的聊天紀錄
         const history = await fetchChat(user.webui.token, chat.value);
         if (!history) return;
-        console.log("history", history);
         setModel(history.chat.models[0])
         setMessages(history.chat.messages);
     };

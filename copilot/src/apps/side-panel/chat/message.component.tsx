@@ -50,7 +50,6 @@ type MessageBlockProps = {
 }
 
 export default function MessageBlock({ message }: MessageBlockProps) {
-    console.log(message);
     return <div key={message.id} className={`p-1 flex flex-col ${message.role === 'user' ? 'items-end' : 'items-start'}`}>
         {!message?.files?.length ?
             null :
