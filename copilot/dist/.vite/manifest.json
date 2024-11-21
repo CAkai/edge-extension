@@ -54,7 +54,7 @@
     "isEntry": true
   },
   "src/apps/side-panel/index.html": {
-    "file": "assets/index.html-CpZ0ang-.js",
+    "file": "assets/index.html-CSrMllaO.js",
     "name": "index.html",
     "src": "src/apps/side-panel/index.html",
     "isEntry": true,
@@ -65,7 +65,7 @@
       "src/apps/side-panel/content-script.ts"
     ],
     "css": [
-      "assets/index-B6u0paoi.css"
+      "assets/index-BS-AYmkb.css"
     ]
   }
 }
