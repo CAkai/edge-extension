@@ -14,6 +14,7 @@ export type ThemeProps = {
     bgColorUserFile: string;
     bgColorBot: string;
     bgColorBotFile: string;
+    inputBorderColor: string;
     // ReactMarkdown 的樣式
     mdProseStyle: string;
     mdCodeHeaderBgColor: string;
@@ -29,6 +30,7 @@ const THEME_MAP: Record<ThemeType, ThemeProps> = {
         bgColorUserFile: 'bg-gray-300',
         bgColorBot: 'bg-slate-50',
         bgColorBotFile: 'bg-slate-100',
+        inputBorderColor: 'border-gray-300',
         mdProseStyle: "prose-zinc",
         mdCodeHeaderBgColor: "bg-zinc-100",
         mdCodeTextColor: "text-zinc-600",
@@ -41,6 +43,7 @@ const THEME_MAP: Record<ThemeType, ThemeProps> = {
         bgColorUserFile: 'bg-gray-600',
         bgColorBot: 'bg-gray-800',
         bgColorBotFile: 'bg-gray-700',
+        inputBorderColor: 'border-gray-700',
         mdProseStyle: "prose-invert",
         mdCodeHeaderBgColor: "bg-zinc-900",
         mdCodeTextColor: "text-zinc-400",

@@ -8,7 +8,7 @@ import { useMessageStore } from "../../../libs/chat/chat.store";
 export default function HistoryChat({ onSelect }: { onSelect: DropdownSelectEvent }) {
     const [selectedItem, setSelectedItem] = useState<DropdownItem | undefined>(undefined);
     const [items, setItems] = useState<DropdownItem[]>([]);
-    const {isIdle, clearMessage} = useMessageStore();
+    const isIdle = useMessageStore(state => state.isIdle);
 
     // 原本是用 useQuery，但因為執行太頻繁，出現 minify react error #301，
     // 所以改用 useEffect 來取得資料
@@ -33,13 +33,7 @@ export default function HistoryChat({ onSelect }: { onSelect: DropdownSelectEven
     const handleSelect = (newItem: DropdownItem) => {
         const nextItem = { ...newItem };
         setSelectedItem(nextItem);
-
-        // 如果是新對話，要清空聊天紀錄
-        if (newItem.value === "") {
-            clearMessage();
-        } else {
-            onSelect(nextItem);
-        }
+        onSelect(nextItem);
     }
 
     return (

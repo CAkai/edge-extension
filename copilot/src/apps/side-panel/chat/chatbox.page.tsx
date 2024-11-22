@@ -12,6 +12,7 @@ import MessageInput from "./message-input.component";
 import { NAVIGATION_NAME } from "../../../libs/navigation/navigation.constant";
 import { readStream } from "../../../packages/stream";
 import { ChatCompletionResponse } from "../../../libs/chat/chat.type";
+import NewChat from "./new-chat.component";
 
 function scrollToBottom(el: HTMLElement) {
     el.scrollIntoView({ behavior: "auto", block: "end" });
@@ -73,7 +74,6 @@ export default function ChatBox() {
         // 取得 chat.id 對應的聊天紀錄
         const history = await fetchChat(user.webui.token, chat.value);
         if (!history) return;
-        console.log(history);
         setModel(history.chat.models[0])
         setMessages(history.chat.messages);
     };
@@ -91,7 +91,10 @@ export default function ChatBox() {
             <div className="flex flex-col justify-end">
                 <div className="flex justify-between mb-1">
                     <ModelList model={model} onSelect={(newModel) => setModel(newModel.value)} />
+                    <div className="flex gap-1">
                     <HistoryChat onSelect={getChatHisotry} />
+                    <NewChat />
+                    </div>
                 </div>
                 <MessageInput />
             </div>

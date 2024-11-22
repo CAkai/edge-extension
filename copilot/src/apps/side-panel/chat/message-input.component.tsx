@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import SendIcon from "../../../../public/svg/send.svg?react";
 import { useMessageStore } from "../../../libs/chat/chat.store";
+import { getThemeProps, themeStorage } from "../../../libs/theme";
+import { useStorage } from "../../../packages/storage";
 
 export default function MessageInput() {
     const [text, setText] = useState('');
     const {addMessage, wait, isIdle} = useMessageStore();
+    const theme = getThemeProps(useStorage(themeStorage));
 
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value);
@@ -46,7 +49,7 @@ export default function MessageInput() {
     };
 
     return (
-        <div className="rounded-lg border border-black w-full h-28 relative">
+        <div className={`rounded-lg border ${theme.inputBorderColor} w-full h-28 relative`}>
             <textarea
                 // 這邊加 bg-transparent 是因為 textarea 會有一個預設的背景色，這樣會切到 border 的四個角
                 className="overflow-hidden text-base w-full h-full px-2 py-1 bg-transparent"
