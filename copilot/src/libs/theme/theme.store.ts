@@ -7,13 +7,18 @@ export const themeStorage = createStorage<ThemeType>('theme-storage-key', 'light
     liveUpdate: true,
 });
 
-type ThemeProps = {
+export type ThemeProps = {
     bgColor: string;
     textColor: string;
     bgColorUser: string;
     bgColorUserFile: string;
     bgColorBot: string;
     bgColorBotFile: string;
+    // ReactMarkdown 的樣式
+    mdProseStyle: string;
+    mdCodeHeaderBgColor: string;
+    mdCodeTextColor: string;
+    mdBgColor: string;
 }
 
 const THEME_MAP: Record<ThemeType, ThemeProps> = {
@@ -24,6 +29,10 @@ const THEME_MAP: Record<ThemeType, ThemeProps> = {
         bgColorUserFile: 'bg-gray-300',
         bgColorBot: 'bg-slate-50',
         bgColorBotFile: 'bg-slate-100',
+        mdProseStyle: "prose-zinc",
+        mdCodeHeaderBgColor: "bg-zinc-100",
+        mdCodeTextColor: "text-zinc-600",
+        mdBgColor: "bg-gray-100",
     },
     dark: {
         bgColor: 'bg-gray-800',
@@ -32,6 +41,10 @@ const THEME_MAP: Record<ThemeType, ThemeProps> = {
         bgColorUserFile: 'bg-gray-600',
         bgColorBot: 'bg-gray-800',
         bgColorBotFile: 'bg-gray-700',
+        mdProseStyle: "prose-invert",
+        mdCodeHeaderBgColor: "bg-zinc-900",
+        mdCodeTextColor: "text-zinc-400",
+        mdBgColor: "bg-zinc-900",
     },
 };
 

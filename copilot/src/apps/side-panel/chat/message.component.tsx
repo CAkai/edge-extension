@@ -11,8 +11,9 @@ import { useStorage } from "../../../packages/storage";
 import { getThemeProps, themeStorage } from "../../../libs/theme";
 import FileButton from "../../../components/file-button.component";
 import FileTagButton from "../../../components/file-tag-button.component";
+import { ThemeProps } from "../../../libs/theme/theme.store";
 
-function components() {
+function components(theme: ThemeProps) {
     return {
         pre: ({ children }: any) => <pre className="not-prose">{children}</pre>,
         code({ className, children, ...props }: any) {
@@ -21,10 +22,11 @@ function components() {
                 const id = Math.random().toString(36).substring(2, 9);
                 return (
                     <div className="not-prose rounded-md border">
-                        <div className="flex h-12 items-ctner justify-between bg-zinc-100 dark:bg-zinc-900">
+                        {/* 加 overflow 是因為有些內容會超出訊息框 */}
+                        <div className={`flex h-12 items-ctner justify-between ${theme.mdCodeHeaderBgColor}`}>
                             <div className="px-2 flex items-center gap-2">
                                 <TermianlIcon style={{ width: '20px', height: '20px' }} />
-                                <p className="text-sm text-zinc-600 dark:text-zinc-400">
+                                <p className={`text-sm ${theme.mdCodeTextColor}`}>
                                     {match[1]}
                                 </p>
                             </div>
@@ -40,7 +42,7 @@ function components() {
             }
             else {
                 return (
-                    <code className="not-prose rounded bg-gray-100 px-1 dark:bg-zinc-900" {...props}>
+                    <code className={`not-prose roundedpx-1 ${theme.mdBgColor}`} {...props}>
                         {children}
                     </code>
                 )
@@ -90,10 +92,10 @@ export default function MessageBlock({ message }: MessageBlockProps) {
                 }`}>
             {message.content === '' ? <LoadingIcon /> :
                 <ReactMarkdown
-                    className="prose prose-zinc max-w-none dark:prose-invert"
+                    className={`prose ${theme.mdProseStyle} max-w-none overflow-auto`}
                     remarkPlugins={[remarkGfm]}
                     rehypePlugins={[rehypeHighlight]}
-                    components={components()}>
+                    components={components(theme)}>
                     {message.content}
                 </ReactMarkdown>}
             {generateBotFile()}
