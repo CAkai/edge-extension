@@ -36,7 +36,7 @@ export const userStorage: UserStorage = {
 
         LogInfo("正在檢查使用者資料...");
         // 如果已經有 access_token 和 webui_token，表示已經登入過了，直接返回
-        if (!user.icloud.access_token && !user.webui.token) return user;
+        if (user.icloud.access_token && user.webui.token) return user;
 
         // 取得 icloud 資料
         // 這裡不需要去 chrome.storage 取得 icloud token 是因為 storage 就是以 chrome.storage 操作的

@@ -10,6 +10,7 @@ import { z } from 'zod';
 // fetchUserInfo 會到 iCloud 伺服器，依照傳入的 token 取得使用者資料。
 export async function fetchCloudUser(token: string): Promise<iCloudUser | null> {
     LogInfo("正在取得 iCloud 使用者資料...");
+    console.log("token", token);
     return await fetch(import.meta.env.VITE_ICLOUD_URL + "api/v1/auth", {
         method: "GET",
         headers: {
