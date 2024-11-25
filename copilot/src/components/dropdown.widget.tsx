@@ -89,7 +89,7 @@ export default function Dropdown({ items, selected, direction, children, disable
             </div>
             <div
                 style={{ width: width, maxHeight: height }}
-                className={`absolute ${DROPDOWN_ORIGIN[direction]} z-10 mt-2 ${ANIMA_DIRECTION[direction]} rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none scale-animation ${isExpanded ? 'scale-on' : 'scale-off'
+                className={`absolute overflow-auto no-scrollbar ${DROPDOWN_ORIGIN[direction]} z-10 mt-2 ${ANIMA_DIRECTION[direction]} rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none scale-animation ${isExpanded ? 'scale-on' : 'scale-off'
                     }`}
                 role="menu"
                 aria-orientation="vertical"

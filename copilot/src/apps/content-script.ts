@@ -1,8 +1,3 @@
-import { i18n } from "../libs/alias";
-import { userStorage } from "../libs/user";
-import { isNoUser } from "../libs/user/user.type";
-import { LogSystem } from "../packages/log";
-
 /*
 Content scripts 是在 Web 頁面內運行的 javascript 腳本。通過使用標準的DOM，它們可以獲取瀏覽器所訪問頁面的詳細信息，並可以修改這些信息。下面是 content script 可以做的一些事情範例：
 
@@ -20,6 +15,11 @@ Content scripts 是在 Web 頁面內運行的 javascript 腳本。通過使用�
 ！ 這意味著 content script 可以訪問網頁的 DOM，但不能訪問擴展的 API。
 ！ 此外， console.log 會顯示再網頁的 console 中，而不是在擴展的背景頁中。
 */
+import { i18n } from "../libs/alias";
+import { userStorage } from "../libs/user";
+import { isNoUser } from "../libs/user/user.type";
+import { LogSystem } from "../packages/log";
+
 // 自動登入功能。
 // 此功能放在背景服務的話，userStorage 只會在背景服務啟動時執行一次，導致點錯頁面就無法自動登入
 userStorage.load().then(user => {
