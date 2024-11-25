@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { userStorage } from '../../libs/user';
+import { User, userStorage } from '../../libs/user';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useStorage } from '../../packages/storage';
 import Auth from './auth/auth.page';
@@ -10,13 +10,17 @@ import { NAVIGATION_NAME } from '../../libs/navigation/navigation.constant';
 
 const queryClient = new QueryClient();
 
+function isLogin(user: User) {
+    return user.icloud.access_token && user.webui.token;
+}
+
 export default function SidePanel() {
     // 綁定 SidePanel 到背景頁，讓 connect 事件能夠觸發
     chrome.runtime.connect({ name: NAVIGATION_NAME.Sidepanel });
     navStorage.set(NAVIGATION_NAME.Sidepanel);
     const user = useStorage(userStorage);
 
-    return <div className="h-full w-full">{!user.icloud.access_token ? <Auth /> : <ChatBox />}</div>;
+    return <div className="h-full w-full">{isLogin(user) ? <ChatBox /> : <Auth />}</div>;
 }
 
 createRoot(document.getElementById('root')!).render(

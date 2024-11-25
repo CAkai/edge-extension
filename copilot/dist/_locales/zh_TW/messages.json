@@ -48,6 +48,9 @@
     "login": {
         "message": "登入"
     },
+    "logining": {
+        "message": "登入中"
+    },
     "noLogin": {
         "message": "未登入"
     },

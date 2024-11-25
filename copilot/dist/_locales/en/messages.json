@@ -46,6 +46,9 @@
     "login": {
         "message": "Log In"
     },
+    "logining": {
+        "message": "Logging in"
+    },
     "noLogin": {
         "message": "Not logged in"
     },
