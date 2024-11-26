@@ -49,9 +49,7 @@ export default function ChatBox() {
         }
  
         for await (const v of readStream<ChatCompletionResponse>(reader)) {
-            console.log(v);
-            // updateLastMessage(v.choices?.[0]?.delta?.content ?? "");
-            updateLastMessage("");
+            updateLastMessage(v.choices?.[0]?.delta?.content ?? "");
         }
         LogDebug("lastMessage", lastMessage()?.content);
         done();
