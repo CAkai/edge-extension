@@ -79,8 +79,7 @@ export default function ChatBox() {
         const history = await fetchChat(user.webui.token, chat.value);
         if (!history) return;
         setMessages(history.chat.messages);
-        // setModel(history.chat.models[0]);
-        setModel("abbbb");
+        setModel(history.chat.models[0]);
     };
 
     return (
