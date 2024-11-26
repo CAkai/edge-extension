@@ -82,7 +82,7 @@ export default function MessageBlock({ message }: MessageBlockProps) {
         if (!message?.citations?.length) return null;
 
         return (
-            <div className="flex text-xs font-medium items-center">
+            <div className="flex text-xs font-medium items-center gap-1">
                 {message.citations.map((c, i) => {
                     return <FileTagButton index={i + 1} name={c.source.name} />;
                 })}

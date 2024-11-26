@@ -2,14 +2,14 @@ import { LogDebug } from "../../packages/log";
 import { userStorage } from "../user";
 
 // downloadFile 允許
-export function downloadFile(dataURL: string, filename: string): Promise<File> {
+export function downloadFile(dataURL: string, filename: string, filetype: string): Promise<File> {
     if (!dataURL.startsWith("data:") && !dataURL.startsWith("blob:") && !dataURL.startsWith("http")) {
         return Promise.reject("Invalid data URL");
     }
 
     return fetch(dataURL)
         .then(res => res.blob())
-        .then(blob => new File([blob], filename, { type: blob.type }));
+        .then(blob => new File([blob], filename, { type: filetype }));
 }
 
 export async function uploadFileToCloud(file: File) {
@@ -40,8 +40,8 @@ export async function uploadFileToCloud(file: File) {
         });
 }
 
-export function downloadFileToCloud(dataURL: string, filename: string) {
-    return downloadFile(dataURL, filename)
+export function downloadFileToCloud(dataURL: string, filename: string, fileType: string) {
+    return downloadFile(dataURL, filename, fileType)
         .then(file => uploadFileToCloud(file))
         .then((res: {message: string; error: string}) => res.error === "" ? res.message : Promise.reject(res.error));
 }

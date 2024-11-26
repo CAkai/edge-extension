@@ -114,6 +114,9 @@
         "description": "上傳圖片到 iCloud",
         "message": "上傳圖片到 iCloud"
     },
+    "uploadImageToChat": {
+        "message": "上傳圖片到對話"
+    },
     "uploadSuccess": {
         "message": "上傳成功",
         "description": "upload success"

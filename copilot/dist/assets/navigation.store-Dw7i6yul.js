@@ -1,1 +1,0 @@
-import{a as o,S as n}from"./index-lOtXKBCI.js";var t=(a=>(a.Root="",a.Sidepanel="side-panel",a.SidepanelChat="side-panel/chat",a.SidepanelAuth="side-panel/auth",a))(t||{});const e=o("navigation-storage-key","",{storageEnum:n.Local,liveUpdate:!0}),s={...e,clear:async()=>{await e.set(t.Root)}};export{t as N,s as n};

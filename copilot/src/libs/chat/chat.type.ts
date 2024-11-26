@@ -6,10 +6,15 @@ export type ChatBase = {
     created_at: number;
 }
 
+export type MessageContent = {
+    type: "text" | "image_url";
+    content?: string;
+    image_url?: {url: string};
+}
 export type Message = {
     role: string
-    content: string
-    images?: Uint8Array[] | string[]
+    content: string | MessageContent[]
+    images?: ChatFileImage[]
     tool_calls?: ToolCall[]
 }
 
@@ -126,7 +131,7 @@ type ChatCitationMetadata = {
     embedding_config: string;
 }
 
-type ChatFile = ChatFileImage | ChatFileNormal;
+export type ChatFile = ChatFileImage | ChatFileNormal;
 
 type ChatFileImage = {
     type: "image";

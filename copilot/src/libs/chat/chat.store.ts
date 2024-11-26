@@ -29,12 +29,18 @@ export const useMessageStore = create<MessageState>((set, get) => ({
 
     setMessages: (by) => set(() => ({ status: "idle", messages: [...by] })),
     addMessage: (by) => set((state) => {
+        // 這裡要處理 content 是 string 或是 array 的情況
+        let content: string;
+        if (typeof by.content === "string") content = by.content;
+        else content = by.content.filter(e => e.type === "text").map(e => e.content).join("");
+        // 建立新的 MessageInfo
         const newMessage: MessageInfo = {
+            ...by,
             id: crypto.randomUUID(),
             timestamp: new Date().getTime(),
             parentId: "",
             chiildrenIds: [],
-            files: [],
+            files: [...by.images ?? []],
             info: {
                 eval_count: 0,
                 eval_duration: 0,
@@ -42,7 +48,7 @@ export const useMessageStore = create<MessageState>((set, get) => ({
                 prompt_eval_count: 0,
                 total_duration: 0,
             },
-            ...by,
+            content: content as string,
         };
         return {
             status: get().status,

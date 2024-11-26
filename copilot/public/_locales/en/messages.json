@@ -115,6 +115,10 @@
         "message": "upload image to iCloud",
         "description": "upload image to iCloud"
     },
+    "uploadImageToChat": {
+        "message": "upload image to chat",
+        "description": "upload image to chat"
+    },
     "uploadSuccess": {
         "message": "upload successfully",
         "description": "upload success"

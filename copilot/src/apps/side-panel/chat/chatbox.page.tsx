@@ -11,7 +11,7 @@ import { useStorage } from "../../../packages/storage";
 import MessageInput from "./message-input.component";
 import { NAVIGATION_NAME } from "../../../libs/navigation/navigation.constant";
 import { readStream } from "../../../packages/stream";
-import { ChatCompletionResponse } from "../../../libs/chat/chat.type";
+import { ChatCompletionResponse, MessageContent } from "../../../libs/chat/chat.type";
 import NewChat from "./new-chat.component";
 import { LogDebug, LogInfo } from "../../../packages/log";
 
@@ -38,7 +38,18 @@ export default function ChatBox() {
                 return {
                     // 因為 MessageInfo.role 是存模型名稱，所以這裡要轉換，否則 Open WebUI 給的內容會怪怪的。
                     role: msg.role !== "user" ? "assistant" : "user",
-                    content: msg.content,
+                    content: [
+                        {
+                            type: "text",
+                            content: msg.content,
+                        },
+                        ...msg.files?.filter(e => e.type === "image").map(e => ({
+                            type: "image_url",
+                            image_url: {
+                                url: e.url,
+                            }
+                        })) ?? [],
+                    ] as MessageContent[],
                 }
             }),
         });
