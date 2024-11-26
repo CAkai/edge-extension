@@ -14,6 +14,7 @@ export interface MessageState {
     addMessage: (by: Message) => void;
     updateLastMessage: (by: string) => void;
     clearMessage: () => void;
+    lastMessage: () => MessageInfo | undefined;
 }
 
 export const useMessageStore = create<MessageState>((set, get) => ({
@@ -59,4 +60,9 @@ export const useMessageStore = create<MessageState>((set, get) => ({
             return { status: get().status, messages: [...nextMessages, { ...newMessage, content: newMessage.content + by }] };
         }),
     clearMessage: () => set(() => ({ status: "idle", messages: [] })),
+    lastMessage: () => {
+        const messages = get().messages;
+        if (messages.length === 0) return undefined;
+        return messages[messages.length - 1];
+    },
 }));

@@ -13,7 +13,7 @@ import { NAVIGATION_NAME } from "../../../libs/navigation/navigation.constant";
 import { readStream } from "../../../packages/stream";
 import { ChatCompletionResponse } from "../../../libs/chat/chat.type";
 import NewChat from "./new-chat.component";
-import { LogInfo } from "../../../packages/log";
+import { LogDebug, LogInfo } from "../../../packages/log";
 
 function scrollToBottom(el: HTMLElement) {
     el.scrollIntoView({ behavior: "auto", block: "end" });
@@ -25,7 +25,7 @@ export default function ChatBox() {
     const user = useStorage(userStorage);
     // 因為 hook 只能放在最上層，所以這裡要宣告
     // 否則會出現 invalid hook call
-    const { messages, setMessages, addMessage, isWaiting, pending, done, updateLastMessage } = useMessageStore();
+    const { messages, setMessages, addMessage, isWaiting, pending, done, updateLastMessage, lastMessage } = useMessageStore();
     const anchorRef = createRef<HTMLDivElement>();
 
 
@@ -35,7 +35,8 @@ export default function ChatBox() {
             stream: true,
             messages: messages.map((msg) => {
                 return {
-                    role: msg.role,
+                    // 因為 MessageInfo.role 是存模型名稱，所以這裡要轉換，否則 Open WebUI 給的內容會怪怪的。
+                    role: msg.role !== "user" ? "assistant" : "user",
                     content: msg.content,
                 }
             }),
@@ -48,10 +49,9 @@ export default function ChatBox() {
         }
  
         for await (const v of readStream<ChatCompletionResponse>(reader)) {
-            LogInfo("Chat completion response", v);
             updateLastMessage(v.choices?.[0]?.delta?.content ?? "");
         }
-        
+        LogDebug("lastMessage", lastMessage()?.content);
         done();
 
     };
