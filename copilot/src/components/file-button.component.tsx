@@ -18,7 +18,7 @@ function calculateSize(size: number): string {
 export default function FileButton({ name, size }: FileButtonProps) {
     return (
         <div className="self-end">
-            <button className="relative group p-1.5 w-60 flex items-center bg-white dark:bg-gray-850  rounded-2xl text-left" type="button">
+            <button className="relative group p-1.5 w-60 flex items-center bg-white dark:bg-gray-850 rounded-2xl text-left" type="button">
                 <div className="p-3 bg-black/20 dark:bg-white/10 text-white rounded-xl">
                     <FileIcon />
                 </div>

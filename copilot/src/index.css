@@ -1649,6 +1649,10 @@ video {
   padding: 1rem;
 }
 
+.p-0\.5 {
+  padding: 0.125rem;
+}
+
 .px-1 {
   padding-left: 0.25rem;
   padding-right: 0.25rem;
@@ -1701,6 +1705,10 @@ video {
 
 .pb-\[1px\] {
   padding-bottom: 1px;
+}
+
+.pb-1 {
+  padding-bottom: 0.25rem;
 }
 
 .text-left {
@@ -1983,6 +1991,11 @@ body {
 .hover\:bg-zinc-200:hover {
   --tw-bg-opacity: 1;
   background-color: rgb(228 228 231 / var(--tw-bg-opacity, 1));
+}
+
+.hover\:bg-gray-200:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgb(229 231 235 / var(--tw-bg-opacity, 1));
 }
 
 .focus\:outline-none:focus {

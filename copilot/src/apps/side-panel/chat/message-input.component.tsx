@@ -11,6 +11,7 @@ import { ContextMenuOption } from '../../server/contextmenu.service';
 import { ChatFile } from '../../../libs/chat/chat.type';
 import ImageButton from '../../../components/image-button.component';
 import FileButton from '../../../components/file-button.component';
+import FileUploadButton from '../../../components/file-upload-button.component';
 
 export default function MessageInput() {
     const [text, setText] = useState('');
@@ -101,6 +102,19 @@ export default function MessageInput() {
         // 因為 shift + Enter 預設就是換行，所以這邊不需要做任何事情
     };
 
+    const handleUpload = async (e: Promise<unknown>[]) => {
+        const images = await Promise.all(e);
+        setAttachments(prev => [
+            ...prev,
+            ...images.map(
+                (image) => {
+                    const { data } = image as { name: string; data: string };
+                    return { type: 'image', url: data } as ChatFile;
+                }
+            ),
+        ]);
+    };
+
     return (
         <div className={`rounded-lg border ${theme.inputBorderColor} w-full relative`}>
             {attachments.length > 0 && (
@@ -134,6 +148,9 @@ export default function MessageInput() {
                 value={text}
                 onKeyDown={handleKeyDown}
                 onChange={handleChange}></textarea>
+            <div className="flex gap-1">
+                <FileUploadButton onUpload={handleUpload} />
+            </div>
             <button
                 className="absolute bottom-1 right-1"
                 disabled={!isIdle()}
