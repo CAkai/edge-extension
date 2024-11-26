@@ -13,6 +13,7 @@ import { NAVIGATION_NAME } from "../../../libs/navigation/navigation.constant";
 import { readStream } from "../../../packages/stream";
 import { ChatCompletionResponse } from "../../../libs/chat/chat.type";
 import NewChat from "./new-chat.component";
+import { LogInfo } from "../../../packages/log";
 
 function scrollToBottom(el: HTMLElement) {
     el.scrollIntoView({ behavior: "auto", block: "end" });
@@ -41,11 +42,13 @@ export default function ChatBox() {
         });
 
         if (!reader) {
+            LogInfo("Chat completion response is null");
             done();
             return;
         }
  
         for await (const v of readStream<ChatCompletionResponse>(reader)) {
+            LogInfo("Chat completion response", v);
             updateLastMessage(v.choices?.[0]?.delta?.content ?? "");
         }
         
