@@ -1,5 +1,6 @@
 import { i18n, notify } from "../../libs/alias";
 import { downloadFileToCloud } from "../../libs/file/file.api";
+import { chromeNotify } from "../../packages/chrome/notification";
 import { openSidePanel } from "./sidepanel.service";
 
 type ContextMenu = {
@@ -14,58 +15,38 @@ export enum ContextMenuOption {
     ASK = "icloud-copilot-contextmenu-ask",
     TRANSLATE = "icloud-copilot-contextmenu-translate",
     UPLOAD_IMAGE_TO_ICLOUD = "icloud-copilot-contextmenu-upload-image",
+    UPLOAD_IMAGE_TO_CHAT = "icloud-copilot-contextmenu-upload-image-to-chat",
     NO_TOKEN = "icloud-copilot-no-token",
 }
 
 function uploadImageToICloud(dataURL: string, filename: string) {
     downloadFileToCloud(dataURL, filename)
     .then(() => {
-        chrome.notifications.create(
+        chromeNotify(
+            "success",
             `${ContextMenuOption.UPLOAD_IMAGE_TO_ICLOUD}-http`,
-            {
-                type: "basic",
-                iconUrl: "images/check.png",
-                title: i18n("uploadImageToICloud"),
-                message: i18n("uploadSuccess"),
-            },
-            (notificationId) => {
-                setTimeout(() => {
-                    chrome.notifications.clear(notificationId);
-                }, 3000);
-            });
+            i18n("uploadImageToICloud"),
+            i18n("uploadSuccess"),
+        );
     })
     .catch(async (err: string) => {
         if (err === "no token") {
             // 發送 未登入 通知後，打開側邊欄
-            chrome.notifications.create(
+            chromeNotify(
+                "error",
                 ContextMenuOption.NO_TOKEN,
-                {
-                    type: "basic",
-                    iconUrl: "images/cancel.png",
-                    title: i18n("noLogin"),
-                    message: i18n("loginTitle"),
-                },
-                (notificationId) => {
-                    setTimeout(() => {
-                        chrome.notifications.clear(notificationId);
-                    }, 5000);
-                });
+                i18n("noLogin"),
+                i18n("loginTitle"),
+            );
             return;
         }
 
-        chrome.notifications.create(
+        chromeNotify(
+            "error",
             `${ContextMenuOption.UPLOAD_IMAGE_TO_ICLOUD}-http`,
-            {
-                type: "basic",
-                iconUrl: "images/cancel.png",
-                title: i18n("uploadImageToICloud"),
-                message: i18n("uploadFailed"),
-            },
-            (notificationId) => {
-                setTimeout(() => {
-                    chrome.notifications.clear(notificationId);
-                }, 5000);
-            });
+            i18n("uploadImageToICloud"),
+            i18n("uploadFailed"),
+        );
     })
 }
 
