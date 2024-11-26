@@ -21,6 +21,7 @@ export default function ModelList({ model, onSelect }: ModelListProps) {
         const fetchModels = async () => {
             const user = await userStorage.get();
             const data = await getModels(user.webui.token);
+            if (!data) return Promise.reject('No data');
             return data.map((e) => {
                 return {
                     id: crypto.randomUUID(),
@@ -33,6 +34,10 @@ export default function ModelList({ model, onSelect }: ModelListProps) {
             setModels(models);
             setSelectedModel(models[0]);
             onSelect?.(models[0]);
+        })
+        .catch(() => {
+            // 如果沒有資料，表示沒有成功登入 Open WebUI，必須要重新登入。
+            userStorage.clear();
         });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

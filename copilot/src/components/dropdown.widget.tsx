@@ -1,17 +1,18 @@
-import React, { createRef, useState, useEffect } from "react";
-import "./dropdown.widget.css";
+import React, { createRef, useState, useEffect } from 'react';
+import './dropdown.widget.css';
+import { i18n } from '../libs/alias';
 
 export type DropdownItem = {
     id: string;
     label: string;
     value: string;
-}
+};
 
 export type DropdownSelectEvent = (item: DropdownItem) => void | Promise<void>;
 
 type DropdownProps = {
     items: DropdownItem[];
-    direction: "tr" | "br" | "tl" | "bl";
+    direction: 'tr' | 'br' | 'tl' | 'bl';
     className?: string;
     children?: React.ReactNode;
     selected?: DropdownItem;
@@ -19,25 +20,35 @@ type DropdownProps = {
     height?: string;
     disabled?: boolean;
     onSelect?: DropdownSelectEvent;
-}
+};
 
 // 下拉式列表的展開方向
 const ANIMA_DIRECTION = {
-    tr: "origin-bottom-left",
-    br: "origin-top-left",
-    tl: "origin-bottom-right",
-    bl: "origin-top-right",
-}
+    tr: 'origin-bottom-left',
+    br: 'origin-top-left',
+    tl: 'origin-bottom-right',
+    bl: 'origin-top-right',
+};
 
 // 下拉式列表的位置
 const DROPDOWN_ORIGIN = {
-    tr: "left-0 bottom-[2rem]",
-    tl: "right-0 bottom-[2rem]",
-    br: "left-0 top-[1.5rem]",
-    bl: "right-0 top-[1.5rem]",
-}
+    tr: 'left-0 bottom-[2rem]',
+    tl: 'right-0 bottom-[2rem]',
+    br: 'left-0 top-[1.5rem]',
+    bl: 'right-0 top-[1.5rem]',
+};
 
-export default function Dropdown({ items, selected, direction, children, disabled=false, className="", width="fit-content", height="200px", onSelect }: DropdownProps) {
+export default function Dropdown({
+    items,
+    selected,
+    direction,
+    children,
+    disabled = false,
+    className = '',
+    width = 'fit-content',
+    height = '200px',
+    onSelect,
+}: DropdownProps) {
     const clickOutsideRef = createRef<HTMLDivElement>();
     const [isExpanded, setIsExpanded] = useState(false);
     const [selectedItem, setSelectedItem] = useState(selected ?? items[0]);
@@ -73,8 +84,9 @@ export default function Dropdown({ items, selected, direction, children, disable
                     onClick={() => setIsExpanded(!isExpanded)}>
                     {children}
                     <svg
-                        className={`-mr-1 h-5 w-5 text-gray-400 transform transition-transform duration-300 ${isExpanded ? '-rotate-180' : ''
-                            }`}
+                        className={`-mr-1 h-5 w-5 text-gray-400 transform transition-transform duration-300 ${
+                            isExpanded ? '-rotate-180' : ''
+                        }`}
                         viewBox="0 0 20 20"
                         fill="currentColor"
                         aria-hidden="true"
@@ -88,37 +100,44 @@ export default function Dropdown({ items, selected, direction, children, disable
                 </button>
             </div>
             <div
-                style={{ width: width, maxHeight: height }}
-                className={`absolute overflow-auto no-scrollbar ${DROPDOWN_ORIGIN[direction]} z-10 mt-2 ${ANIMA_DIRECTION[direction]} rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none scale-animation ${isExpanded ? 'scale-on' : 'scale-off'
-                    }`}
+                style={{ maxWidth: width, maxHeight: height }}
+                className={`absolute overflow-auto no-scrollbar ${DROPDOWN_ORIGIN[direction]} z-10 mt-2 ${
+                    ANIMA_DIRECTION[direction]
+                } rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none scale-animation ${
+                    isExpanded ? 'scale-on' : 'scale-off'
+                }`}
                 role="menu"
                 aria-orientation="vertical"
                 aria-labelledby="menu-button"
                 tabIndex={-1}>
                 <div role="none">
-                    {items.map(item => {
-                        return (
-                            <button
-                                className={`w-full text-left block whitespace-nowrap overflow-hidden overflow-ellipsis px-4 py-2 text-sm text-gray-700 ${selectedItem?.value === item.value ? 'bg-gray-200' : ''
+                    {items.length > 0 ? (
+                        items.map(item => {
+                            return (
+                                <button
+                                    className={`w-full text-left block whitespace-nowrap overflow-hidden overflow-ellipsis px-4 py-2 text-sm text-gray-700 ${
+                                        selectedItem?.value === item.value ? 'bg-gray-200' : ''
                                     } hover:bg-gray-100`}
-                                key={item.id}
-                                role="menuitem"
-                                tabIndex={-1}
-                                title={item.label}
-                                onClick={() => {
-                                    setSelectedItem(item);
-                                    setIsExpanded(false);
-                                    if (onSelect) {
-                                        onSelect(item);
-                                    }
-                                }}>
-                                {item.label}
-                            </button>
-                        );
-                    })}
+                                    key={item.id}
+                                    role="menuitem"
+                                    tabIndex={-1}
+                                    title={item.label}
+                                    onClick={() => {
+                                        setSelectedItem(item);
+                                        setIsExpanded(false);
+                                        if (onSelect) {
+                                            onSelect(item);
+                                        }
+                                    }}>
+                                    {item.label}
+                                </button>
+                            );
+                        })
+                    ) : (
+                        <div className="text-center text-sm text-gray-500 px-4 py-2 block whitespace-nowrap">{i18n("noItem")}</div>
+                    )}
                 </div>
             </div>
         </div>
     );
-
 }
