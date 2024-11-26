@@ -12,6 +12,7 @@ import { getThemeProps, themeStorage } from '../../../libs/theme';
 import FileButton from '../../../components/file-button.component';
 import FileTagButton from '../../../components/file-tag-button.component';
 import { ThemeProps } from '../../../libs/theme/theme.store';
+import { i18n } from '../../../libs/alias';
 
 function components(theme: ThemeProps) {
     return {
@@ -77,7 +78,7 @@ export default function MessageBlock({ message }: MessageBlockProps) {
     };
 
     const generateBotFile = () => {
-        if (message.role === 'user') return null;
+        if (["user", "system-error"].includes(message.role)) return null;
         if (!message?.citations?.length) return null;
 
         return (
@@ -88,6 +89,14 @@ export default function MessageBlock({ message }: MessageBlockProps) {
             </div>
         );
     };
+
+    if (message.role === 'system-error') {
+        return (
+            <div key={message.id} className="flex justify-center p-1">
+                <p className="text-red-600 text-base">[{i18n("systemError")}] {message.content}</p>
+            </div>
+        )
+    }
 
     return (
         <div key={message.id} className={`p-1 flex flex-col ${message.role === 'user' ? 'items-end' : 'items-start'}`}>

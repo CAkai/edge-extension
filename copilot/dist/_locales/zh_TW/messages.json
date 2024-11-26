@@ -134,5 +134,18 @@
     },
     "noItem": {
         "message": "沒有資料"
+    },
+    "modelNotFound_model": {
+        "message": "找不到 $model$ 模型，系統將指定第一個模型給您。",
+        "description": "Model $model$ not found",
+        "placeholders": {
+            "model": {
+                "content": "$1",
+                "example": "User"
+            }
+        }
+    },
+    "systemError": {
+        "message": "系統錯誤"
     }
 }

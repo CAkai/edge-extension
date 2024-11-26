@@ -33,7 +33,8 @@ export default function ChatBox() {
         const reader = await generateChatCompletion(user.webui.token, {
             model: model,
             stream: true,
-            messages: messages.map((msg) => {
+            messages: messages.filter(e => e.role !== "system-error")
+            .map((msg) => {
                 return {
                     // 因為 MessageInfo.role 是存模型名稱，所以這裡要轉換，否則 Open WebUI 給的內容會怪怪的。
                     role: msg.role !== "user" ? "assistant" : "user",
@@ -77,8 +78,9 @@ export default function ChatBox() {
         // 取得 chat.id 對應的聊天紀錄
         const history = await fetchChat(user.webui.token, chat.value);
         if (!history) return;
-        setModel(history.chat.models[0])
         setMessages(history.chat.messages);
+        // setModel(history.chat.models[0]);
+        setModel("abbbb");
     };
 
     return (

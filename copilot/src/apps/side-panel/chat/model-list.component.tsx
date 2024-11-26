@@ -4,6 +4,7 @@ import { getModels } from "../../../libs/llm/llm.api";
 import { userStorage } from "../../../libs/user";
 import LlmIcon from '../../../../public/svg/model.svg?react';
 import { useMessageStore } from "../../../libs/chat/chat.store";
+import { i18n } from "../../../libs/alias";
 
 type ModelListProps = {
     model?: string;
@@ -13,7 +14,7 @@ type ModelListProps = {
 export default function ModelList({ model, onSelect }: ModelListProps) {
     const [selectedModel, setSelectedModel] = useState<DropdownItem | undefined>(undefined);
     const [models, setModels] = useState<DropdownItem[]>([]);
-    const isIdle = useMessageStore(state => state.isIdle);
+    const {isIdle, addMessage} = useMessageStore();
 
     // 原本是用 useQuery，但因為執行太頻繁，出現 minify react error #301，
     // 所以改用 useEffect 來取得資料
@@ -46,6 +47,14 @@ export default function ModelList({ model, onSelect }: ModelListProps) {
     useEffect(() => {
         const selected = models.find((e) => e.value === model);
         if (selected) setSelectedModel(selected);
+        else if (model !== "") {
+            // 如果沒有找到對應的 model，就選擇第一個
+            setSelectedModel(models[0]);
+            // 然後發送錯誤訊息
+            addMessage({role: "system-error", content: i18n("modelNotFound_model", model)});
+            // 通知外面選擇第一個 model
+            onSelect?.(models[0]);
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [model]);
 

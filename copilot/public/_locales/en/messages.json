@@ -135,5 +135,18 @@
     },
     "noItem": {
         "message": "No items"
+    },
+    "modelNotFound_model": {
+        "message": "Model $model$ not found. We would select the first one for you.",
+        "description": "Model $model$ not found",
+        "placeholders": {
+            "model": {
+                "content": "$1",
+                "example": "User"
+            }
+        }
+    },
+    "systemError": {
+        "message": "System error"
     }
 }
