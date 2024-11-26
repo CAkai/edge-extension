@@ -23,24 +23,24 @@
       "_index-lOtXKBCI.js"
     ]
   },
-  "_user.store-iA-FD-76.js": {
-    "file": "assets/user.store-iA-FD-76.js",
+  "_user.store-DvOBRXwm.js": {
+    "file": "assets/user.store-DvOBRXwm.js",
     "name": "user.store",
     "imports": [
       "_index-lOtXKBCI.js"
     ]
   },
   "content-script.ts-loader.js": {
-    "file": "assets/content-script.ts-loader-wwAA3hkr.js",
+    "file": "assets/content-script.ts-loader-CUnsg51k.js",
     "src": "content-script.ts-loader.js"
   },
   "src/apps/content-script.ts": {
-    "file": "assets/content-script.ts-DH1ROldZ.js",
+    "file": "assets/content-script.ts-DMyJDe8w.js",
     "name": "content-script.ts",
     "src": "src/apps/content-script.ts",
     "isEntry": true,
     "imports": [
-      "_user.store-iA-FD-76.js",
+      "_user.store-DvOBRXwm.js",
       "_index-lOtXKBCI.js"
     ]
   },
@@ -55,29 +55,29 @@
     ]
   },
   "src/apps/server/index.ts": {
-    "file": "assets/index.ts-CPkxNV_h.js",
+    "file": "assets/index.ts-BkxH0u5z.js",
     "name": "index.ts",
     "src": "src/apps/server/index.ts",
     "isEntry": true,
     "imports": [
-      "_user.store-iA-FD-76.js",
+      "_user.store-DvOBRXwm.js",
       "_navigation.store-Dw7i6yul.js",
       "_index-lOtXKBCI.js"
     ]
   },
   "src/apps/side-panel/index.html": {
-    "file": "assets/index.html-UrN5XZl0.js",
+    "file": "assets/index.html-X_cH7hXb.js",
     "name": "index.html",
     "src": "src/apps/side-panel/index.html",
     "isEntry": true,
     "imports": [
       "_theme.store-DX0xu_5c.js",
       "_index-lOtXKBCI.js",
-      "_user.store-iA-FD-76.js",
+      "_user.store-DvOBRXwm.js",
       "_navigation.store-Dw7i6yul.js"
     ],
     "css": [
-      "assets/index-U7iC3S_a.css"
+      "assets/index-DlUnU7Zn.css"
     ]
   }
 }
