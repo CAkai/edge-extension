@@ -1855,6 +1855,14 @@ textarea {
   resize: none;
 }
 
+html,
+body {
+  height: 100%;
+  /* 確保根元素高度一致 */
+  overflow: hidden;
+  /* 防止多餘滾動，否則切換到歷史聊天紀錄後再輸入新的訊息，側邊欄就可以滾動到很下面。 */
+}
+
 .placeholder\:text-gray-400::-moz-placeholder {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity, 1));

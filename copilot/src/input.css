@@ -3,16 +3,16 @@
 @tailwind components;
 @tailwind utilities;
 
-/* add the code bellow */ 
+/* add the code bellow */
 @layer utilities {
     /* Hide scrollbar for Chrome, Safari and Opera */
     .no-scrollbar::-webkit-scrollbar {
         display: none;
     }
-   /* Hide scrollbar for IE, Edge and Firefox */
+    /* Hide scrollbar for IE, Edge and Firefox */
     .no-scrollbar {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
     }
 }
 
@@ -21,4 +21,10 @@ textarea {
     border-color: Transparent;
     outline: none;
     resize: none;
+}
+
+html,
+body {
+    height: 100%; /* 確保根元素高度一致 */
+    overflow: hidden; /* 防止多餘滾動，否則切換到歷史聊天紀錄後再輸入新的訊息，側邊欄就可以滾動到很下面。 */
 }

@@ -20,15 +20,13 @@ export default function SidePanel() {
     navStorage.set(NAVIGATION_NAME.Sidepanel);
     const user = useStorage(userStorage);
 
-    return <div className="h-full w-full">{isLogin(user) ? <ChatBox /> : <Auth />}</div>;
+    return <>{isLogin(user) ? <ChatBox /> : <Auth />}</>;
 }
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
         <QueryClientProvider client={queryClient}>
-            <div className="h-dvh min-w-[360px]">
-                <SidePanel />
-            </div>
+            <SidePanel />
         </QueryClientProvider>
     </StrictMode>,
 );
