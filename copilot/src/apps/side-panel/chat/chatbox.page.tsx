@@ -34,24 +34,29 @@ export default function ChatBox() {
             model: model,
             stream: true,
             messages: messages.filter(e => e.role !== "system-error")
-            .map((msg) => {
-                return {
-                    // 因為 MessageInfo.role 是存模型名稱，所以這裡要轉換，否則 Open WebUI 給的內容會怪怪的。
-                    role: msg.role !== "user" ? "assistant" : "user",
-                    content: [
-                        {
-                            type: "text",
-                            content: msg.content,
-                        },
-                        ...msg.files?.filter(e => e.type === "image").map(e => ({
-                            type: "image_url",
-                            image_url: {
-                                url: e.url,
-                            }
-                        })) ?? [],
-                    ] as MessageContent[],
-                }
-            }),
+                .map((msg) => {
+                    if (msg.files && msg.files.length > 0) return {
+                        // 因為 MessageInfo.role 是存模型名稱，所以這裡要轉換，否則 Open WebUI 給的內容會怪怪的。
+                        role: msg.role !== "user" ? "assistant" : "user",
+                        content: [
+                            {
+                                type: "text",
+                                text: msg.content,
+                            },
+                            ...msg.files?.filter(e => e.type === "image").map(e => ({
+                                type: "image_url",
+                                image_url: {
+                                    url: e.url,
+                                }
+                            })) ?? [],
+                        ] as MessageContent[],
+                    }
+                    else return {
+                        // 因為 MessageInfo.role 是存模型名稱，所以這裡要轉換，否則 Open WebUI 給的內容會怪怪的。
+                        role: msg.role !== "user" ? "assistant" : "user",
+                        content: msg.content,
+                    }
+                }),
         });
 
         if (!reader) {
@@ -59,7 +64,7 @@ export default function ChatBox() {
             done();
             return;
         }
- 
+
         for await (const v of readStream<ChatCompletionResponse>(reader)) {
             updateLastMessage(v.choices?.[0]?.delta?.content ?? "");
         }
@@ -71,7 +76,7 @@ export default function ChatBox() {
     // 每次 messages 更新後，都要將網頁滾動到最底部
     useEffect(() => {
         scrollToBottom(anchorRef.current!);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messages]);
 
     // 有時候 model 會是空的，無法發送 api，所以要檢查 messages, model
@@ -81,7 +86,7 @@ export default function ChatBox() {
             addMessage({ role: model, content: "" });
             ask();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [messages, model]);
 
     // 因為 getChatHistory 有用到 Hook，所以必須在這裡宣告
@@ -101,14 +106,14 @@ export default function ChatBox() {
                     return <MessageBlock message={item} />;
                 })}
                 {/* 讓網頁能夠定位到最底部 */}
-                <div style={{ float:"left", clear: "both" }} ref={anchorRef} />
+                <div style={{ float: "left", clear: "both" }} ref={anchorRef} />
             </div>
             <div className="flex flex-col justify-end">
                 <div className="flex justify-between mb-1">
                     <ModelList model={model} onSelect={(newModel) => setModel(newModel.value)} />
                     <div className="flex gap-1">
-                    <HistoryChat onSelect={getChatHisotry} />
-                    <NewChat />
+                        <HistoryChat onSelect={getChatHisotry} />
+                        <NewChat />
                     </div>
                 </div>
                 <MessageInput />
