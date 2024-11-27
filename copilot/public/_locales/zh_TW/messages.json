@@ -150,5 +150,8 @@
     },
     "systemError": {
         "message": "系統錯誤"
+    },
+    "nullChatResponse": {
+        "message": "沒有收到回應"
     }
 }

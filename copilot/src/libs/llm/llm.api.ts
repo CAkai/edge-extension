@@ -26,44 +26,15 @@ export async function getModels(token: string) {
 		throw error;
 	}
 
-	let models: Model[] = res?.data ?? [];
+	const models: Model[] = res?.data ?? [];
     LogDebug("Models fetched", models);
 
-	models = models
-		.filter((m) => m.id !== "arena-model" && !m.info?.meta?.hidden)
-		// Sort the models
-		.sort((a, b) => {
-			// Check if models have position property
-            const pos_a = a.info?.meta?.position;
-            const pos_b = b.info?.meta?.position;
-			const aHasPosition = pos_a !== undefined;
-			const bHasPosition = pos_b !== undefined;
-
-			// If both a and b have the position property
-			if (aHasPosition && bHasPosition) {
-				return pos_a - pos_b;
-			}
-
-			// If only a has the position property, it should come first
-			if (aHasPosition) return -1;
-
-			// If only b has the position property, it should come first
-			if (bHasPosition) return 1;
-
-			// Compare case-insensitively by name for models without position property
-			const lowerA = a.name.toLowerCase();
-			const lowerB = b.name.toLowerCase();
-
-			if (lowerA < lowerB) return -1;
-			if (lowerA > lowerB) return 1;
-
-			// If same case-insensitively, sort by original strings,
-			// lowercase will come before uppercase due to ASCII values
-			if (a.name < b.name) return -1;
-			if (a.name > b.name) return 1;
-
-			return 0; // They are equal
+	return models
+		.filter((m) => {
+			const notArena = m.id !== "arena-model";
+			const visible = !m.info?.meta?.hidden;
+			const notPipeline = !Object.hasOwnProperty.call(m, "pipeline");
+			return notArena && visible && notPipeline;
 		});
 
-	return models;
 }

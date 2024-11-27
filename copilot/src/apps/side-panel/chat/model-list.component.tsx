@@ -5,6 +5,7 @@ import { userStorage } from "../../../libs/user";
 import LlmIcon from '../../../../public/svg/model.svg?react';
 import { useMessageStore } from "../../../libs/chat/chat.store";
 import { i18n } from "../../../libs/alias";
+import { useLlmStore } from "../../../libs/llm";
 
 type ModelListProps = {
     model?: string;
@@ -15,6 +16,7 @@ export default function ModelList({ model, onSelect }: ModelListProps) {
     const [selectedModel, setSelectedModel] = useState<DropdownItem | undefined>(undefined);
     const [models, setModels] = useState<DropdownItem[]>([]);
     const {isIdle, addMessage} = useMessageStore();
+    const updateModels = useLlmStore(state => state.set);
 
     // 原本是用 useQuery，但因為執行太頻繁，出現 minify react error #301，
     // 所以改用 useEffect 來取得資料
@@ -23,6 +25,7 @@ export default function ModelList({ model, onSelect }: ModelListProps) {
             const user = await userStorage.get();
             const data = await getModels(user.webui.token);
             if (!data) return Promise.reject('No data');
+            updateModels(data);
             return data.map((e) => {
                 return {
                     id: crypto.randomUUID(),
@@ -66,6 +69,7 @@ export default function ModelList({ model, onSelect }: ModelListProps) {
                 items={models}
                 disabled={!isIdle()}
                 direction="tr"
+                height="20rem"
                 selected={nextSelectedModel}
                 onSelect={(newItem) => {
                     const nextItem = { ...newItem };

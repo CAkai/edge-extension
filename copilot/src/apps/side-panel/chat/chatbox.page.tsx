@@ -11,9 +11,11 @@ import { useStorage } from "../../../packages/storage";
 import MessageInput from "./message-input.component";
 import { NAVIGATION_NAME } from "../../../libs/navigation/navigation.constant";
 import { readStream } from "../../../packages/stream";
-import { ChatCompletionResponse, MessageContent } from "../../../libs/chat/chat.type";
+import { ChatCompletionResponse } from "../../../libs/chat/chat.type";
 import NewChat from "./new-chat.component";
 import { LogDebug, LogInfo } from "../../../packages/log";
+import { useLlmStore } from "../../../libs/llm";
+import { i18n } from "../../../libs/alias";
 
 function scrollToBottom(el: HTMLElement) {
     el.scrollIntoView({ behavior: "auto", block: "end" });
@@ -25,42 +27,35 @@ export default function ChatBox() {
     const user = useStorage(userStorage);
     // 因為 hook 只能放在最上層，所以這裡要宣告
     // 否則會出現 invalid hook call
-    const { messages, setMessages, addMessage, isWaiting, pending, done, updateLastMessage, lastMessage } = useMessageStore();
+    const { messages, toOpenWebUI, setMessages, addMessage, isWaiting, pending, done, updateLastMessage, lastMessage } = useMessageStore();
     const anchorRef = createRef<HTMLDivElement>();
+    const selectModel = useLlmStore(state => state.select);
 
 
     const ask = async () => {
+        const modelInfo = selectModel(model);
+        if (!modelInfo) {
+            LogInfo("Model not found", model);
+            addMessage({ role: "system-error", content: i18n("modelNotFound_model", model) });
+            done();
+            return;
+        }
+        // 先把使用者的訊息轉換成 Open WebUI 的訊息格式
+        // 再添加一個空的訊息，讓畫面可以顯示正在輸入中
+        // 這樣做是因為傳給 Open WebUI 的最後一個訊息才不會是空的
+        const messageInputs = toOpenWebUI(modelInfo.owned_by);
+        addMessage({ role: model, content: "" });
+
         const reader = await generateChatCompletion(user.webui.token, {
-            model: model,
+            model: modelInfo.id,
             stream: true,
-            messages: messages.filter(e => e.role !== "system-error")
-                .map((msg) => {
-                    if (msg.files && msg.files.length > 0) return {
-                        // 因為 MessageInfo.role 是存模型名稱，所以這裡要轉換，否則 Open WebUI 給的內容會怪怪的。
-                        role: msg.role !== "user" ? "assistant" : "user",
-                        content: [
-                            {
-                                type: "text",
-                                text: msg.content,
-                            },
-                            ...msg.files?.filter(e => e.type === "image").map(e => ({
-                                type: "image_url",
-                                image_url: {
-                                    url: e.url,
-                                }
-                            })) ?? [],
-                        ] as MessageContent[],
-                    }
-                    else return {
-                        // 因為 MessageInfo.role 是存模型名稱，所以這裡要轉換，否則 Open WebUI 給的內容會怪怪的。
-                        role: msg.role !== "user" ? "assistant" : "user",
-                        content: msg.content,
-                    }
-                }),
+            messages: messageInputs,
         });
+
 
         if (!reader) {
             LogInfo("Chat completion response is null");
+            addMessage({ role: "system-error", content: i18n("nullChatResponse") });
             done();
             return;
         }
@@ -83,7 +78,6 @@ export default function ChatBox() {
     useEffect(() => {
         if (isWaiting() && model) {
             pending();
-            addMessage({ role: model, content: "" });
             ask();
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -42,7 +42,7 @@ export default function HistoryChat({ onSelect }: { onSelect: DropdownSelectEven
             disabled={!isIdle()}
             direction="tl"
             width="15rem"
-            height="200px"
+            height="20rem"
             // 因為 selectedModel 是 mutable 的，所以要複製一份
             selected={selectedItem ? { ...selectedItem } : undefined}
             onSelect={handleSelect}>

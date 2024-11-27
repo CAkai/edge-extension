@@ -24,6 +24,8 @@ export default function FileUploadButton({ onUpload }: FileUploadButtonProps) {
                 }),
         );
         onUpload(newImages);
+        // 清空 input 的值，以便下次選擇相同檔案時能觸發 onChange 事件
+        e.target.value = '';
     };
 
     return (

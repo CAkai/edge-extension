@@ -152,5 +152,8 @@
     },
     "systemError": {
         "message": "System error"
+    },
+    "nullChatResponse": {
+        "message": "No response received."
     }
 }

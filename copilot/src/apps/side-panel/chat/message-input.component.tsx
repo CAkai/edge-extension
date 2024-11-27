@@ -28,7 +28,7 @@ export default function MessageInput() {
         addMessage({
             role: 'user',
             content: text,
-            images: attachments.filter(e => e.type === 'image'),
+            images: attachments.filter(e => e.type === 'image').map(e => e.url),
         });
         setAttachments([]);
         wait();
@@ -130,7 +130,7 @@ export default function MessageInput() {
                                         src={e.url}
                                         alt="input"
                                         onClick={() => {
-                                            const nextAttachments = attachments.filter(a => a.url !== e.url);
+                                            const nextAttachments = [...attachments].filter(a => a.url !== e.url);
                                             setAttachments(nextAttachments);
                                         }}
                                     />

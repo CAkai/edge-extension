@@ -1,20 +1,32 @@
-// ChatBase 是 Open WebUI 的聊天室基本資料
-export type ChatBase = {
-    id: string;
-    title: string;
-    updated_at: number;
-    created_at: number;
+/**
+ * 擴充功能接收的訊息
+ */
+export type Message = {
+    role: string;
+    content: string;
+    images?: string[];
+};
+
+/**
+ * Open WebUI 允許的訊息格式
+ */
+export type OpenAIMessage = {
+    role: string
+    content: string | OpenAIMessageContent[]
 }
 
-export type MessageContent = {
-    type: "text" | "image_url";
-    content?: string;
-    image_url?: {url: string};
+export type OpenAIMessageContent = {
+    type: "text";
+    content: string;
+} | {
+    type: "image_url";
+    image_url: { url: string };
 }
-export type Message = {
-    role: string
-    content: string | MessageContent[]
-    images?: ChatFileImage[]
+
+export type OllamaMessage = {
+    role: "system" | "user" | "assistant" | "tool";
+    content: string;
+    images?: string[] | Uint8Array[];
     tool_calls?: ToolCall[]
 }
 
@@ -28,10 +40,21 @@ type ToolCall = {
     };
 }
 
+/**
+ * Chat Completion 相關
+ */
+// ChatBase 是 Open WebUI 的聊天室基本資料
+export type ChatBase = {
+    id: string;
+    title: string;
+    updated_at: number;
+    created_at: number;
+}
+
 export type ChatCompletionRequest = {
     model: string
     stream: boolean
-    messages: Message[]
+    messages: OllamaMessage[] | OpenAIMessage[]
 }
 
 type ChatCompletionChoice = {
@@ -63,6 +86,9 @@ export type ChatCompletionResponse = {
     usage?: ChatCompletionUsage;
 };
 
+/**
+ * Open WebUI 回傳的聊天室完整資料
+ */
 // ChatData 是 Open WebUI 的聊天室完整資料，包含聊天室的訊息、檔案、標籤等等
 export type ChatData = {
     archived: boolean;
@@ -158,7 +184,7 @@ type OpenWebUIFile = {
     filename: string;
     created_at: number;
     updated_at: number;
-    data: {content: string};
+    data: { content: string };
     meta: OpenWebUIFileMeta;
 }
 
