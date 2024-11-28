@@ -54,10 +54,11 @@ export async function fetchChat(token: string, chatId: string) {
     return res;
 }
 
-export async function generateChatCompletion(token: string, body: ChatCompletionRequest) {
+export async function generateChatCompletion(token: string, owned_by: string, body: ChatCompletionRequest) {
 	let error = null;
     LogInfo("Generate chat completion", body);
-    const res = await fetch(`${import.meta.env.VITE_OPEN_WEBUI_URL}api/chat/completions`, {
+    const url = `${import.meta.env.VITE_OPEN_WEBUI_URL}${owned_by === "ollama" ? "ollama/api/chat" : "api/chat/completions"}`;
+    const res = await fetch(url, {
         method: 'POST',
         headers: {
             Authorization: `Bearer ${token}`,

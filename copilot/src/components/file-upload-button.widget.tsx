@@ -2,10 +2,11 @@ import { createRef } from 'react';
 import FileUploadIcon from '../../public/svg/attachment.svg?react';
 
 type FileUploadButtonProps = {
+    accept?: string;
     onUpload: (e: Promise<unknown>[]) => void;
 };
 
-export default function FileUploadButton({ onUpload }: FileUploadButtonProps) {
+export default function FileUploadButton({ accept="*", onUpload }: FileUploadButtonProps) {
     const inputRef = createRef<HTMLInputElement>();
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.target.files) return;
@@ -32,7 +33,7 @@ export default function FileUploadButton({ onUpload }: FileUploadButtonProps) {
         <div>
             <input
                 multiple // 支援多檔案上傳
-                accept="image/png, image/jpeg"
+                accept={accept}
                 className="hidden"
                 type="file"
                 ref={inputRef}

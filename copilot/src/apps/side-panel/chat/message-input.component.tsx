@@ -9,9 +9,9 @@ import { i18n } from '../../../libs/alias';
 import { chromeNotify } from '../../../packages/chrome/notification';
 import { ContextMenuOption } from '../../server/contextmenu.service';
 import { ChatFile } from '../../../libs/chat/chat.type';
-import ImageButton from '../../../components/image-button.component';
-import FileButton from '../../../components/file-button.component';
-import FileUploadButton from '../../../components/file-upload-button.component';
+import ImageButton from '../../../components/image-button.widget';
+import FileButton from '../../../components/file-button.widget';
+import FileUploadButton from '../../../components/file-upload-button.widget';
 import { NAVIGATION_NAME, navStorage } from '../../../libs/navigation';
 
 export default function MessageInput() {
@@ -152,7 +152,7 @@ export default function MessageInput() {
                 onKeyDown={handleKeyDown}
                 onChange={handleChange}></textarea>
             <div className="flex gap-1">
-                <FileUploadButton onUpload={handleUpload} />
+                <FileUploadButton accept='image/png, image/jpeg' onUpload={handleUpload} />
             </div>
             <button
                 className="absolute bottom-1 right-1"

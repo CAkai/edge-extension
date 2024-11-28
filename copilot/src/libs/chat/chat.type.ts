@@ -77,14 +77,23 @@ type ChatCompletionUsage = {
     total_tokens: number
 }
 
-export type ChatCompletionResponse = {
+export type ChatCompletionResponse = OllamaChatCompletionResponse | OpenAIChatCompletionResponse;
+
+export type OllamaChatCompletionResponse = {
+    model: string;
+    created_at: string;
+    message: OllamaMessage;
+    done: boolean;
+}
+
+export type OpenAIChatCompletionResponse = {
     id: string;
     object: string;
     created: number;
     model: string;
     choices: ChatCompletionChoice[];
     usage?: ChatCompletionUsage;
-};
+}
 
 /**
  * Open WebUI 回傳的聊天室完整資料

@@ -6,11 +6,11 @@ import { MessageInfo } from '../../../libs/chat/chat.type';
 import LoadingIcon from '../../../components/loading.widget';
 import 'highlight.js/styles/github.css';
 import TermianlIcon from '../../../../public/svg/terminal.svg?react';
-import CopyButton from '../../../components/copy-button.component';
+import CopyButton from '../../../components/copy-button.widget';
 import { useStorage } from '../../../packages/storage';
 import { getThemeProps, themeStorage } from '../../../libs/theme';
-import FileButton from '../../../components/file-button.component';
-import FileTagButton from '../../../components/file-tag-button.component';
+import FileButton from '../../../components/file-button.widget';
+import FileTagButton from '../../../components/file-tag-button.widget';
 import { ThemeProps } from '../../../libs/theme/theme.store';
 import { i18n } from '../../../libs/alias';
 
