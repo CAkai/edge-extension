@@ -45,21 +45,23 @@ export default function ChatBox() {
         // 這樣做是因為傳給 Open WebUI 的最後一個訊息才不會是空的
         const messageInputs = toOpenWebUI(modelInfo.owned_by);
         addMessage({ role: model, content: '' });
-
+        // 這裡要等待 Open WebUI 回傳訊息
         const reader = await generateChatCompletion(user.webui.token, modelInfo.owned_by, {
             model: modelInfo.id,
             stream: true,
             messages: messageInputs,
         });
-
+        // 如果 reader 是 null，代表 Open WebUI 回傳的訊息是空的，
+        // 直接顯示錯誤訊息，並通知系統已經完成
         if (!reader) {
             LogInfo('Chat completion response is null');
             addMessage({ role: 'system-error', content: i18n('nullChatResponse') });
             done();
             return;
         }
-
+        // 以 stream 的方式讀取 Open WebUI 回傳的訊息
         for await (const v of readStream<ChatCompletionResponse>(reader)) {
+            // 因為 Open WebUI 回傳的訊息格式不同，所以要分開處理
             if (modelInfo.owned_by === 'ollama') {
                 const result = v as OllamaChatCompletionResponse;
                 updateLastMessage(result.message?.content ?? "");
