@@ -6,7 +6,6 @@ export async function getLocalStorage(): Promise<{ [key: string]: any } | undefi
         if (typeof window === 'undefined' || Object.keys(localStorage).length === 0) {
             throw new Error("localStorage is not available");
         }
-        console.log(1);
         return localStorage;
     }
     catch {
