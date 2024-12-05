@@ -1,7 +1,7 @@
 import { getItemFromLocalStorage, removeItemInLocalStorage, setItemInLocalStorage } from "../../packages/localstorage";
-import { LogInfo } from "../../packages/log";
+import { LogDebug, LogInfo } from "../../packages/log";
 import { BaseStorage, createStorage, StorageEnum } from "../../packages/storage";
-import { fetchCloudUser, iCloudLoginForm, logInCloud, logInWebUI, signUpWebUI } from "./user.api";
+import { checkWebUIToken, fetchCloudUser, iCloudLoginForm, logInCloud, logInWebUI, signUpWebUI } from "./user.api";
 import { newUser, User } from "./user.type";
 
 const storage = createStorage<User>(
@@ -16,6 +16,7 @@ const storage = createStorage<User>(
 type UserStorage = BaseStorage<User> & {
     clear: () => Promise<void>;
     save: (user: User) => Promise<void>;
+    isLogIn: () => Promise<boolean>;
     load: () => Promise<User>;
     logInCloud: (form: iCloudLoginForm) => Promise<User>;
     logInWebUI: () => Promise<User>;
@@ -31,12 +32,27 @@ export const userStorage: UserStorage = {
         await setItemInLocalStorage(import.meta.env.VITE_ICLOUD_STORAGE_KEY as string, newUser.icloud.access_token);
         await storage.set(newUser);
     },
+    isLogIn: async () => {
+        const user = await storage.get();
+        if (!user.icloud.access_token) {
+            LogDebug("使用者尚未登入 iCloud");
+            return false;
+        }
+
+        if (user.webui.token && await checkWebUIToken(user.webui.token)) return true;
+        return false;
+    },
     load: async () => {
         const user = await storage.get();
 
-        LogInfo("正在檢查使用者資料...");
-        // 如果已經有 access_token 和 webui_token，表示已經登入過了，直接返回
-        if (user.icloud.access_token && user.webui.token) return user;
+        LogDebug("正在檢查使用者資料...");
+
+        // 如果已經有 access_token 和 webui_token，驗證一下 webui_token 是否還有效
+        if (await userStorage.isLogIn()) return user;
+        // 清除舊的 Open WebUI token
+        // 要清的原因是底下會把 user 寫進 storage，如果不清，就會把舊的 token 寫進去，然後 logInWebUI 會失敗
+        LogInfo("清除舊的 Open WebUI Token");
+        user.webui.token = "";
 
         // 取得 icloud 資料
         // 這裡不需要去 chrome.storage 取得 icloud token 是因為 storage 就是以 chrome.storage 操作的
@@ -67,9 +83,11 @@ export const userStorage: UserStorage = {
     },
     logInWebUI: async () => {
         const user = await storage.get();
+
         // 如果沒有 icloud token，就無法登入 webui，因此直接返回
         // 如果已經登入過 webui，就不用再登入
         if (!user.icloud.access_token || user.webui.token) return user;
+
         // 先登入看看，如果沒有成功，就註冊
         const data = await logInWebUI({
             email: user.icloud.id + "@umc.com",

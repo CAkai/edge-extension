@@ -1,4 +1,4 @@
-import { LogError, LogInfo } from "../../packages/log";
+import { LogDebug, LogError } from "../../packages/log";
 import { ChatBase, ChatCompletionRequest, ChatData } from "./chat.type";
 
 export async function fetchChatList(token: string) {
@@ -56,7 +56,7 @@ export async function fetchChat(token: string, chatId: string) {
 
 export async function generateChatCompletion(token: string, owned_by: string, body: ChatCompletionRequest) {
 	let error = null;
-    LogInfo("Generate chat completion", body);
+    LogDebug("Generate chat completion", body);
     const url = `${import.meta.env.VITE_OPEN_WEBUI_URL}${owned_by === "ollama" ? "ollama/api/chat" : "api/chat/completions"}`;
     const res = await fetch(url, {
         method: 'POST',
@@ -71,11 +71,11 @@ export async function generateChatCompletion(token: string, owned_by: string, bo
 	});
 
 	if (error) {
-        LogInfo("Generate chat completion error", error);
+        LogError("Generate chat completion error", error);
 		throw error;
 	}
 
-    LogInfo("Generate chat completion response", res);
+    LogDebug("Generate chat completion response", res);
     if (res?.ok && res?.body) {
 	    return res.body.pipeThrough(new TextDecoderStream()).getReader();
     }

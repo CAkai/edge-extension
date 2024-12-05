@@ -1,26 +1,30 @@
-import { StrictMode } from 'react';
+import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { User, userStorage } from '../../libs/user';
+import { userStorage } from '../../libs/user';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { useStorage } from '../../packages/storage';
 import Auth from './auth/auth.page';
 import ChatBox from './chat/chatbox.page';
 import { navStorage } from '../../libs/navigation';
 import { NAVIGATION_NAME } from '../../libs/navigation/navigation.constant';
+import { isNoUser } from '../../libs/user/user.type';
 
 const queryClient = new QueryClient();
-
-function isLogin(user: User) {
-    return user.icloud.access_token && user.webui.token;
-}
 
 export default function SidePanel() {
     // 綁定 SidePanel 到背景頁，讓 connect 事件能夠觸發
     chrome.runtime.connect({ name: NAVIGATION_NAME.Sidepanel });
     navStorage.set(NAVIGATION_NAME.Sidepanel);
-    const user = useStorage(userStorage);
+    const [isLoginned, setIsLoginned] = useState(false);
+    // 檢查是否登入
+    useEffect(() => {
+        // 自動登入功能。
+        // 此功能放在背景服務的話，userStorage 只會在背景服務啟動時執行一次，導致點錯頁面就無法自動登入
+        userStorage.load().then(user => {
+            setIsLoginned(!isNoUser(user));
+        });
+    }, []);
 
-    return <>{isLogin(user) ? <ChatBox /> : <Auth />}</>;
+    return <>{isLoginned ? <ChatBox /> : <Auth />}</>;
 }
 
 createRoot(document.getElementById('root')!).render(

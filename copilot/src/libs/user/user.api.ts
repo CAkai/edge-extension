@@ -1,4 +1,4 @@
-import { LogError, LogInfo, LogWarning } from "../../packages/log";
+import { LogDebug, LogError, LogInfo, LogWarning } from "../../packages/log";
 import { i18n } from "../alias";
 import { iCloudUser, OpenWebUIInfo } from "./user.type";
 import { z } from 'zod';
@@ -9,8 +9,8 @@ import { z } from 'zod';
 
 // fetchUserInfo 會到 iCloud 伺服器，依照傳入的 token 取得使用者資料。
 export async function fetchCloudUser(token: string): Promise<iCloudUser | null> {
-    LogInfo("正在取得 iCloud 使用者資料...");
-    console.log("token", token);
+    LogDebug("正在取得 iCloud 使用者資料...");
+    LogDebug("token", token);
     return await fetch(import.meta.env.VITE_ICLOUD_URL + "api/v1/auth", {
         method: "GET",
         headers: {
@@ -24,7 +24,7 @@ export async function fetchCloudUser(token: string): Promise<iCloudUser | null> 
                 return null;
             }
 
-            console.log("已搜尋到 iCloud Token");
+            LogDebug("已搜尋到 iCloud Token");
             return {
                 ...res,
                 access_token: token,
@@ -60,6 +60,31 @@ export async function logInCloud(data: iCloudLoginForm): Promise<iCloudUser | nu
 /*
  * Open WebUI API
  */
+
+// checkWebUIToken 會檢查 Open WebUI 的 token 是否還有效。
+export async function checkWebUIToken(token: string): Promise<boolean> {
+    LogDebug("正在檢查 Open WebUI Token...");
+    token = "21983usdlkjfsa'wer"
+    return await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/v1/auths", {
+        method: "GET",
+        headers: {
+            "Authorization": `Bearer ${token}`,
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            LogDebug("data", data);
+            if (data.detail) {
+                LogWarning(`連線到 Open WebUI 時，發生了錯誤：${data.detail}`);
+                return false;
+            }
+            return true;
+        })
+        .catch((err) => {
+            LogError(err);
+            return false;
+        });
+}
 
 // logInWebUI 函數會在使用者登入 iCloud 後，自動登入 Open WebUI。
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
