@@ -5,11 +5,11 @@
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_contextmenu.service-BTUSVTtP.js": {
-    "file": "assets/contextmenu.service-BTUSVTtP.js",
+  "_contextmenu.service-BkgVHqq6.js": {
+    "file": "assets/contextmenu.service-BkgVHqq6.js",
     "name": "contextmenu.service",
     "imports": [
-      "_user.store-BsdMtor_.js",
+      "_user.store-B7PU5b1l.js",
       "_index-lOtXKBCI.js"
     ]
   },
@@ -24,29 +24,29 @@
       "_index-lOtXKBCI.js"
     ]
   },
-  "_user.store-BsdMtor_.js": {
-    "file": "assets/user.store-BsdMtor_.js",
+  "_user.store-B7PU5b1l.js": {
+    "file": "assets/user.store-B7PU5b1l.js",
     "name": "user.store",
     "imports": [
       "_index-lOtXKBCI.js"
     ]
   },
   "content-script.ts-loader.js": {
-    "file": "assets/content-script.ts-loader-BC_NIJtt.js",
+    "file": "assets/content-script.ts-loader-Cf66ZV5O.js",
     "src": "content-script.ts-loader.js"
   },
   "src/apps/content-script.ts": {
-    "file": "assets/content-script.ts-CBNd2CrH.js",
+    "file": "assets/content-script.ts-DN7x_6k1.js",
     "name": "content-script.ts",
     "src": "src/apps/content-script.ts",
     "isEntry": true,
     "imports": [
-      "_user.store-BsdMtor_.js",
+      "_user.store-B7PU5b1l.js",
       "_index-lOtXKBCI.js"
     ]
   },
   "src/apps/options/index.html": {
-    "file": "assets/index.html-BJG0o8bl.js",
+    "file": "assets/index.html-B-NnOQsV.js",
     "name": "index.html",
     "src": "src/apps/options/index.html",
     "isEntry": true,
@@ -56,26 +56,26 @@
     ]
   },
   "src/apps/server/index.ts": {
-    "file": "assets/index.ts-BWV680XS.js",
+    "file": "assets/index.ts-BTW5XKah.js",
     "name": "index.ts",
     "src": "src/apps/server/index.ts",
     "isEntry": true,
     "imports": [
-      "_user.store-BsdMtor_.js",
-      "_contextmenu.service-BTUSVTtP.js",
+      "_user.store-B7PU5b1l.js",
+      "_contextmenu.service-BkgVHqq6.js",
       "_index-lOtXKBCI.js"
     ]
   },
   "src/apps/side-panel/index.html": {
-    "file": "assets/index.html-uTuv4Us9.js",
+    "file": "assets/index.html-BXkc7F-_.js",
     "name": "index.html",
     "src": "src/apps/side-panel/index.html",
     "isEntry": true,
     "imports": [
       "_theme.store-DX0xu_5c.js",
       "_index-lOtXKBCI.js",
-      "_user.store-BsdMtor_.js",
-      "_contextmenu.service-BTUSVTtP.js"
+      "_user.store-B7PU5b1l.js",
+      "_contextmenu.service-BkgVHqq6.js"
     ],
     "css": [
       "assets/index-Bn8bh_oK.css"
