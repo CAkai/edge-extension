@@ -36,5 +36,29 @@ export async function getModels(token: string) {
 			const notPipeline = !Object.hasOwnProperty.call(m, "pipeline");
 			return notArena && visible && notPipeline;
 		});
+}
 
+export async function getDefaultPrompts() {
+	let error = null;
+
+    const res = await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/v1/configs/export", {
+        method: "GET",
+    })
+        .then(async (res) => {
+            if (!res.ok) throw await res.json();
+			return res.json();
+        })
+        .catch((err) => {
+			LogError(`Cannot fetch prompts: ${err}`);
+			error = err;
+			return null;
+		});
+
+    
+	if (error) {
+		throw error;
+	}
+	const prompts = res?.ui?.prompt_suggestions ?? [];
+	LogDebug("Default Prompts fetched", prompts);
+	return prompts;
 }

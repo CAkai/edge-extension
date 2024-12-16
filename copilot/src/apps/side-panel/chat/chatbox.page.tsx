@@ -117,7 +117,7 @@ export default function ChatBox() {
                         <NewChat />
                     </div>
                 </div>
-                <MessageInput />
+                <MessageInput model={model} />
             </div>
         </div>
     );

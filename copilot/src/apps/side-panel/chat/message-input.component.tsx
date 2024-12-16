@@ -13,8 +13,14 @@ import ImageButton from '../../../components/image-button.widget';
 import FileButton from '../../../components/file-button.widget';
 import FileUploadButton from '../../../components/file-upload-button.widget';
 import { NAVIGATION_NAME, navStorage } from '../../../libs/navigation';
+import ModelPromptButton from './model-prompt-button.component';
+import { DropdownItem } from '../../../components/dropdown.widget';
 
-export default function MessageInput() {
+type MessageInputProps = {
+    model: string;
+};
+
+export default function MessageInput({model = "default"}: MessageInputProps) {
     const [text, setText] = useState('');
     const [attachments, setAttachments] = useState<ChatFile[]>([]);
     const { addMessage, wait, isIdle, clearMessage } = useMessageStore();
@@ -23,6 +29,10 @@ export default function MessageInput() {
     const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setText(e.target.value);
     };
+
+    const handlePromptSelect = (prompt: DropdownItem) => {
+        setText(prompt.value);
+    }
 
     const send = (text: string) => {
         addMessage({
@@ -153,6 +163,7 @@ export default function MessageInput() {
                 onChange={handleChange}></textarea>
             <div className="flex gap-1">
                 <FileUploadButton accept='image/png, image/jpeg' onUpload={handleUpload} />
+                <ModelPromptButton model={model} onSelect={handlePromptSelect}/>
             </div>
             <button
                 className="absolute bottom-1 right-1"

@@ -9,7 +9,6 @@ export async function getLocalStorage(): Promise<{ [key: string]: any } | undefi
         return localStorage;
     }
     catch {
-        console.log(2);
         const tabs = await getChromeTabs();
         if (!tabs) return;
 

@@ -59,12 +59,34 @@ interface ModelConfig {
 }
 
 interface ModelMeta {
-    position: number;
+	position: number;
 	description?: string;
 	capabilities?: object;
 	profile_image_url?: string;
-    hidden?: boolean;
+	hidden?: boolean;
+	suggestion_prompts?: { content: string }[];
 }
 
 type ModelParams = object
 // interface ModelParams {}
+
+
+// Prompts
+
+
+export type OpenWebUIPrompts = {
+	version: number;
+	ui: {
+		default_locale: string;
+		prompt_suggestions: PromptSuggestion[];
+		enable_signup: boolean;
+	}
+}
+
+export type PromptSuggestion = {
+	title: string[];
+	content: string;
+}
+
+
+
