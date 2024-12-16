@@ -39,12 +39,12 @@ export default function MessageInput() {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const handleContextMenuEvent = (request: { type: string; value: string }, _: any, sendResponse: any) => {
             if (!request) return;
-            clearMessage();
             // 當側邊欄被打開時，右鍵選單觸發時，Navigation 會是空的，所以這邊要再設定一次
             navStorage.set(NAVIGATION_NAME.SidepanelChat);
             // sendResponse 一定要寫，不然會跳「 The message port closed before a response was received.」
             switch (request.type) {
                 case 'clipboard':
+                    clearMessage();
                     send(request.value);
                     sendResponse('已貼上至 Side Panel');
                     break;

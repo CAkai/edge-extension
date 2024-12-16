@@ -5,11 +5,11 @@
     "src": "../@crx/manifest",
     "isEntry": true
   },
-  "_contextmenu.service-BkgVHqq6.js": {
-    "file": "assets/contextmenu.service-BkgVHqq6.js",
+  "_contextmenu.service-__WGmM2Z.js": {
+    "file": "assets/contextmenu.service-__WGmM2Z.js",
     "name": "contextmenu.service",
     "imports": [
-      "_user.store-B7PU5b1l.js",
+      "_user.store-F7xgAcIW.js",
       "_index-lOtXKBCI.js"
     ]
   },
@@ -24,24 +24,24 @@
       "_index-lOtXKBCI.js"
     ]
   },
-  "_user.store-B7PU5b1l.js": {
-    "file": "assets/user.store-B7PU5b1l.js",
+  "_user.store-F7xgAcIW.js": {
+    "file": "assets/user.store-F7xgAcIW.js",
     "name": "user.store",
     "imports": [
       "_index-lOtXKBCI.js"
     ]
   },
   "content-script.ts-loader.js": {
-    "file": "assets/content-script.ts-loader-Cf66ZV5O.js",
+    "file": "assets/content-script.ts-loader-BnYGxlNu.js",
     "src": "content-script.ts-loader.js"
   },
   "src/apps/content-script.ts": {
-    "file": "assets/content-script.ts-DN7x_6k1.js",
+    "file": "assets/content-script.ts-BPiadIk3.js",
     "name": "content-script.ts",
     "src": "src/apps/content-script.ts",
     "isEntry": true,
     "imports": [
-      "_user.store-B7PU5b1l.js",
+      "_user.store-F7xgAcIW.js",
       "_index-lOtXKBCI.js"
     ]
   },
@@ -56,26 +56,26 @@
     ]
   },
   "src/apps/server/index.ts": {
-    "file": "assets/index.ts-BTW5XKah.js",
+    "file": "assets/index.ts-rRN1IPrE.js",
     "name": "index.ts",
     "src": "src/apps/server/index.ts",
     "isEntry": true,
     "imports": [
-      "_user.store-B7PU5b1l.js",
-      "_contextmenu.service-BkgVHqq6.js",
+      "_user.store-F7xgAcIW.js",
+      "_contextmenu.service-__WGmM2Z.js",
       "_index-lOtXKBCI.js"
     ]
   },
   "src/apps/side-panel/index.html": {
-    "file": "assets/index.html-BXkc7F-_.js",
+    "file": "assets/index.html-BrNrZsBF.js",
     "name": "index.html",
     "src": "src/apps/side-panel/index.html",
     "isEntry": true,
     "imports": [
       "_theme.store-DX0xu_5c.js",
       "_index-lOtXKBCI.js",
-      "_user.store-B7PU5b1l.js",
-      "_contextmenu.service-BkgVHqq6.js"
+      "_user.store-F7xgAcIW.js",
+      "_contextmenu.service-__WGmM2Z.js"
     ],
     "css": [
       "assets/index-Bn8bh_oK.css"
