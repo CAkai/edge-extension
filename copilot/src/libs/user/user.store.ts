@@ -1,6 +1,7 @@
-import { getItemFromLocalStorage, removeItemInLocalStorage, setItemInLocalStorage } from "../../packages/localstorage";
+import { getItemFromLocalStorage, setItemInLocalStorage } from "../../packages/localstorage";
 import { LogDebug, LogInfo } from "../../packages/log";
 import { BaseStorage, createStorage, StorageEnum } from "../../packages/storage";
+// import { getModels } from "../llm/llm.api";
 import { checkWebUIToken, fetchCloudUser, iCloudLoginForm, logInCloud, logInWebUI, signUpWebUI } from "./user.api";
 import { newUser, User } from "./user.type";
 
@@ -25,11 +26,13 @@ type UserStorage = BaseStorage<User> & {
 export const userStorage: UserStorage = {
     ...storage,
     clear: async () => {
-        await removeItemInLocalStorage(import.meta.env.VITE_ICLOUD_STORAGE_KEY as string);
+        LogDebug("清除使用者資料...");
+        // await removeItemInLocalStorage(import.meta.env.VITE_ICLOUD_STORAGE_KEY as string);
         await storage.set(newUser());
     },
     save: async (newUser) => {
-        await setItemInLocalStorage(import.meta.env.VITE_ICLOUD_STORAGE_KEY as string, newUser.icloud.access_token);
+        // 有 access_token 才儲存到 localStorage，否則存入空白 token 會導致 iCloud 自動退出
+        if (newUser.icloud.access_token) await setItemInLocalStorage(import.meta.env.VITE_ICLOUD_STORAGE_KEY as string, newUser.icloud.access_token);
         await storage.set(newUser);
     },
     isLogIn: async () => {
@@ -101,6 +104,13 @@ export const userStorage: UserStorage = {
 
         // 如果還是沒有成功，就直接返回
         if (!data) return user;
+
+        // 因為使用者可能是處於 Pending 狀態，所以要檢查能不能認證。
+        const isValid = await checkWebUIToken(data.token);
+        if (!isValid) {
+            LogInfo("Open WebUI Token 無效，請向管理員確認，是否已經啟用 Open WebUI...");
+            return user;
+        }
 
         user.webui = data;
         await storage.set(user);

@@ -64,7 +64,6 @@ export async function logInCloud(data: iCloudLoginForm): Promise<iCloudUser | nu
 // checkWebUIToken 會檢查 Open WebUI 的 token 是否還有效。
 export async function checkWebUIToken(token: string): Promise<boolean> {
     LogDebug("正在檢查 Open WebUI Token...");
-    token = "21983usdlkjfsa'wer"
     return await fetch(import.meta.env.VITE_OPEN_WEBUI_URL + "api/v1/auths", {
         method: "GET",
         headers: {
