@@ -34,7 +34,7 @@
   "content_scripts": [
     {
       "js": [
-        "assets/content-script.ts-loader-Bss02I8U.js"
+        "assets/content-script.ts-loader-D7fVOb2L.js"
       ],
       "matches": [
         "<all_urls>"
@@ -54,9 +54,9 @@
         "logo/48.png",
         "logo/16.png",
         "images/*",
-        "assets/user.store-VziN0bJU.js",
-        "assets/index-Cw-HyLLZ.js",
-        "assets/content-script.ts-_HHbKvhy.js"
+        "assets/user.store-Dn-jXeEC.js",
+        "assets/index-lOtXKBCI.js",
+        "assets/content-script.ts-o0BjXaSN.js"
       ],
       "use_dynamic_url": false
     }

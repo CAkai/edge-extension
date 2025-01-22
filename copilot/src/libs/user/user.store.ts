@@ -101,7 +101,7 @@ export const userStorage: UserStorage = {
                 email: user.icloud.id + "@umc.com",
                 password: user.icloud.access_token
             });
-
+        console.log(data);
         // 如果還是沒有成功，就直接返回
         if (!data) return user;
 
